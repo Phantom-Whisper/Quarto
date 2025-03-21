@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuartoApp.Pages.ReglesPage"
+             Title="ReglesPage">
+    <Grid 
+        RowDefinitions="auto, *">
+        <Label 
+            Grid.Row="0"
+            Text="Règles"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            FontSize="30"/>
+        <Border
+            Grid.Row="1"
+            Stroke="Cyan"
+            StrokeThickness="3"
+            BackgroundColor="DarkCyan"
+            StrokeShape="RoundRectangle 30,30,30,30"
+            Margin="40 30">
+            <Label
+                Text="•Les regles"
+                Margin="15 0 0 30"/>
+        </Border>
+    </Grid>
+</ContentPage>
