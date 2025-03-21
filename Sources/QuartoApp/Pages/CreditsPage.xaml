@@ -5,26 +5,39 @@
              x:Class="QuartoApp.Pages.CreditsPage"
              Title="CreditsPage">
     <Grid
-        RowDefinitions="auto, *, auto"
-        BackgroundColor="red">
+        RowDefinitions="auto, *, auto">
+        <ImageButton
+    HorizontalOptions="Start"
+    VerticalOptions="Start"
+    Margin="10,0,20,0"
+    HeightRequest="26"
+    WidthRequest="26"
+    Clicked="Return_Clicked">
+            <ImageButton.Source>
+                <FontImageSource
+            FontFamily="AwesomeSolid"
+            Glyph=""
+            Size="30"
+            Color="{AppThemeBinding Light=Black, Dark=White}" />
+            </ImageButton.Source>
+        </ImageButton>
         <Label
             Text="Crédits"
             HorizontalOptions="Center"
             FontSize="Header"/>
         <ScrollView
-            Grid.Row="1"
-            BackgroundColor="DarkSalmon">
+            Grid.Row="1">
             <Grid
-                ColumnDefinitions="auto, *"
-                BackgroundColor="Green">
+                ColumnDefinitions="*, *"
+                RowDefinitions="auto, auto">
                 <Grid
                     Grid.Column="0"
                     ColumnDefinitions="2*, *"
-                    RowDefinitions="auto, auto, auto, auto"
-                    Background="Violet">
+                    RowDefinitions="auto, auto, auto, auto">
                     <Label
                         Text="Équipe"
                         FontSize="Medium"
+                        Margin="10"
                         HorizontalOptions="Center"/>
 
                     <card:CarteMembre
@@ -46,6 +59,25 @@
                     Source="dotnet_bot.png" 
                     MaximumWidthRequest="500"
                     MaximumHeightRequest="500"/>
+                <Border 
+                    Stroke="Transparent"
+                    Padding="10" 
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2">
+                    <Label 
+                        Padding="25"
+                        HorizontalOptions="Center"
+                        Text="
+                        Nous tenons à remercier notre encadrement pédagogique et technique.&#10;
+                        En particulier nos enseignants, pour leurs conseils avisés, leur patience et leur soutien indéfectible tout au long du développement.&#10;
+                        Vos orientations nous ont permis de surmonter de nombreux défis et d’améliorer constamment notre approche.&#10;
+                        Ce projet est le fruit d’un effort collectif, dont l’engagement, la créativité et la persévérance ont permis de donner vie à cette solution informatique. &#10;
+                        Merci à tous pour votre contribution et votre confiance !&#10;
+                        L'Équipe du Projet."
+                        FontSize="18"
+                        HorizontalTextAlignment="Center" 
+                        LineBreakMode="WordWrap"/>
+                </Border>
             </Grid>
         </ScrollView>
         <Label

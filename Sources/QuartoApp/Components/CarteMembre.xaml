@@ -7,9 +7,9 @@
         StrokeThickness="4"
         BackgroundColor="LightGreen"
         StrokeShape="RoundRectangle 25"
-        Margin="10,5,10,5">
+        Margin="40,5,5,10">
         <Grid 
-            ColumnDefinitions="auto, auto" 
+            ColumnDefinitions="auto, *" 
             RowDefinitions="auto, auto">
             <Border
                     WidthRequest="150"
@@ -27,16 +27,18 @@
             <Grid
                 VerticalOptions="Center"
                 RowDefinitions="*,*"
+                RowSpacing="10"
                 Grid.Column="1">
                 <Label
-                    Text="Personne 1" 
-                    Margin="5"
+                    Text="Personne 1"
+                    FontSize="Medium"
                     VerticalOptions="Center"
+                    HorizontalOptions="Center"
                     Grid.Row="0" />
                 <Label
                      Text="Personne 1" 
-                     Margin="5"
                      VerticalOptions="Center"
+                     HorizontalOptions="Center"
                      Grid.Row="1" />
             </Grid>
         </Grid>
