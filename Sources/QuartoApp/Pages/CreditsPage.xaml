@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:card="clr-namespace:QuartoApp.Components"
              x:Class="QuartoApp.Pages.CreditsPage"
              Title="CreditsPage">
     <Grid
-        RowDefinitions="auto, *, auto">
+        RowDefinitions="auto, *, auto"
+        BackgroundColor="red">
         <Label
             Text="Crédits"
             HorizontalOptions="Center"
@@ -13,53 +15,42 @@
             Grid.Row="1"
             BackgroundColor="DarkSalmon">
             <Grid
-                ColumnDefinitions="auto, *">
+                ColumnDefinitions="auto, *"
+                BackgroundColor="Green">
                 <Grid
                     Grid.Column="0"
-                    ColumnDefinitions="*, auto"
-                    RowDefinitions="*, *, *, *">
+                    ColumnDefinitions="2*, *"
+                    RowDefinitions="auto, auto, auto, auto"
+                    Background="Violet">
                     <Label
                         Text="Équipe"
                         FontSize="Medium"
                         HorizontalOptions="Center"/>
-                    <Image 
-                        Source="dotnet_bot.png"
-                        Grid.Column="0"
-                        Grid.Row="1"/>
-                    <Label
-                        Text="1"
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        VerticalOptions="Center"/>
 
-                    <Image 
-                        Source="dotnet_bot.png"
-                        Grid.Column="0"
-                        Grid.Row="2"/>  
-                    <Label
-                        Text="2"
-                        Grid.Column="1"
-                        Grid.Row="2"
-                        VerticalOptions="Center"/>
+                    <card:CarteMembre
+                        Grid.Row="1">
+                        
+                    </card:CarteMembre>
+                    <card:CarteMembre
+                        Grid.Row="2">
+                        
+                    </card:CarteMembre>
 
-                    <Image 
-                        Source="dotnet_bot.png"
-                        Grid.Column="0"
-                        Grid.Row="3"/>
-                    <Label
-                        Text="3"
-                        Grid.Column="1"
-                        Grid.Row="3" 
-                        VerticalOptions="Center" />
+                    <card:CarteMembre
+                        Grid.Row="3">
+                        
+                    </card:CarteMembre>
                 </Grid>
                 <Image
                     Grid.Column="1"
-                    Source="dotnet_bot.png" />
+                    Source="dotnet_bot.png" 
+                    MaximumWidthRequest="500"
+                    MaximumHeightRequest="500"/>
             </Grid>
         </ScrollView>
         <Label
             Grid.Row="2"
-            Text="© copyright" 
+            Text="© 2025 Quarto Dev Team. All Rights Reserved." 
             HorizontalOptions="Center" 
             FontSize="Subtitle" />
     </Grid>

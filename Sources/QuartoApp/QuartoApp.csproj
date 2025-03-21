@@ -71,6 +71,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Components\CarteMembre.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\CreditsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
