@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuartoApp.Pages.CreditsPage"
+             Title="CreditsPage">
+    <Grid
+        RowDefinitions="auto, *, auto">
+        <Label
+            Text="Crédits"
+            HorizontalOptions="Center"
+            FontSize="Header"/>
+        <ScrollView
+            Grid.Row="1"
+            BackgroundColor="DarkSalmon">
+            <Grid
+                ColumnDefinitions="auto, *">
+                <Grid
+                    Grid.Column="0"
+                    ColumnDefinitions="*, auto"
+                    RowDefinitions="*, *, *, *">
+                    <Label
+                        Text="Équipe"
+                        FontSize="Medium"
+                        HorizontalOptions="Center"/>
+                    <Image 
+                        Source="dotnet_bot.png"
+                        Grid.Column="0"
+                        Grid.Row="1"/>
+                    <Label
+                        Text="1"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        VerticalOptions="Center"/>
+
+                    <Image 
+                        Source="dotnet_bot.png"
+                        Grid.Column="0"
+                        Grid.Row="2"/>  
+                    <Label
+                        Text="2"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        VerticalOptions="Center"/>
+
+                    <Image 
+                        Source="dotnet_bot.png"
+                        Grid.Column="0"
+                        Grid.Row="3"/>
+                    <Label
+                        Text="3"
+                        Grid.Column="1"
+                        Grid.Row="3" 
+                        VerticalOptions="Center" />
+                </Grid>
+                <Image
+                    Grid.Column="1"
+                    Source="dotnet_bot.png" />
+            </Grid>
+        </ScrollView>
+        <Label
+            Grid.Row="2"
+            Text="© copyright" 
+            HorizontalOptions="Center" 
+            FontSize="Subtitle" />
+    </Grid>
+</ContentPage>
