@@ -5,28 +5,24 @@
              x:Class="QuartoApp.Pages.CreditsPage"
              Title="CreditsPage">
     <Grid
-        RowDefinitions="auto, *, auto">
-        <ImageButton
-    HorizontalOptions="Start"
-    VerticalOptions="Start"
-    Margin="10,0,20,0"
-    HeightRequest="26"
-    WidthRequest="26"
-    Clicked="Return_Clicked">
-            <ImageButton.Source>
-                <FontImageSource
-            FontFamily="AwesomeSolid"
-            Glyph=""
-            Size="30"
-            Color="{AppThemeBinding Light=Black, Dark=White}" />
-            </ImageButton.Source>
-        </ImageButton>
-        <Label
+        RowDefinitions="auto, *, auto, auto"
+        ColumnDefinitions="*, 6*, *"
+        ColumnSpacing="30"
+        Padding="40,5,40,5">
+       <Label
             Text="Crédits"
             HorizontalOptions="Center"
-            FontSize="Header"/>
+            FontSize="Header"
+            Grid.ColumnSpan="3"/>
+        <BoxView
+            Grid.Row="1"
+            Grid.Column="1"
+            CornerRadius="40"
+            BackgroundColor="DarkGray"
+            />
         <ScrollView
-            Grid.Row="1">
+            Grid.Row="1"
+            Grid.Column="1">
             <Grid
                 ColumnDefinitions="*, *"
                 RowDefinitions="auto, auto">
@@ -61,29 +57,34 @@
                     MaximumHeightRequest="500"/>
                 <Border 
                     Stroke="Transparent"
-                    Padding="10" 
                     Grid.Row="1"
-                    Grid.ColumnSpan="2">
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="Center">
                     <Label 
-                        Padding="25"
                         HorizontalOptions="Center"
-                        Text="
-                        Nous tenons à remercier notre encadrement pédagogique et technique.&#10;
-                        En particulier nos enseignants, pour leurs conseils avisés, leur patience et leur soutien indéfectible tout au long du développement.&#10;
-                        Vos orientations nous ont permis de surmonter de nombreux défis et d’améliorer constamment notre approche.&#10;
-                        Ce projet est le fruit d’un effort collectif, dont l’engagement, la créativité et la persévérance ont permis de donner vie à cette solution informatique. &#10;
-                        Merci à tous pour votre contribution et votre confiance !&#10;
-                        L'Équipe du Projet."
+                        Margin="20,5,50,5"
+                        Text="Nous tenons à remercier notre encadrement pédagogique et technique.&#10;En particulier nos enseignants, pour leurs conseils avisés, leur patience et leur soutien indéfectible tout au long du développement.&#10;Vos orientations nous ont permis de surmonter de nombreux défis et d’améliorer constamment notre approche.&#10;Ce projet est le fruit d’un effort collectif, dont l’engagement, la créativité et la persévérance ont permis de donner vie à cette solution informatique. &#10; L'Équipe du Projet."
                         FontSize="18"
                         HorizontalTextAlignment="Center" 
-                        LineBreakMode="WordWrap"/>
+                        LineBreakMode="CharacterWrap"/>
                 </Border>
             </Grid>
         </ScrollView>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="2"
+            RowDefinitions="*, *, auto">
+            <Button
+                Text="Retour"
+                Grid.Row="2"/>            
+        </Grid>
         <Label
             Grid.Row="2"
+            Grid.ColumnSpan="3"
             Text="© 2025 Quarto Dev Team. All Rights Reserved." 
             HorizontalOptions="Center" 
-            FontSize="Subtitle" />
+            VerticalOptions="Center"
+            FontSize="Subtitle"
+            Margin="0,5,5,5"/>
     </Grid>
 </ContentPage>
