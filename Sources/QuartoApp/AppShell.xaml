@@ -15,7 +15,7 @@
 
     <ShellContent
     Title="Regles"
-    ContentTemplate="{DataTemplate pages:ReglesPage}"
+    ContentTemplate="{DataTemplate pages:RulesPage}"
     Route="Regles" />
 
 </Shell>
