@@ -12,11 +12,16 @@
             Text="Quarto"
             HorizontalOptions="Center"
             FontSize="Title"/>
+
         <Button Grid.Row="3"
             Text="Start"
                 Margin="50"
             HeightRequest="50"
-            WidthRequest="100"/>
+            WidthRequest="100"
+            BorderWidth="5"
+            >
+        </Button>
+          <!--BorderColor="{StaticResource SilverGradient}" -> mis dans le button-->
 
     </Grid>
 </ContentPage>
