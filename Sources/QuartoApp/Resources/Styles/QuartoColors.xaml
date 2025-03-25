@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- New Palette Color -->
+
+    <Color x:Key="QPrimary">#99643E</Color>
+    <Color x:Key="QSecondary">#85502A</Color>
+    <Color x:Key="QTiersary">#764923</Color>
+    <Color x:Key="QPrimaryDark">#5F3B2E</Color>
+    <Color x:Key="QSecondaryDark">#4A291D</Color>
+    <Color x:Key="QTiersaryDark">#412116</Color>
+
+    <LinearGradientBrush x:Key="SilverGradient" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#7A7369" />
+        <GradientStop Offset="0.51" Color="#EAC48B" />
+        <GradientStop Offset="1" Color="#7A7369" />
+    </LinearGradientBrush>
+
+</ResourceDictionary>
