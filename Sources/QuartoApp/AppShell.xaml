@@ -12,11 +12,5 @@
     Title="Accueil"
     ContentTemplate="{DataTemplate pages:AccueilPage}"
     Route="AccueilPage" />
-    
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
 
 </Shell>
