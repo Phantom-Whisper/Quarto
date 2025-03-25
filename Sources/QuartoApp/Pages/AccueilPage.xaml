@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuartoApp.Pages.AccueilPage"
+             Title="AccueilPage"
+             Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <Image Source="simple.png"
+                   Aspect="Fill" 
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+        <Grid RowDefinitions="3*,Auto,Auto,Auto,*" >
+
+            <Image Source="quartologo.png"/>
+
+            <Label Grid.Row="2"
+                Text="Quarto"
+                HorizontalOptions="Center"
+                FontSize="Title"/>
+
+            <Button Grid.Row="3"
+                Text="Start"
+                Margin="50"
+                HeightRequest="50"
+                WidthRequest="100"
+                BorderWidth="5"
+                >
+            </Button>
+              <!--BorderColor="{StaticResource SilverGradient}" -> mis dans le button-->
+        </Grid>
+    </Grid>
+</ContentPage>

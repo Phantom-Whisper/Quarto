@@ -9,9 +9,9 @@
     Title="QuartoApp">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    Title="Accueil"
+    ContentTemplate="{DataTemplate pages:AccueilPage}"
+    Route="AccueilPage" />
 
     <ShellContent
         Title="Credits"
