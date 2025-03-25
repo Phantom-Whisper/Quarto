@@ -4,12 +4,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:QuartoApp"
+    xmlns:pages="clr-namespace:QuartoApp.Pages"
     Shell.FlyoutBehavior="Flyout"
     Title="QuartoApp">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    Title="Accueil"
+    ContentTemplate="{DataTemplate pages:AccueilPage}"
+    Route="AccueilPage" />
 
 </Shell>
