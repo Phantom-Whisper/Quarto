@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:card="clr-namespace:QuartoApp.Components"
+             x:Class="QuartoApp.Pages.CreditsPage"
+             Title="CreditsPage">
+    <Grid
+        RowDefinitions="auto, *, auto, auto"
+        ColumnDefinitions="*, 6*, *"
+        ColumnSpacing="30"
+        Padding="40,5,40,5">
+       <Label
+            Text="Crédits"
+            HorizontalOptions="Center"
+            FontSize="Header"
+            Grid.ColumnSpan="3"/>
+        <BoxView
+            Grid.Row="1"
+            Grid.Column="1"
+            CornerRadius="40"
+            BackgroundColor="DarkGray"
+            />
+        <ScrollView
+            Grid.Row="1"
+            Grid.Column="1">
+            <Grid
+                ColumnDefinitions="*, *"
+                RowDefinitions="auto, auto">
+                <Grid
+                    Grid.Column="0"
+                    ColumnDefinitions="2*, *"
+                    RowDefinitions="auto, auto, auto, auto">
+                    <Label
+                        Text="Équipe"
+                        FontSize="Medium"
+                        Margin="10"
+                        HorizontalOptions="Center"/>
+
+                    <card:CarteMembre
+                        Grid.Row="1">
+                        
+                    </card:CarteMembre>
+                    <card:CarteMembre
+                        Grid.Row="2">
+                        
+                    </card:CarteMembre>
+
+                    <card:CarteMembre
+                        Grid.Row="3">
+                        
+                    </card:CarteMembre>
+                </Grid>
+                <Image
+                    Grid.Column="1"
+                    Source="dotnet_bot.png" 
+                    MaximumWidthRequest="500"
+                    MaximumHeightRequest="500"/>
+                <Border 
+                    Stroke="Transparent"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="Center">
+                    <Label 
+                        HorizontalOptions="Center"
+                        Margin="20,5,50,5"
+                        Text="Nous tenons à remercier notre encadrement pédagogique et technique.&#10;En particulier nos enseignants, pour leurs conseils avisés, leur patience et leur soutien indéfectible tout au long du développement.&#10;Vos orientations nous ont permis de surmonter de nombreux défis et d’améliorer constamment notre approche.&#10;Ce projet est le fruit d’un effort collectif, dont l’engagement, la créativité et la persévérance ont permis de donner vie à cette solution informatique. &#10; L'Équipe du Projet."
+                        FontSize="18"
+                        HorizontalTextAlignment="Center" 
+                        LineBreakMode="CharacterWrap"/>
+                </Border>
+            </Grid>
+        </ScrollView>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="2"
+            RowDefinitions="*, *, auto">
+            <Button
+                Text="Retour"
+                Grid.Row="2"/>            
+        </Grid>
+        <Label
+            Grid.Row="2"
+            Grid.ColumnSpan="3"
+            Text="© 2025 Quarto Dev Team. All Rights Reserved." 
+            HorizontalOptions="Center" 
+            VerticalOptions="Center"
+            FontSize="Subtitle"
+            Margin="0,5,5,5"/>
+    </Grid>
+</ContentPage>
