@@ -14,6 +14,11 @@
     Route="AccueilPage" />
 
     <ShellContent
+        Title="Credits"
+        ContentTemplate="{DataTemplate pages:CreditsPage}"
+        Route="Credits"/>
+    
+    <ShellContent
     Title="Regles"
     ContentTemplate="{DataTemplate pages:RulesPage}"
     Route="Regles" />
