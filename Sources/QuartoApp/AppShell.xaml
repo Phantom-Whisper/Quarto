@@ -23,4 +23,14 @@
         ContentTemplate="{DataTemplate pages:RulesPage}"
         Route="Regles" />
 
+    <ShellContent
+        Title="Win"
+        ContentTemplate="{DataTemplate pages:WinPage}"
+        Route="Win" />
+
+    <ShellContent
+        Title="Egality"
+        ContentTemplate="{DataTemplate pages:EgalityPage}"
+        Route="Egality" />
+
 </Shell>
