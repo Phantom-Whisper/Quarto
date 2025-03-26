@@ -3,14 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuartoApp.Pages.AccueilPage"
              Title="AccueilPage"
+             BackgroundImageSource="simple.png"
              Shell.NavBarIsVisible="False">
 
     <Grid>
-        <Image Source="simple.png"
-                   Aspect="Fill" 
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
-
         <Grid RowDefinitions="3*,Auto,Auto,Auto,*" >
 
             <Image Source="quartologo.png"/>
@@ -28,6 +24,7 @@
                 BorderWidth="5"
                 >
             </Button>
+            
               <!--BorderColor="{StaticResource SilverGradient}" -> mis dans le button-->
         </Grid>
     </Grid>

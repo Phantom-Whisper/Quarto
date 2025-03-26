@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuartoApp.Pages.RulesPage"
              Title="RulesPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundImageSource="simple.png"
              BackgroundColor="LightGray">
     <Grid 
         RowDefinitions="3*, 25*, 2*">
@@ -17,8 +19,9 @@
             ColumnDefinitions="*,3*,*">
             <BoxView
                 Grid.Column="1"
-                Color="Gray"
-                CornerRadius="40"/>
+                CornerRadius="40"
+                BackgroundColor="#797979">
+            </BoxView>
             <ScrollView
                 Grid.Column="1"
                 Margin="40, 20, 0, 20">
