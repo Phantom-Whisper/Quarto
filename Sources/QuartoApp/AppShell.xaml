@@ -11,7 +11,7 @@
     <ShellContent
     Title="Accueil"
     ContentTemplate="{DataTemplate pages:AccueilPage}"
-    Route="AccueilPage" />
+    Route="Accueil" />
 
     <ShellContent
         Title="Credits"
@@ -22,5 +22,10 @@
     Title="Regles"
     ContentTemplate="{DataTemplate pages:RulesPage}"
     Route="Regles" />
+
+    <ShellContent
+    Title="Settings"
+    ContentTemplate="{DataTemplate pages:SettingsPage}"
+    Route="Settings" />
 
 </Shell>
