@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuartoApp.Views"
+             xmlns:lang="clr-namespace:QuartoApp.Resources.Localization"
+             x:Class="QuartoApp.Pages.SettingsPage"
+             Title="SettingsPage"
+             Shell.NavBarIsVisible="False">
+    
+
+    <Grid Margin="20,20,20,50" 
+          RowDefinitions="*,6*"
+          ColumnDefinitions="*,3*">
+        <Label Grid.Column="1"
+               Text="{x:Static lang:LangRessources.Paramètres}"
+               HorizontalOptions="Center"
+               FontSize="Title"
+               TextColor="{StaticResource Or }"/>
+        <Grid ColumnDefinitions="*,3*"
+              RowDefinitions="2*,*"
+              Grid.Row="1"
+              Grid.ColumnSpan="2">
+            <VerticalStackLayout Margin="0,0,30,0">
+                <views:CustomButton >
+                    <Label 
+                        Text="{x:Static lang:LangRessources.Général}" 
+                        TextColor="{StaticResource Or}" 
+                        FontFamily="NovaSquare" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center"/>
+                </views:CustomButton>
+                
+                <views:CustomButton >
+                    <Label 
+                        Text="Règles" 
+                        TextColor="{StaticResource Or}" 
+                        FontFamily="NovaSquare" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center"/>
+                </views:CustomButton>
+
+                <views:CustomButton >
+                    <Label 
+                        Text="Score" 
+                        TextColor="{StaticResource Or}" 
+                        FontFamily="NovaSquare" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center"/>
+                </views:CustomButton>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="1" Margin="0,0,30,0">
+                <views:CustomButton >
+                    <Label 
+                        Text="Crédits" 
+                        TextColor="{StaticResource Or}" 
+                        FontFamily="NovaSquare" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center"/>
+                </views:CustomButton>
+
+                <views:CustomButton>
+                    <Label 
+                        Text="Quitter" 
+                        TextColor="{StaticResource Or}" 
+                        FontFamily="NovaSquare" 
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Center"/>
+                </views:CustomButton>
+            </VerticalStackLayout>
+            <Image Source="back.png" 
+                   Grid.Column="1"
+                   Grid.RowSpan="2" ZIndex="0"
+                   Aspect="Fill"/>
+            <ScrollView Grid.Column="1"
+                        Grid.RowSpan="2">
+                <Grid ColumnDefinitions="*,*,3*,*"
+                      RowDefinitions="Auto,Auto,Auto,*">
+                    <!-- Music part -->
+                    <ImageButton
+                        Grid.Column="1"
+                        BackgroundColor="Transparent">
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="AwesomeSolid"
+                                             Glyph=""
+                                             Size="20"
+                                             Color="{AppThemeBinding Dark={StaticResource Or}, Light={StaticResource Silver}}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+
+
+                    <!-- Language part -->
+                    <ImageButton
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        BackgroundColor="Transparent">
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="AwesomeSolid"
+                         Glyph=""
+                         Size="20"
+                         Color="{AppThemeBinding Dark={StaticResource Or}, Light={StaticResource Silver}}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+
+                    <Picker x:Name="picker"
+                            Grid.Column="2"
+                            Grid.Row="1">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>fr</x:String>
+                                <x:String>en</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+
+
+                    <!-- Background part -->
+                    <ImageButton
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        BackgroundColor="Transparent">
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="AwesomeSolid"
+                         Glyph=""
+                         Size="20"
+                         Color="{AppThemeBinding Dark={StaticResource Or}, Light={StaticResource Silver}}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Grid>
+            </ScrollView>
+        </Grid>
+        
+    </Grid>
+    
+    
+</ContentPage>
