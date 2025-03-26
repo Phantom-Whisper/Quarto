@@ -28,4 +28,9 @@
         ContentTemplate="{DataTemplate pages:WinPage}"
         Route="Win" />
 
+    <ShellContent
+        Title="Egality"
+        ContentTemplate="{DataTemplate pages:EgalityPage}"
+        Route="Egality" />
+
 </Shell>
