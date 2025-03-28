@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:card="clr-namespace:QuartoApp.Views"
+             x:Class="QuartoApp.Pages.LoginPage"
+             Title="LoginPage"
+             BackgroundImageSource="simple.png"
+             Shell.NavBarIsVisible="False">
+    <Grid
+        ColumnDefinitions="*,*">
+        <Image Grid.Column="0"
+               Source="boardexemple.png"
+               Margin="80, 0, 80, 0"/>
+        <Grid Grid.Column="1"
+              RowDefinitions="*, 3*, auto"
+              Margin="0, 0, 100, 0">
+            <Image Grid.Row="0"
+                   Source="quartologo.png"
+                   Margin="0, 20, 0, 0"/>
+            <Image Grid.Row="1"
+                   Source="back.png"
+                   Margin="0, 0, 0, 150"/>
+            <card:EntrerUnPseudo Grid.Row="1"
+                                 Margin="150, 110, 0, 380"/>
+            <card:EntrerUnPseudo Grid.Row="1"
+                                 Margin="150, 190, 0, 300"/>
+        </Grid>
+    </Grid>
+</ContentPage>

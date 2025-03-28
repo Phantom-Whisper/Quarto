@@ -4,7 +4,7 @@
              x:Class="QuartoApp.Pages.EgalityPage"
              Title="EgalityPage"
              BackgroundImageSource="simple.png"
-            Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False">
     <Grid
         RowDefinitions="3*, auto, *, auto, auto"
         ColumnDefinitions="auto, *, auto">

@@ -33,4 +33,9 @@
         ContentTemplate="{DataTemplate pages:EgalityPage}"
         Route="Egality" />
 
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate pages:LoginPage}"
+        Route="Login" />
+
 </Shell>
