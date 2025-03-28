@@ -65,26 +65,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Resources\Localization\LangRessources.en-US.Designer.cs">
-	    <DependentUpon>LangRessources.en-US.resx</DependentUpon>
+	  <Compile Update="Resources\Localization\AppResources.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
-	  </Compile>
-	  <Compile Update="Resources\Localization\LangRessources.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>LangRessources.resx</DependentUpon>
+	    <DependentUpon>AppResources.resx</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources\Localization\LangRessources.en-US.resx">
-	    <LastGenOutput>LangRessources.en-US.Designer.cs</LastGenOutput>
+	  <EmbeddedResource Update="Resources\Localization\AppResources.resx">
 	    <Generator>ResXFileCodeGenerator</Generator>
-	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\Localization\LangRessources.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>LangRessources.Designer.cs</LastGenOutput>
+	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
 
@@ -96,6 +87,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\WinPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Localization\LocalizationDictionary.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\QuartoColors.xaml">
