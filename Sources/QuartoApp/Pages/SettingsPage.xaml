@@ -76,6 +76,7 @@
                     <Picker x:Name="picker"
                             Grid.Column="2"
                             Grid.Row="1"
+                            Title="{ext:LocalizedString Key=PickerText}"
                             SelectedItem="{Binding Culture, Source={StaticResource Localization}}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">

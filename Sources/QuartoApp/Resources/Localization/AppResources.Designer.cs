@@ -70,6 +70,15 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choisir une langue.
+        /// </summary>
+        internal static string PickerText {
+            get {
+                return ResourceManager.GetString("PickerText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Quitter.
         /// </summary>
         internal static string Quitter {

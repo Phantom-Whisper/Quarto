@@ -120,6 +120,9 @@
   <data name="Parametres" xml:space="preserve">
     <value>Paramètres</value>
   </data>
+  <data name="PickerText" xml:space="preserve">
+    <value>Choisir une langue</value>
+  </data>
   <data name="Quitter" xml:space="preserve">
     <value>Quitter</value>
   </data>
