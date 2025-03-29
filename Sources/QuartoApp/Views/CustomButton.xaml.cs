@@ -1,13 +1,9 @@
-namespace QuartoApp.Views
+namespace QuartoApp.Views;
+
+public partial class CustomButton : ContentView
 {
-    public partial class CustomButton : Grid
-    {
-
-
-        public CustomButton()
-        {
-            InitializeComponent();
-        }
-
-    }
+	public CustomButton()
+	{
+		InitializeComponent();
+	}
 }

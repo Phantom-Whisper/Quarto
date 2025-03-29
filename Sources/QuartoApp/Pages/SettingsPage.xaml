@@ -4,6 +4,7 @@
              xmlns:views="clr-namespace:QuartoApp.Views"
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              x:Class="QuartoApp.Pages.SettingsPage"
+             xmlns:component="clr-namespace:QuartoApp.Views"
              Title="SettingsPage"
              Shell.NavBarIsVisible="False">
     
@@ -21,52 +22,22 @@
               Grid.Row="1"
               Grid.ColumnSpan="2">
             <VerticalStackLayout Margin="0,0,30,0">
-                <views:CustomButton >
-                    <Label 
-                        Text="Général" 
-                        TextColor="{StaticResource Or}" 
-                        FontFamily="NovaSquare" 
-                        VerticalOptions="Center" 
-                        HorizontalOptions="Center"/>
-                </views:CustomButton>
-                
-                <views:CustomButton >
-                    <Label 
-                        Text="Règles" 
-                        TextColor="{StaticResource Or}" 
-                        FontFamily="NovaSquare" 
-                        VerticalOptions="Center" 
-                        HorizontalOptions="Center"/>
-                </views:CustomButton>
+                <component:CustomButton >
+                </component:CustomButton>
 
-                <views:CustomButton >
-                    <Label 
-                        Text="Score" 
-                        TextColor="{StaticResource Or}" 
-                        FontFamily="NovaSquare" 
-                        VerticalOptions="Center" 
-                        HorizontalOptions="Center"/>
-                </views:CustomButton>
+                <component:CustomButton >
+                </component:CustomButton>
+
+                <component:CustomButton >
+                </component:CustomButton>
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Row="1" Margin="0,0,30,0">
-                <views:CustomButton >
-                    <Label 
-                        Text="Crédits" 
-                        TextColor="{StaticResource Or}" 
-                        FontFamily="NovaSquare" 
-                        VerticalOptions="Center" 
-                        HorizontalOptions="Center"/>
-                </views:CustomButton>
+                <component:CustomButton >
+                </component:CustomButton>
 
-                <views:CustomButton>
-                    <Label 
-                        Text="{ext:LocalizedString Key=Quitter}" 
-                        TextColor="{StaticResource Or}" 
-                        FontFamily="NovaSquare" 
-                        VerticalOptions="Center" 
-                        HorizontalOptions="Center"/>
-                </views:CustomButton>
+                <component:CustomButton>
+                </component:CustomButton>
             </VerticalStackLayout>
             <Image Source="back.png" 
                    Grid.Column="1"
