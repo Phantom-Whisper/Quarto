@@ -4,14 +4,10 @@
              x:Class="QuartoApp.Pages.AccueilPage"
              xmlns:component="clr-namespace:QuartoApp.Components"
              Title="AccueilPage"
+             BackgroundImageSource="simple.png"
              Shell.NavBarIsVisible="False">
 
     <Grid>
-        <Image Source="simple.png"
-                   Aspect="Fill" 
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
-
         <Grid RowDefinitions="3*,Auto,Auto,Auto,*" >
 
             <Image Source="quartologo.png"/>

@@ -1,4 +1,4 @@
-namespace QuartoApp.Components;
+namespace QuartoApp.Views;
 
 public partial class CustomButton2 : ContentView
 {
