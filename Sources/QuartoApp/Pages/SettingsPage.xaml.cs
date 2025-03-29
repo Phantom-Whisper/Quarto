@@ -1,5 +1,3 @@
-using System.Globalization;
-
 namespace QuartoApp.Pages;
 
 public partial class SettingsPage : ContentPage
@@ -8,5 +6,4 @@ public partial class SettingsPage : ContentPage
 	{
 		InitializeComponent();
 	}
-
 }

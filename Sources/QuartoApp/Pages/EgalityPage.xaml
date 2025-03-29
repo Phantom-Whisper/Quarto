@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuartoApp.Views"
              x:Class="QuartoApp.Pages.EgalityPage"
-             Title="EgalityPage"
+             Title="EgalityPage"             
              BackgroundImageSource="simple.png"
-            Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False">
     <Grid
         RowDefinitions="3*, auto, *, auto, auto"
         ColumnDefinitions="auto, *, auto">
@@ -19,12 +20,13 @@
             HorizontalOptions="Center"
             FontSize="35"
             TextColor="Gold"
-            Text="Le joueur 1 a gagné !"/>
+            Text="Il y a égalité !"/>
         <Button
             Grid.Row="4"
             Grid.Column="0"
             Text="Rejouer"
             Margin="35, 0, 35, 35"/>
+        
         <Button
             Grid.Row="3"
             Grid.Column="2"

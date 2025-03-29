@@ -9,8 +9,8 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/QuartoColors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/QuartoColors.xaml"/>
-                <ResourceDictionary Source="/Resources/Styles/QuartoStyle.xaml"/>
+                <ResourceDictionary Source="/Resources/Styles/QuartoStyle.xaml" />
+                <ResourceDictionary Source="/Resources/Localization/LocalizationDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

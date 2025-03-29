@@ -18,7 +18,7 @@
                 FontSize="Title"/>
 
             <Button Grid.Row="3"
-                Text="Start"
+                Text="Lancer"
                 Margin="50"
                 HeightRequest="50"
                 WidthRequest="100"

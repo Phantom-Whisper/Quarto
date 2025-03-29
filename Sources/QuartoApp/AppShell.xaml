@@ -19,9 +19,9 @@
         Route="Credits"/>
 
     <ShellContent
-        Title="Regles"
+        Title="Rules"
         ContentTemplate="{DataTemplate pages:RulesPage}"
-        Route="Regles" />
+        Route="Rules" />
 
     <ShellContent
         Title="Win"
@@ -34,8 +34,13 @@
         Route="Egality" />
 
     <ShellContent
-    Title="Settings"
-    ContentTemplate="{DataTemplate pages:SettingsPage}"
-    Route="Settings" />
+        Title="Defeat"
+        ContentTemplate="{DataTemplate pages:DefeatPage}"
+        Route="Defeat" />
+
+    <ShellContent
+        Title="Settings"
+        ContentTemplate="{DataTemplate pages:SettingsPage}"
+        Route="Settings" />
 
 </Shell>
