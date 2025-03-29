@@ -1,39 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:component="clr-namespace:QuartoApp.Components"
              x:Class="QuartoApp.Pages.RulesPage"
              Title="RulesPage"
              BackgroundColor="LightGray">
-    <Grid 
-        RowDefinitions="3*, 25*, 2*">
+    <Grid RowDefinitions="Auto, *"
+        ColumnDefinitions="*,3*,*"
+          Margin="0,0,0,40">
         <Label 
-            Grid.Row="0"
+            Grid.ColumnSpan="3"
             Text="Règles"
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
-            FontSize="30"/>
-        <Grid
-            Grid.Row="1"
-            ColumnDefinitions="*,3*,*">
-            <BoxView
+            FontSize="30"
+            Margin="0,0,0,10"/>
+        <Image Source="back.png" 
+               Grid.Column="1"
+               Grid.Row="1"
+               ZIndex="0"
+               Aspect="Fill"/>
+        <ScrollView
                 Grid.Column="1"
-                Color="Gray"
-                CornerRadius="40"/>
-            <ScrollView
-                Grid.Column="1"
+                Grid.Row="1"
                 Margin="40, 20, 0, 20">
-                <Label
+            <Label
                     Text="• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles"/>
-            </ScrollView>
-            <Grid
-                Grid.Column="2"
-                RowDefinitions="*, *, auto"
-                ColumnDefinitions="*, auto, *">
-                <Button
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Text="Retour"/>
-            </Grid>
-        </Grid>
+        </ScrollView>
+        <component:CustomButton Grid.Row="1" Grid.Column="2" VerticalOptions="End">
+        </component:CustomButton>
     </Grid>
 </ContentPage>

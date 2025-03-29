@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuartoApp.Pages.AccueilPage"
+             xmlns:component="clr-namespace:QuartoApp.Components"
              Title="AccueilPage"
              Shell.NavBarIsVisible="False">
 
@@ -28,7 +29,7 @@
                 BorderWidth="5"
                 >
             </Button>
-              <!--BorderColor="{StaticResource SilverGradient}" -> mis dans le button-->
+            <!--BorderColor="{StaticResource SilverGradient}" -> mis dans le button-->
         </Grid>
     </Grid>
 </ContentPage>

@@ -81,7 +81,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Components\CustomButton.xaml">
+	  <MauiXaml Update="Views\CustomButton.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\CustomButton2.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\ScorePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SettingsPage.xaml">
