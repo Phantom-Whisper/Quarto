@@ -9,9 +9,9 @@
     Title="QuartoApp">
 
     <ShellContent
-        Title="Accueil"
-        ContentTemplate="{DataTemplate pages:AccueilPage}"
-        Route="AccueilPage" />
+    Title="Accueil"
+    ContentTemplate="{DataTemplate pages:AccueilPage}"
+    Route="Accueil" />
 
     <ShellContent
         Title="Credits"
@@ -32,5 +32,10 @@
         Title="Egality"
         ContentTemplate="{DataTemplate pages:EgalityPage}"
         Route="Egality" />
+
+    <ShellContent
+    Title="Settings"
+    ContentTemplate="{DataTemplate pages:SettingsPage}"
+    Route="Settings" />
 
 </Shell>
