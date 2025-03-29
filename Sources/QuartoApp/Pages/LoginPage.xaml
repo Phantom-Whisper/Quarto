@@ -8,22 +8,46 @@
              Shell.NavBarIsVisible="False">
     <Grid
         ColumnDefinitions="*,*">
-        <Image Grid.Column="0"
+        <Image 
                Source="boardexemple.png"
                Margin="80, 0, 80, 0"/>
         <Grid Grid.Column="1"
-              RowDefinitions="*, 3*, auto"
+              RowDefinitions="*, 2*, *"
               Margin="0, 0, 100, 0">
-            <Image Grid.Row="0"
+            
+            <Image 
                    Source="quartologo.png"
                    Margin="0, 20, 0, 0"/>
+            
             <Image Grid.Row="1"
                    Source="back.png"
-                   Margin="0, 0, 0, 150"/>
-            <card:EntrerUnPseudo Grid.Row="1"
-                                 Margin="150, 110, 0, 380"/>
-            <card:EntrerUnPseudo Grid.Row="1"
-                                 Margin="150, 190, 0, 300"/>
+                   Aspect="Fill"/>
+
+            <Grid Grid.Row="1"
+                  RowDefinitions="Auto,Auto, Auto">
+
+                <HorizontalStackLayout  HorizontalOptions="Center"
+                                        Margin="0,50,0,0">
+                    <Label Style="{StaticResource LoginLabel}"
+                           Text="Joueur 1 :"/>
+                    <Entry Style="{StaticResource Login}"/>
+                    
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout 
+                                     Grid.Row="1" HorizontalOptions="Center">
+                    <Label Style="{StaticResource LoginLabel}"
+                           Text="Joueur 2 :"/>
+                    <Entry Style="{StaticResource Login}"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Grid.Row="2">
+                    
+                </HorizontalStackLayout>
+                
+
+            </Grid>
+
         </Grid>
     </Grid>
 </ContentPage>

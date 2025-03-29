@@ -11,6 +11,8 @@
     <Color x:Key="QSecondaryDark">#4A291D</Color>
     <Color x:Key="QTiersaryDark">#412116</Color>
 
+    <Color x:Key="Or">#FFD37E</Color>
+
     <LinearGradientBrush x:Key="SilverGradient" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Offset="0" Color="#7A7369" />
         <GradientStop Offset="0.51" Color="#EAC48B" />
