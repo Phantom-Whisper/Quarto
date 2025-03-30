@@ -42,5 +42,10 @@
         Title="Settings"
         ContentTemplate="{DataTemplate pages:SettingsPage}"
         Route="Settings" />
-
+    
+    <ShellContent
+        Title="Score"
+        ContentTemplate="{DataTemplate pages:ScorePage}"
+        Route="Score" />
+    
 </Shell>
