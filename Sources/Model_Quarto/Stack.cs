@@ -4,13 +4,14 @@ namespace Model
 {
     public class Stack
     {
-        private ObservableCollection<int> stack { get; }
+        private ObservableCollection<Piece> stack { get; set; }
 
-        public Stack(ObservableCollection<int> stack) {  this.stack = stack; }
+        public Stack(ObservableCollection<Piece> stack)
+        {
+            this.stack = stack;
+        }
 
         public bool IsEmpty() {  return stack.Count == 0; }
-
-        
 
     }
 }
