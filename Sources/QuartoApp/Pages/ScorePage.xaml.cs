@@ -1,6 +1,6 @@
 namespace QuartoApp.Pages;
 
-public partial class ScorePage : ContentView
+public partial class ScorePage : ContentPage
 {
 	public ScorePage()
 	{
