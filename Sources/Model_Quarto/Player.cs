@@ -9,9 +9,10 @@ namespace Model
     public class Player
     {
 
-        public Player(string pseudo)
+        public Player(string pseudo, int nbWin)
         {
             Pseudo = pseudo;
+            NbWin = nbWin;
         }
 
         public required string Pseudo
@@ -20,20 +21,16 @@ namespace Model
             init;
         }
 
-        private int nbWin;
 
         public int NbWin
         {
-            get => nbWin;
-            init
-            {
-                nbWin = 0;
-            }
+            get;
+            set;
         }
 
         public void AddWin()
         {
-            ++nbWin;
-        }
+            NbWin++;
+        }        
     }
 }
