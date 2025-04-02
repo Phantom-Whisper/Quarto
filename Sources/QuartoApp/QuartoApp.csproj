@@ -87,7 +87,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  
-	  </MauiXaml>
 	  <MauiXaml Update="Pages\ScorePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
