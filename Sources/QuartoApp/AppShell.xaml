@@ -9,19 +9,29 @@
     Title="QuartoApp">
 
     <ShellContent
-        Title="Accueil"
-        ContentTemplate="{DataTemplate pages:AccueilPage}"
-        Route="AccueilPage" />
+    Title="Accueil"
+    ContentTemplate="{DataTemplate pages:AccueilPage}"
+    Route="Accueil" />
 
     <ShellContent
-        Title="Credits"
-        ContentTemplate="{DataTemplate pages:CreditsPage}"
-        Route="Credits"/>
-
-    <ShellContent
-        Title="Regles"
+        Title="Rules"
         ContentTemplate="{DataTemplate pages:RulesPage}"
-        Route="Regles" />
+        Route="Rules" />
+
+    <ShellContent
+        Title="Settings"
+        ContentTemplate="{DataTemplate pages:SettingsPage}"
+        Route="Settings" />
+
+    <ShellContent
+        Title="Score"
+        ContentTemplate="{DataTemplate pages:ScorePage}"
+        Route="Score" />
+
+    <ShellContent
+        Title="Defeat"
+        ContentTemplate="{DataTemplate pages:DefeatPage}"
+        Route="Defeat" />
 
     <ShellContent
         Title="Win"
@@ -29,9 +39,9 @@
         Route="Win" />
 
     <ShellContent
-        Title="Egality"
-        ContentTemplate="{DataTemplate pages:EgalityPage}"
-        Route="Egality" />
+        Title="Credits"
+        ContentTemplate="{DataTemplate pages:CreditsPage}"
+        Route="Credits"/>
 
     <ShellContent
         Title="Login"

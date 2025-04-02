@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuartoApp.Views"
+             xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
+             x:Class="QuartoApp.Pages.SettingsPage"
+             xmlns:component="clr-namespace:QuartoApp.Views"
+             Title="SettingsPage"
+             BackgroundImageSource="simple.png"
+             Shell.NavBarIsVisible="False">
+    
+
+    <Grid Margin="20,20,20,50" 
+          RowDefinitions="*,6*"
+          ColumnDefinitions="*,3*">
+        <Label Grid.Column="1"
+               Text="{ext:LocalizedString Key=Parametres}"
+               HorizontalOptions="Center"
+               FontSize="Title"
+               TextColor="{StaticResource Gold }"/>
+        <Grid ColumnDefinitions="*,3*"
+              RowDefinitions="2*,*"
+              Grid.Row="1"
+              Grid.ColumnSpan="2">
+            <VerticalStackLayout Margin="0,0,30,0">
+                <component:CustomButton />
+
+                <component:CustomButton />
+
+                <component:CustomButton/>
+
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="1" Margin="0,0,30,0">
+                <component:CustomButton/>
+
+                <component:CustomButton/>
+
+            </VerticalStackLayout>
+            <Image Source="back.png" 
+                   Grid.Column="1"
+                   Grid.RowSpan="2" ZIndex="0"
+                   Aspect="Fill"/>
+            <ScrollView Grid.Column="1"
+                        Grid.RowSpan="2">
+                <Grid ColumnDefinitions="*,*,3*,*"
+                      RowDefinitions="Auto,Auto,Auto,*">
+                    <!-- Music part -->
+                    <ImageButton
+                        Grid.Column="1"
+                        BackgroundColor="Transparent">
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="AwesomeSolid"
+                                             Glyph=""
+                                             Size="20"
+                                             Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Silver}}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+
+
+                    <!-- Language part -->
+                    <ImageButton
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        BackgroundColor="Transparent">
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="AwesomeSolid"
+                         Glyph=""
+                         Size="20"
+                         Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Silver}}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+
+                    <Picker x:Name="picker"
+                            Grid.Column="2"
+                            Grid.Row="1"
+                            Title="{ext:LocalizedString Key=PickerText}"
+                            SelectedItem="{Binding Culture, Source={StaticResource Localization}}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>fr-FR</x:String>
+                                <x:String>en-US</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+
+
+                    <!-- Background part -->
+                    <ImageButton
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        BackgroundColor="Transparent">
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="AwesomeSolid"
+                         Glyph=""
+                         Size="20"
+                         Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Silver}}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Grid>
+            </ScrollView>
+        </Grid>
+        
+    </Grid>
+    
+    
+</ContentPage>
