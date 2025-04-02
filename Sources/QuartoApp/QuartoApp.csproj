@@ -83,9 +83,6 @@
 	  <MauiXaml Update="Pages\DefeatPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\EgalityPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Pages\WinPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

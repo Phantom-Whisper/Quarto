@@ -11,7 +11,7 @@
     <Color x:Key="QSecondaryDark">#4A291D</Color>
     <Color x:Key="QTiersaryDark">#412116</Color>
 
-    <Color x:Key="Or">#FFC977</Color>
+    <Color x:Key="Gold">#FFC977</Color>
     <Color x:Key="Silver">#7A7369</Color>
 
 
