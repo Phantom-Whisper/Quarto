@@ -5,7 +5,9 @@ VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartoApp", "QuartoApp\QuartoApp.csproj", "{867865C0-1D12-4C33-9383-C9AE4B1E835E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model_Quarto", "Model_Quarto\Model_Quarto.csproj", "{E1F14081-AB4D-47C2-BEDA-DB9DBC13237C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model_Quarto\Model.csproj", "{E1F14081-AB4D-47C2-BEDA-DB9DBC13237C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{303192DF-F8E2-45C1-A70E-27E16484C0BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +24,10 @@ Global
 		{E1F14081-AB4D-47C2-BEDA-DB9DBC13237C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1F14081-AB4D-47C2-BEDA-DB9DBC13237C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1F14081-AB4D-47C2-BEDA-DB9DBC13237C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{303192DF-F8E2-45C1-A70E-27E16484C0BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{303192DF-F8E2-45C1-A70E-27E16484C0BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{303192DF-F8E2-45C1-A70E-27E16484C0BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{303192DF-F8E2-45C1-A70E-27E16484C0BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
