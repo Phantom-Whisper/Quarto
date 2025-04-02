@@ -42,7 +42,12 @@
         Title="Credits"
         ContentTemplate="{DataTemplate pages:CreditsPage}"
         Route="Credits"/>
-
+    
+    <ShellContent
+        Title="Score"
+        ContentTemplate="{DataTemplate pages:ScorePage}"
+        Route="Score" />
+    
     <ShellContent
         Title="Login"
         ContentTemplate="{DataTemplate pages:LoginPage}"
