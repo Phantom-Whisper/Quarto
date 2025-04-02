@@ -48,4 +48,9 @@
         ContentTemplate="{DataTemplate pages:ScorePage}"
         Route="Score" />
     
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate pages:LoginPage}"
+        Route="Login" />
+
 </Shell>
