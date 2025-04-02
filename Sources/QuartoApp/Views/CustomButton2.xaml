@@ -5,7 +5,7 @@
     
     <Grid Margin="10" >
         <Button BackgroundColor="Transparent"  BorderColor="Transparent" ZIndex="2"/>
-        <Label Text="Texte" TextColor="{StaticResource Or}" FontFamily="NovaSquare" VerticalOptions="Center" HorizontalOptions="Center"  ZIndex="3"/>
+        <Label Text="Texte" TextColor="{StaticResource Gold}" FontFamily="NovaSquare" VerticalOptions="Center" HorizontalOptions="Center"  ZIndex="3"/>
         <Image Source="buttonv1.png" Aspect="AspectFit"/>
     </Grid>
 </ContentView>

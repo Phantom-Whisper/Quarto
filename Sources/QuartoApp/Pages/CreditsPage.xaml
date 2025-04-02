@@ -7,20 +7,18 @@
              BackgroundImageSource="simple.png"
              Title="CreditsPage">
     <Grid
-        RowDefinitions="auto, *, auto, auto"
-        ColumnDefinitions="*, 6*, *"
-        ColumnSpacing="30"
-        Padding="40,5,40,5">
+        RowDefinitions=" *, 9*, * "
+        ColumnDefinitions="*, 5*, *"
+        Padding="40,5,0,5">
        <Label
             Text="Crédits"
             HorizontalOptions="Center"
             FontSize="Header"
             Grid.ColumnSpan="3"/>
-        <BoxView
-            Grid.Row="1"
-            Grid.Column="1"
-            CornerRadius="40"
-            BackgroundColor="#797979"/>
+        <Image Source="back.png" 
+           Grid.Column="1"
+           Grid.Row="1" ZIndex="0"
+           Aspect="Fill"/>
         <ScrollView
             Grid.Row="1"
             Grid.Column="1">
@@ -52,29 +50,20 @@
                     Source="boardexemple.png"
                     MaximumWidthRequest="500"
                     MaximumHeightRequest="500"/>
-                <Border 
-                    Stroke="Transparent"
-                    Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    HorizontalOptions="Center">
-                    <Label 
+                <Label 
                         HorizontalOptions="Center"
-                        Margin="20,5,50,5"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Margin="50,0"
                         Text="Nous tenons à remercier notre encadrement pédagogique et technique.&#10;En particulier nos enseignants, pour leurs conseils avisés, leur patience et leur soutien indéfectible tout au long du développement.&#10;Vos orientations nous ont permis de surmonter de nombreux défis et d’améliorer constamment notre approche.&#10;Ce projet est le fruit d’un effort collectif, dont l’engagement, la créativité et la persévérance ont permis de donner vie à cette solution informatique. &#10; L'Équipe du Projet."
                         FontSize="18"
                         HorizontalTextAlignment="Center" 
                         LineBreakMode="CharacterWrap"/>
-                </Border>
             </Grid>
         </ScrollView>
-        <Grid
-            Grid.Row="1"
-            Grid.Column="2"
-            RowDefinitions="*, *, auto">
-            <Button
-                Text="Retour"
-                Grid.Row="2"/>            
-        </Grid>
+        <card:CustomButton Grid.Row="1"
+                           Grid.Column="2"
+                           VerticalOptions="End"/>
         <Label
             Grid.Row="2"
             Grid.ColumnSpan="3"
