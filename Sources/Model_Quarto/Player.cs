@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model
+﻿namespace Model
 {
     public class Player
     {
 
-        public Player(string pseudo, int nbWin)
+        public Player(string pseudo)
         {
-            Pseudo = pseudo;
-            NbWin = nbWin;
+            Pseudo = pseudo ?? throw new ArgumentNullException(nameof(pseudo));
+            NbWin = 0;
         }
 
-        public required string Pseudo
+        public string Pseudo
         {
             get;
             init;
