@@ -83,6 +83,9 @@
 	  <MauiXaml Update="Pages\DefeatPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\WinPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
