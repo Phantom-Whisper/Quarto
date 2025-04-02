@@ -5,7 +5,7 @@
     <Style TargetType="Entry" x:Key="Login">
         <Setter Property="Margin" Value="20,20,0,0"/>
         <Setter Property="Placeholder" Value="Entrer le pseudo"/>
-        <Setter Property="PlaceholderColor" Value="{StaticResource Or}"/>
+        <Setter Property="PlaceholderColor" Value="{StaticResource Gold}"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="WidthRequest" Value="250"/>
         <Setter Property="HeightRequest" Value="50"/>
@@ -14,7 +14,7 @@
 
     <Style TargetType="Label" x:Key="LoginLabel">
         <Setter Property="Margin" Value="0,20,20,0"/>
-        <Setter Property="TextColor" Value="{StaticResource Or}"/>
+        <Setter Property="TextColor" Value="{StaticResource Gold}"/>
         <Setter Property="FontSize" Value="35"/>
     </Style>
  

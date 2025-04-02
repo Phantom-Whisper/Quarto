@@ -17,7 +17,7 @@
            Text="Scores"
            HorizontalOptions="Center"
            FontSize="Title"
-           TextColor="{StaticResource Or }"/>
+           TextColor="{StaticResource Gold }"/>
         <Grid ColumnDefinitions="*,3*"
           RowDefinitions="2*,*"
           Grid.Row="1"
