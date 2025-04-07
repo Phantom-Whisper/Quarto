@@ -22,7 +22,7 @@ public class LocalizationApp
 
 public class LocalizedStringExtension : IMarkupExtension<string>
 {
-    public string Key { get; set; }
+    public required string Key { get; set; }
     public static string Culture
     {
         get => culture;
