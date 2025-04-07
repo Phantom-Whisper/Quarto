@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    internal class Piece
+    public class Piece
     {
         public bool IsSquare
         {
@@ -35,6 +35,18 @@ namespace Model
             IsLight = isLight;
             IsBig = isBig;
             IsFull = isFull;
+        }
+
+        public override string ToString()
+        {
+            string piece = "";
+
+            piece += IsSquare ? "Square" : "Round";
+            piece += IsLight ? " Light" : " Dark";
+            piece += IsBig ? " Big" : " Small";
+            piece += IsFull ? " Full" : " Hollow";
+
+            return piece;
         }
     }
 }
