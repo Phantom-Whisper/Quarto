@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    internal class Piece
+    public class Piece
     {
         public bool IsSquare
         {

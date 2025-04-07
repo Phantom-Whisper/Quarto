@@ -10,13 +10,7 @@ namespace Model
             Baglist = new ObservableCollection<Piece>();
         }
 
-        private ObservableCollection<Piece> baglist;
-
-        public ObservableCollection<Piece> Baglist
-        {
-            get => baglist ??= new ObservableCollection<Piece>();
-            set => baglist = value ?? new ObservableCollection<Piece>();
-        }
+        public ObservableCollection<Piece> Baglist { get; private set; }
 
         public void AddPiece(bool isSquare, bool isLight, bool isBig, bool isFull)
         {
@@ -25,7 +19,7 @@ namespace Model
 
         public void RemovePiece(Piece piece)
         {
-            if (baglist != null)
+            if (Baglist != null)
             {
                 Baglist.Remove(piece);
             }
