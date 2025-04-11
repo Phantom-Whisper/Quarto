@@ -171,5 +171,20 @@ namespace Model
             Array.Clear(grid, 0, grid.Length);
         }
 
+        public bool IsBoardFull()
+        {
+            for (int x = 0; x < SizeX; x++)
+            {
+                for (int y = 0; y < SizeY; y++)
+                {
+                    if (IsEmpty(x, y) == true)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
     }
 }

@@ -12,6 +12,11 @@ namespace Model
 
         public ObservableCollection<Piece> Baglist { get; private set; }
 
+        public bool IsEmpty()
+        {
+            return !Baglist.Any();
+        }
+
         public void AddPiece(bool isSquare, bool isLight, bool isBig, bool isFull)
         {
             Baglist.Add(new Piece(isSquare,isLight,isBig,isFull));
