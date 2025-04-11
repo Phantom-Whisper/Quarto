@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuartoApp.Views.ScoreView">
+    <Grid
+        ColumnDefinitions="*, 10*"
+        Padding="100,20,100,0">
+        <Image Grid.Column="0"
+            Source="quartologo.png"/>
+        <BoxView Grid.Column="1"
+                 BackgroundColor="#333334"
+                 HeightRequest="50"
+                 VerticalOptions="Center"/>
+        <Label Grid.Column="1"
+               Text="Pseudo"
+               HorizontalOptions="Start"
+               VerticalOptions="Center"
+               Margin="30,0,0,0"/>
+        <Label Grid.Column="1"
+               Text="Score"
+               HorizontalOptions="End"
+               VerticalOptions="Center"
+               Margin="0,0,30,0"/>
+    </Grid>
+</ContentView>

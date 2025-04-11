@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuartoApp.Pages.ScorePage"
+             Title="ScorePage"
+             Shell.NavBarIsVisible="False"
+             BackgroundImageSource="simple.png"
+             xmlns:component="clr-namespace:QuartoApp.Views"
+             xmlns:views="clr-namespace:QuartoApp.Views"
+             xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
+             xmlns:card="clr-namespace:QuartoApp.Views">
+    
+    <Grid Margin="20,20,20,50" 
+      RowDefinitions="*,6*"
+      ColumnDefinitions="*,3*">
+        <Label Grid.Column="1"
+           Text="Scores"
+           HorizontalOptions="Center"
+           FontSize="Title"
+           TextColor="{StaticResource Gold }"/>
+        <Grid ColumnDefinitions="*,3*"
+          RowDefinitions="2*,*"
+          Grid.Row="1"
+          Grid.ColumnSpan="2">
+            <VerticalStackLayout Margin="0,0,30,0">
+                <component:CustomButton >
+                </component:CustomButton>
+
+                <component:CustomButton >
+                </component:CustomButton>
+
+                <component:CustomButton >
+                </component:CustomButton>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="1" Margin="0,0,30,0">
+                <component:CustomButton >
+                </component:CustomButton>
+
+                <component:CustomButton>
+                </component:CustomButton>
+            </VerticalStackLayout>
+            <Image Source="back.png" 
+               Grid.Column="1"
+               Grid.RowSpan="2" ZIndex="0"
+               Aspect="Fill"/>
+            <ScrollView Grid.Column="1"
+                    Grid.RowSpan="2">
+                <VerticalStackLayout>
+                    <card:ScoreView Margin="0,50,0,0"></card:ScoreView>
+                    <card:ScoreView></card:ScoreView>
+                    <card:ScoreView></card:ScoreView>
+                    <card:ScoreView></card:ScoreView>
+                    <card:ScoreView></card:ScoreView>
+                    <card:ScoreView></card:ScoreView>
+                    <card:ScoreView></card:ScoreView>
+                    <card:ScoreView></card:ScoreView>
+                    <card:ScoreView Margin="0,0,0,70"></card:ScoreView>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+    </Grid>
+</ContentPage>

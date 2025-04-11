@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:component="clr-namespace:QuartoApp.Views"
+             x:Class="QuartoApp.Pages.RulesPage"
+             Title="RulesPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundImageSource="simple.png"
+             BackgroundColor="LightGray">
+    <Grid RowDefinitions="Auto, *"
+        ColumnDefinitions="*,3*,*"
+          Margin="0,0,0,40">
+        <Label 
+            Grid.ColumnSpan="3"
+            Text="Règles"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            FontSize="30"
+            Margin="0,0,0,10"/>
+        <Image Source="back.png" 
+               Grid.Column="1"
+               Grid.Row="1"
+               ZIndex="0"
+               Aspect="Fill"/>
+        <ScrollView
+                Grid.Column="1"
+                Grid.Row="1"
+                Margin="40, 20, 0, 20">
+            <Label
+                    Text="• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles"/>
+        </ScrollView>
+        <component:CustomButton Grid.Row="1" Grid.Column="2" VerticalOptions="End">
+        </component:CustomButton>
+    </Grid>
+</ContentPage>

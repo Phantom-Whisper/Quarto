@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:component="clr-namespace:QuartoApp.Views"
+             x:Class="QuartoApp.Pages.DefeatPage"
+             Title="DefeatPage"
+             BackgroundImageSource="simple.png"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="8*, *, *, *, *"
+          ColumnDefinitions="auto, *, auto">
+        <Image Grid.Row="0"
+               Grid.Column="1"
+               Source="egality.png"
+               Margin="0, 60, 0, 10"/>
+        
+        <Label Grid.Row="1" 
+               Grid.Column="1"
+               HorizontalOptions="Center"
+               TextColor="Gold"
+               Text="Text"/>
+        
+        <component:CustomButton Grid.Row="4"
+                Grid.Column="0"
+                WidthRequest="200"/>
+
+        <component:CustomButton Grid.Row="3"
+                Grid.Column="2"
+                WidthRequest="200" 
+                VerticalOptions="End"/>
+        
+        
+        <component:CustomButton Grid.Row="4"
+                Grid.Column="2"
+                WidthRequest="200"/>
+    </Grid>
+</ContentPage>

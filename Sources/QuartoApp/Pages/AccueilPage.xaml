@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuartoApp.Pages.AccueilPage"
+             xmlns:component="clr-namespace:QuartoApp.Views"
+             Title="AccueilPage"
+             BackgroundImageSource="simple.png"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,5*,*">
+        <ImageButton BackgroundColor="Transparent"
+                     HorizontalOptions="End"
+                     Margin="0,0,30,0"
+                     BorderColor="{StaticResource Gold}"
+                     BorderWidth="2"
+                     CornerRadius="90"
+                     WidthRequest="50"
+                     HeightRequest="50">
+            <ImageButton.Source>
+                <FontImageSource FontFamily="AwesomeSolid"
+                 Glyph=""
+                 Size="25"
+                 Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Silver}}"/>
+            </ImageButton.Source>
+        </ImageButton>
+        <VerticalStackLayout VerticalOptions="Center"
+                             Grid.Row="1">
+
+            <Image Source="quarto.png"
+                   HeightRequest="300"/>
+
+            <component:CustomButton WidthRequest="300" />
+
+        </VerticalStackLayout>
+        <component:CustomButton2 Grid.Row="2" WidthRequest="200" HeightRequest="70" HorizontalOptions="Start"/>
+        <component:CustomButton2 Grid.Row="2" WidthRequest="200" HeightRequest="70" HorizontalOptions="End"/>
+    </Grid>
+</ContentPage>

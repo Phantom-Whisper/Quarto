@@ -4,12 +4,48 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:QuartoApp"
+    xmlns:pages="clr-namespace:QuartoApp.Pages"
     Shell.FlyoutBehavior="Flyout"
     Title="QuartoApp">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    Title="Accueil"
+    ContentTemplate="{DataTemplate pages:AccueilPage}"
+    Route="Accueil" />
+
+    <ShellContent
+        Title="Rules"
+        ContentTemplate="{DataTemplate pages:RulesPage}"
+        Route="Rules" />
+
+    <ShellContent
+        Title="Settings"
+        ContentTemplate="{DataTemplate pages:SettingsPage}"
+        Route="Settings" />
+
+    <ShellContent
+        Title="Score"
+        ContentTemplate="{DataTemplate pages:ScorePage}"
+        Route="Score" />
+
+    <ShellContent
+        Title="Defeat"
+        ContentTemplate="{DataTemplate pages:DefeatPage}"
+        Route="Defeat" />
+
+    <ShellContent
+        Title="Win"
+        ContentTemplate="{DataTemplate pages:WinPage}"
+        Route="Win" />
+
+    <ShellContent
+        Title="Credits"
+        ContentTemplate="{DataTemplate pages:CreditsPage}"
+        Route="Credits"/>
+
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate pages:LoginPage}"
+        Route="Login" />
 
 </Shell>
