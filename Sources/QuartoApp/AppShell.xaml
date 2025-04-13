@@ -9,14 +9,19 @@
     Title="QuartoApp">
 
     <ShellContent
-    Title="Accueil"
-    ContentTemplate="{DataTemplate pages:AccueilPage}"
-    Route="Accueil" />
+        Title="Accueil"
+        ContentTemplate="{DataTemplate pages:AccueilPage}"
+        Route="Accueil" />
 
     <ShellContent
         Title="Rules"
         ContentTemplate="{DataTemplate pages:RulesPage}"
         Route="Rules" />
+
+    <ShellContent
+        Title="Game"
+        ContentTemplate="{DataTemplate pages:GamePage}"
+        Route="Game" />
 
     <ShellContent
         Title="Settings"
