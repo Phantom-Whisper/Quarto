@@ -55,10 +55,13 @@
 
         </Grid>
 
-        <HorizontalStackLayout Grid.ColumnSpan="2">
-            <component:CustomButton WidthRequest="200"/>
-            <component:CustomButton WidthRequest="200"/>
-            <component:CustomButton WidthRequest="200"/>
+         <HorizontalStackLayout Grid.ColumnSpan="2" 
+                        HorizontalOptions="End"
+                        VerticalOptions="End"
+                        Margin="50,50,40,50">
+            <component:CustomButton WidthRequest="300"/>
+            <component:CustomButton WidthRequest="300"/>
+            <component:CustomButton WidthRequest="300"/>
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>
