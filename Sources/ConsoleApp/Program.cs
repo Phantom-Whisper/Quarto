@@ -1,4 +1,5 @@
 ﻿using Model;
+using System.IO.Pipelines;
 
 
 Board board = new(4, 4);
@@ -33,4 +34,6 @@ foreach (Piece piece in pieces)
     index++;
 }
 
-
+Console.WriteLine("----------------------------------");
+Piece piecee = new(true, true, true, true);
+Console.WriteLine(piecee.ToString());

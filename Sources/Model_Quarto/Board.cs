@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model
+﻿namespace Model
 {
     public class Board
     {
@@ -41,7 +35,12 @@ namespace Model
         /// <summary>
         /// A grid of <c>Piece</c> making the <c>Board</c>.
         /// </summary>
-        public readonly Piece[,] grid;
+        private readonly Piece[,] grid;
+
+        /// <summary>
+        /// This property contains the status of the grid
+        /// </summary>
+        public Piece[,] Grid => grid;
 
         public int NbCells
         {
@@ -60,7 +59,7 @@ namespace Model
             if (IsEmpty(x, y) && IsOnBoard(x, y))
                 grid[x, y] = piece;
             else
-                throw new InvalidOperationException("The piece cannot be placed in this position.");
+                throw new InvalidOperationException($"The piece cannot be placed in this position ({x},{y}).");
         }
 
         /// <summary>
