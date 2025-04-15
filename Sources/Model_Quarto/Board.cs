@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model
+﻿namespace Model
 {
     public class Board
     {
@@ -15,6 +9,8 @@ namespace Model
         /// <param name="y">Number of cells in the y-axis.</param>
         public Board(int x, int y) 
         {
+            if (x != 4 || y != 4)
+                throw new ArgumentException($"The size of the board cannot be of this size {SizeX}*{SizeY}.");
             SizeX = x;
             SizeY = y;
             grid = new Piece[SizeX, SizeY];
@@ -39,7 +35,17 @@ namespace Model
         /// <summary>
         /// A grid of <c>Piece</c> making the <c>Board</c>.
         /// </summary>
-        public readonly Piece[,] grid;
+        private readonly Piece[,] grid;
+
+        /// <summary>
+        /// This property contains the status of the grid
+        /// </summary>
+        public Piece[,] Grid => grid;
+
+        public int NbCells
+        {
+            get => SizeX * SizeY;
+        }
 
         /// <summary>
         /// Thid method insert a piece at a certain position on the board.
@@ -53,7 +59,7 @@ namespace Model
             if (IsEmpty(x, y) && IsOnBoard(x, y))
                 grid[x, y] = piece;
             else
-                throw new InvalidOperationException("The piece cannot be placed in this position.");
+                throw new InvalidOperationException($"The piece cannot be placed in this position ({x},{y}).");
         }
 
         /// <summary>
@@ -137,8 +143,11 @@ namespace Model
         /// <returns></returns>
         public bool IsEmpty(int x, int y)
         {
-            if (grid[x, y] == null)
-                return true;
+            if (IsOnBoard(x,y))
+            {
+                if (grid[x, y] == null)
+                    return true;
+            }
             return false;
         }
 
@@ -148,7 +157,12 @@ namespace Model
         /// <param name="x">Position on the x-axis</param>
         /// <param name="y">Position on the y-axis</param>
         /// <returns></returns>
-        public Piece GetPiece(int x, int y) => grid[x, y];
+        public Piece GetPiece(int x, int y)
+        {
+            if (!IsOnBoard(x, y))
+                throw new ArgumentException("There's no Piece outside the board.");
+            return grid[x, y];
+        }
 
         /// <summary>
         /// This method tells if the coordinates are within the limits of the board
@@ -158,7 +172,7 @@ namespace Model
         /// <returns></returns>
         public bool IsOnBoard(int x, int y)
         {
-            if (x < 0 || y < 0 || x > SizeX || y > SizeY)
+            if (x < 0 || y < 0 || x >= SizeX || y >= SizeY)
                 return false;
             return true;
         }
