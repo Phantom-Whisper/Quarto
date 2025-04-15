@@ -70,5 +70,20 @@
 
             return piece;
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Piece) return false;
+
+            return this.IsSquare == ((Piece)obj).IsSquare
+                && this.IsLight == ((Piece)obj).IsLight
+                && this.IsBig == ((Piece)obj).IsBig
+                && this.IsFull == ((Piece)obj).IsFull;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(IsSquare, IsLight, IsBig, IsFull);
+        }
     }
 }
