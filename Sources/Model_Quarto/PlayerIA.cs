@@ -6,5 +6,6 @@ namespace Model
         public PlayerIA() : base("IA")
         {
         }
+
     }
 }

@@ -5,7 +5,9 @@
 
         public Player(string pseudo)
         {
-            Pseudo = pseudo ?? throw new ArgumentNullException(nameof(pseudo));
+            Pseudo = !string.IsNullOrWhiteSpace(pseudo)
+                ? pseudo
+                : throw new ArgumentNullException(nameof(pseudo));
             NbWin = 0;
         }
 
