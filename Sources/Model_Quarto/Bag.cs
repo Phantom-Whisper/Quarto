@@ -14,20 +14,27 @@ namespace Model
 
         public void AddPiece(bool isSquare, bool isLight, bool isBig, bool isFull)
         {
-            Baglist.Add(new Piece(isSquare,isLight,isBig,isFull));
+            Piece newPiece = new Piece(isSquare, isLight, isBig, isFull);
+
+            if (!Baglist.Contains(newPiece))
+            {
+                Baglist.Add(newPiece);
+            }
+            else
+            {
+                throw new InvalidOperationException("This piece already exist in the bag.");
+            }
         }
 
         public void RemovePiece(Piece piece)
         {
-            if (Baglist != null)
+            if (Baglist == null || !Baglist.Contains(piece))
             {
-                Baglist.Remove(piece);
+                throw new InvalidOperationException("The piece is not in the bag");
             }
-            else
-            {
-                throw new InvalidOperationException("La pièce n'est pas dans la liste");
-            }
-            
+
+            Baglist.Remove(piece);
+
         }
 
     }
