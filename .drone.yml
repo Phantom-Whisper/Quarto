@@ -14,8 +14,7 @@ steps:
   - name: build
     image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet9-maui
     commands:
-      - cd Sources
-      - dotnet workload restore
+      - cd Sources  
       - dotnet restore Quarto.sln
       - dotnet build Quarto.sln -c Release --no-restore
       - dotnet publish Quarto.sln -c Release --no-restore -o $CI_PROJECT_DIR/build/release
