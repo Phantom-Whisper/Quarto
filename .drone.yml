@@ -28,7 +28,7 @@ steps:
     depends_on: [ build ]
 
   - name: code-inspection
-    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet8
+    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet9
     secrets: [ SECRET_SONAR_LOGIN ]
     environment:
       sonar_host: https://codefirst.iut.uca.fr/sonar/
