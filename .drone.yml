@@ -5,7 +5,8 @@ name: CI
 trigger:
   branch:
     - master 
-    - feat*
+    - Develop
+    - CI/CD
   event:
     - push
 
