@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -186,5 +187,52 @@ namespace Model
             return true;
         }
 
+        public int PositionXPiece(Piece piece)
+        {
+
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    if (GetPiece(i, j) == piece)
+                    {
+                        return i;
+                    }
+                }
+            }
+            throw new InvalidOperationException("Piece not in the board !");
+        }
+
+        public int PositionYPiece(Piece piece)
+        {
+
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    if (GetPiece(i, j) == piece)
+                    {
+                        return j;
+                    }
+                }
+            }
+            throw new InvalidOperationException("Piece not in the board !");
+        }
+
+        public (int x, int y) PositionPiece(Piece piece)
+        {
+
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    if (GetPiece(i, j) == piece)
+                    {
+                        return (i, j);
+                    }
+                }
+            }
+            throw new InvalidOperationException("Piece not in the board !");
+        }
     }
 }
