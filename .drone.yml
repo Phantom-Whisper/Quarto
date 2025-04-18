@@ -12,7 +12,7 @@ trigger:
 
 steps:
   - name: build
-    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet9-maui
+    image: mcr.microsoft.com/dotnet/sdk:9.0
     commands:
       - cd Sources  
       - dotnet restore Quarto.sln
@@ -20,7 +20,7 @@ steps:
       - dotnet publish Quarto.sln -c Release --no-restore -o $CI_PROJECT_DIR/build/release
   
   - name: tests
-    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet9-maui
+    image: mcr.microsoft.com/dotnet/sdk:9.0
     commands:
       - cd Sources/
       - dotnet restore Quarto.sln
