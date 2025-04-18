@@ -14,7 +14,8 @@ steps:
   - name: build
     image: mcr.microsoft.com/dotnet/sdk:9.0
     commands:
-      - cd Sources  
+      - cd Sources
+      - dotnet workload restore        
       - dotnet restore Quarto.sln
       - dotnet build Quarto.sln -c Release --no-restore
       - dotnet publish Quarto.sln -c Release --no-restore -o $CI_PROJECT_DIR/build/release
@@ -38,7 +39,6 @@ steps:
       coverage_exclusions: "TestModel/**"
     commands:
       - cd Sources/
-      - dotnet workload restore
       - dotnet restore Quarto.sln
       - dotnet sonarscanner begin /k:$${project_key} /d:sonar.host.url=$${sonar_host} /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions=$${coverage_exclusions} /d:sonar.login=$${sonar_token} 
       - dotnet build Quarto.sln -c Release --no-restore
