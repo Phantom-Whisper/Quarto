@@ -42,12 +42,12 @@ namespace Model
         public readonly Piece[,] grid;
 
         /// <summary>
-        /// Thid method insert a piece at a certain position on the board.
+        /// This method insert a <c>Piece</c> at a certain position on the <c>Board</c>.
         /// </summary>
         /// <param name="piece"></param>
         /// <param name="x">Position on the x-axis.</param>
         /// <param name="y">Position on the y-axis.</param>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="InvalidOperationException"> when the <c>Piece</c> can't be placed in the position </exception>
         public void InsertPiece(Piece piece, int x, int y)
         {
             if (IsEmpty(x, y) && IsOnBoard(x, y))
@@ -134,7 +134,7 @@ namespace Model
         /// </summary>
         /// <param name="x">Position on the x-axis</param>
         /// <param name="y">Position on the y-axis</param>
-        /// <returns></returns>
+        /// <returns> a boolean : true = the <c>Board</c> is empty and false = the <c>Board</c> is not empty </returns>
         public bool IsEmpty(int x, int y)
         {
             if (grid[x, y] == null)
@@ -143,19 +143,19 @@ namespace Model
         }
 
         /// <summary>
-        /// This method returns a piece at a specific position on the board
+        /// This method returns a <c>Piece</c> at a specific position on the <c>Board</c>
         /// </summary>
         /// <param name="x">Position on the x-axis</param>
         /// <param name="y">Position on the y-axis</param>
-        /// <returns></returns>
+        /// <returns> piece wanted </returns>
         public Piece GetPiece(int x, int y) => grid[x, y];
 
         /// <summary>
-        /// This method tells if the coordinates are within the limits of the board
+        /// This method tells if the coordinates are within the limits of the <c>Board</c>
         /// </summary>
         /// <param name="x">Position on the x-axis</param>
         /// <param name="y">Position on the y-axis</param>
-        /// <returns></returns>
+        /// <returns> boolean : true = is on the board and false = is out of the board </returns>
         public bool IsOnBoard(int x, int y)
         {
             if (x < 0 || y < 0 || x > SizeX || y > SizeY)
@@ -164,7 +164,7 @@ namespace Model
         }
 
         /// <summary>
-        /// This method removes the board of all the <c>pieces</c> on it
+        /// This method removes the <c>Board</c> of all the <c>Pieces</c> on it
         /// </summary>
         public void ClearBoard()
         {
