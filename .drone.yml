@@ -15,9 +15,9 @@ steps:
     image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet9-maui
     commands:
       - cd Sources/
-      - dotnet restore Quarto-CI-CI.sln
-      - dotnet build Quarto-CI-CI.sln -c Release --no-restore
-      - dotnet publish Quarto-CI-CI.sln -c Release --no-restore -o $CI_PROJECT_DIR/build/release
+      - dotnet restore Quarto-CI.sln
+      - dotnet build Quarto-CI.sln -c Release --no-restore
+      - dotnet publish Quarto-CI.sln -c Release --no-restore -o $CI_PROJECT_DIR/build/release
   
   - name: tests
     image: mcr.microsoft.com/dotnet/sdk:9.0
