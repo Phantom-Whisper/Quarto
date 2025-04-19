@@ -15,16 +15,16 @@ steps:
     image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet9-maui
     commands:
       - cd Sources/
-      - dotnet restore Quarto.sln
-      - dotnet build Quarto.sln -c Release --no-restore
-      - dotnet publish Quarto.sln -c Release --no-restore -o $CI_PROJECT_DIR/build/release
+      - dotnet restore Quarto-CI-CI.sln
+      - dotnet build Quarto-CI-CI.sln -c Release --no-restore
+      - dotnet publish Quarto-CI-CI.sln -c Release --no-restore -o $CI_PROJECT_DIR/build/release
   
   - name: tests
     image: mcr.microsoft.com/dotnet/sdk:9.0
     commands:
       - cd Sources/
-      - dotnet restore Quarto.sln
-      - dotnet test Quarto.sln --no-restore
+      - dotnet restore Quarto-CI.sln
+      - dotnet test Quarto-CI.sln --no-restore
     depends_on: [ build ]
 
   - name: code-inspection
@@ -34,16 +34,16 @@ steps:
       sonar_host: https://codefirst.iut.uca.fr/sonar/
       sonar_token:
         from_secret: SECRET_SONAR_LOGIN
-      project_key: Quarto
+      project_key: Quarto-CI
       coverage_exclusions: "TestModel/**"
     commands:
       - cd Sources/
-      - dotnet restore Quarto.sln
+      - dotnet restore Quarto-CI.sln
       - dotnet sonarscanner begin /k:$${project_key} /d:sonar.host.url=$${sonar_host} /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions=$${coverage_exclusions} /d:sonar.login=$${sonar_token} 
-      - dotnet build Quarto.sln -c Release --no-restore
-      - dotnet test Quarto.sln --logger trx --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect "XPlat Code Coverage"
+      - dotnet build Quarto-CI.sln -c Release --no-restore
+      - dotnet test Quarto-CI.sln --logger trx --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect "XPlat Code Coverage"
       - reportgenerator -reports:"**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
-      - dotnet publish Quarto.sln -c Release --no-restore -o $CI_PROJECT_DIR/build/release
+      - dotnet publish Quarto-CI.sln -c Release --no-restore -o $CI_PROJECT_DIR/build/release
       - dotnet sonarscanner end /d:sonar.login=$${sonar_token}
     depends_on: [ build ]
   
