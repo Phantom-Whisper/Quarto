@@ -279,10 +279,19 @@
             }
             return false;
         }
-        /*
-        public bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
+
+        /*public bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
         {
-            // TO DO !
+            (int x, int y) tP1 = board.PositionPiece(p1);
+            (int x, int y) tP2 = board.PositionPiece(p2);
+            (int x, int y) tP3 = board.PositionPiece(p3);
+            (int x, int y) tP4 = board.PositionPiece(p4);
+            List<int> list = new List<int>();
+
+            for (int i = 1; i < 5; i++)
+            {
+                list.Append();
+            }
         }*/
 
         public bool IsSameShape(Piece p1, Piece p2, Piece p3, Piece p4)
