@@ -12,7 +12,7 @@ trigger:
 
 steps:
   - name: build
-    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet9-maui
+    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet9
     commands:
       - cd Sources/
       - dotnet restore Quarto-CI.sln
