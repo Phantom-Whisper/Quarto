@@ -12,7 +12,7 @@ trigger:
 
 steps:
   - name: build
-    image: mcr.microsoft.com/dotnet/sdk:9.0
+    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet9-maui
     commands:
       - cd Sources/
       - dotnet restore Quarto.sln
