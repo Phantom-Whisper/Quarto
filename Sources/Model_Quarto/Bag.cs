@@ -28,7 +28,7 @@ namespace Model
 
         public void RemovePiece(Piece piece)
         {
-            ArgumentNullException.ThrowIfNull(piece, nameof(piece));
+            ArgumentNullException.ThrowIfNull(piece);
 
             if (!Baglist.Contains(piece))
             {
