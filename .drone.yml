@@ -6,7 +6,8 @@ trigger:
   branch:
     - master 
     - Develop
-    - CI/CD
+    - Dev/*
+    - Fix/*
   event:
     - push
 

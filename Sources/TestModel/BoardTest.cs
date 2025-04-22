@@ -6,6 +6,8 @@ namespace TestModel
     {
         readonly Board board = new(4, 4);
         readonly Piece piece = new(true, true, true, true);
+        readonly Piece piece2 = new(true, false, true, true);
+
 
         [Theory]
         [InlineData(4,4,4,4,16)]
@@ -53,6 +55,8 @@ namespace TestModel
             board.InsertPiece(piece, x, y);
 
             Assert.Equal(board.GetPiece(x,y), piece);
+
+            board.ClearBoard();
         }
 
         [Theory]
@@ -69,6 +73,8 @@ namespace TestModel
         {
             board.InsertPiece(piece, 2, 2);
             Assert.Throws<InvalidOperationException>(() => { board.InsertPiece(piece, x, y); });
+
+            board.ClearBoard();
         }
 
         [Theory]
@@ -109,29 +115,58 @@ namespace TestModel
             board.InsertPiece(piece, 2, 2);
 
             Assert.Equal(expectedBool, board.IsEmpty(x,y));
+            
+            board.ClearBoard();
         }
 
         [Fact]
-        public void ToString_ShouldIncludeAllExpectedFormatting()
+        public void ToString_ShouldHandleEmptyGrid()
+        {
+            var output = board.ToString();
+
+            Assert.Contains("x/y", output);
+            Assert.Contains("  0 |", output);
+            Assert.Contains("  1 |", output);
+            Assert.Contains(" 0  |", output);
+            Assert.Contains(" 1  |", output);
+            Assert.DoesNotContain("null", output); // pas de null direct
+        }
+
+        [Fact]
+        public void ToString_ShouldDisplaySinglePiece()
+        {
+            board.InsertPiece(piece,1, 1);
+            var output = board.ToString();
+
+            Assert.Contains("Square Light Big Full", output);
+
+            board.ClearBoard();
+        }
+
+        [Fact]
+        public void ToString_ShouldDisplayMultiplePiecesCorrectly()
         {
             board.InsertPiece(piece, 0, 0);
+            board.InsertPiece(piece2, 1, 1);
 
-            var result = board.ToString();
+            var output = board.ToString();
 
-            Assert.Contains("x/y", result);
-            Assert.Contains(" 0 ", result);
-            Assert.Contains(" 3 ", result);
+            Assert.Contains("Square Light Big Full", output);
+            Assert.Contains("Square Dark Big Full", output);
 
-            Assert.Contains("--------", result);
+            board.ClearBoard();
+        }
 
-            Assert.Contains("Square Light Big Full", result);
+        [Fact]
+        public void ToString_ShouldFormatHeadersAndSeparatorsCorrectly()
+        {
+            var output = board.ToString();
 
-            Assert.Contains("     |", result);
-
-            
-            Assert.Contains("0   |", result); 
-            Assert.Contains("1   |", result); 
-            Assert.Contains("3   |", result); 
+            Assert.Contains("x/y |", output);
+            Assert.Contains("---", output); // separator lines
+            Assert.Contains("  0 |", output);
+            Assert.Contains("  1 |", output);
+            Assert.Contains("  2 |", output);
         }
 
         [Theory]
@@ -155,6 +190,8 @@ namespace TestModel
         {
             board.InsertPiece(piece, x, y);
             Assert.Equal(piece, board.GetPiece(x, y));
+
+            board.ClearBoard();
         }
 
         [Theory]

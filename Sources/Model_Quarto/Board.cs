@@ -1,4 +1,6 @@
-﻿namespace Model
+﻿using System.Text;
+
+namespace Model
 {
     public class Board
     {
@@ -70,69 +72,43 @@
         /// </returns>
         public override string ToString()
         {
-            string str = "";
+            var sb = new StringBuilder();
             int z = 0, x = 0;
+
             for (int i = -1; i < SizeY; i++)
             {
                 if (i == -1)
                 {
-                    str += "x/y";
+                    sb.Append("x/y | ");
                 }
                 else
                 {
-                    if (i < 10)
-                    {
-                        str += "  " + i + "  ";
-                    }
-                    else
-                    {
-                        str += "  " + i + " ";
-                    }
+                    sb.AppendFormat("{0,4} | ", i); 
                 }
-                str += " | ";
             }
-            str += "\n";
-            for (int y = 0; y < SizeX; y++)
-            {
-                str += "--------";
-            }
-            str += "\n";
-            str += z + "   |";
+            sb.AppendLine();
+
+            string horizontalSeparator = new string('-', (SizeY + 1) * 7); 
+            sb.AppendLine(horizontalSeparator);
+
+            sb.AppendFormat("{0,2}  |", z); 
+
             foreach (var piece in grid)
             {
                 if (x == SizeX)
                 {
                     x = 0;
-                    str += "\n";
-                    for (int y = 0; y < SizeX; y++)
-                    {
-                        str += "--------";
-                    }
-                    str += "\n";
+                    sb.AppendLine();
+                    sb.AppendLine(horizontalSeparator);
                     z++;
-                    if (z < 10)
-                    {
-                        str += z + "   |";
-                    }
-                    else
-                    {
-                        str += z + "  |";
-                    }
+                    sb.AppendFormat("{0,2}  |", z);
                 }
 
-                if (piece != null)
-                {
-                    str += piece.ToString();
-                }
-                else
-                {
-                    str += "     ";
-                }
-
-                str += " | ";
+                sb.AppendFormat("{0,5} |", piece?.ToString() ?? ""); 
                 x++;
             }
-            return str;
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -143,11 +119,8 @@
         /// <returns></returns>
         public bool IsEmpty(int x, int y)
         {
-            if (IsOnBoard(x,y))
-            {
-                if (grid[x, y] == null)
+            if (IsOnBoard(x,y) && grid[x, y] == null)
                     return true;
-            }
             return false;
         }
 

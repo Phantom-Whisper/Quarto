@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TestModel
 {
-    public class TestBag
+    public class BagTest
     {
 
         [Fact]
@@ -76,7 +76,7 @@ namespace TestModel
         [Fact]
         public void TestRemovePiece_Null()
         {
-            Bag bag = new Bag();
+            Bag? bag = new Bag();
             bag = null;
 
             Assert.Null(bag);
