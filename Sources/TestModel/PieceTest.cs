@@ -4,12 +4,6 @@ namespace TestModel
 {
     public class PieceTest
     {
-        public static TheoryData<Piece, object, bool> EqualsTestData => new()
-        {
-            { new Piece(true, true, false, true), new Board(4, 4), false },
-            { new Piece(true, true, false, true), new Piece(true, true, false, true), true }
-        };
-
         [Theory]
         [InlineData(true, true, true, true)]
         [InlineData(true, true, true, false)]
@@ -60,12 +54,31 @@ namespace TestModel
             Assert.Equal(piece.ToString(), comparable);
         }
 
-        [Theory]
-        [MemberData(nameof(EqualsTestData))]
-        public void TestIsEqualsObject(Piece obj1, object obj2, bool expectedResult)
+        [Fact]
+        public void Equals_ReturnsFalse_WhenObjectIsNotPiece()
         {
-            var result = obj1.Equals(obj2);
-            Assert.Equal(expectedResult, result);
+            var piece = new Piece(false, true, true, false);
+            var notPiece = "Not a piece";
+
+            Assert.False(piece.Equals(notPiece));
+        }
+
+        [Fact]
+        public void Equals_ReturnsFalse_WhenPropertiesDiffer()
+        {
+            var piece1 = new Piece(true, true, true, true);
+            var piece2 = new Piece(false, false, false, false);
+
+            Assert.False(piece1.Equals(piece2));
+        }
+
+        [Fact]
+        public void Equals_ReturnsTrue_WhenAllPropertiesMatch()
+        {
+            var piece1 = new Piece(true, true, true, true);
+            var piece2 = new Piece(true, true, true, true);
+
+            Assert.True(piece1.Equals(piece2));
         }
 
         [Theory]
