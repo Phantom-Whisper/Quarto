@@ -28,7 +28,7 @@ namespace Model
 
         public void RemovePiece(Piece piece)
         {
-            if (Baglist == null || !Baglist.Contains(piece))
+            if (this == null || !Baglist.Contains(piece))
             {
                 throw new InvalidOperationException("The piece is not in the bag");
             }
