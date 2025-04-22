@@ -1,6 +1,7 @@
 ﻿using Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,6 +71,15 @@ namespace TestModel
             Assert.Equal(isLight, addPiece.IsLight);
             Assert.Equal(isBig, addPiece.IsBig);
             Assert.Equal(isFull, addPiece.IsFull);
+        }
+
+        [Fact]
+        public void TestRemovePiece_Null()
+        {
+            Bag bag = new Bag();
+            bag = null;
+
+            Assert.Null(bag);
         }
 
 
