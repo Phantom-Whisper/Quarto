@@ -4,7 +4,7 @@ namespace TestModel
 {
     public class PieceTest
     {
-        public static TheoryData<object, object, bool> EqualsTestData => new()        
+        public static TheoryData<Piece, object, bool> EqualsTestData => new()
         {
             { new Piece(true, true, false, true), new Board(4, 4), false },
             { new Piece(true, true, false, true), new Piece(true, true, false, true), true }
@@ -62,11 +62,10 @@ namespace TestModel
 
         [Theory]
         [MemberData(nameof(EqualsTestData))]
-        public void TestIsEqualsObject(object obj1, object obj2, bool expectedResult)
-        {                       
+        public void TestIsEqualsObject(Piece obj1, object obj2, bool expectedResult)
+        {
             var result = obj1.Equals(obj2);
-
-            Assert.Equal(result, expectedResult);
+            Assert.Equal(expectedResult, result);
         }
 
         [Theory]
