@@ -4,6 +4,13 @@ namespace TestModel
 {
     public class PieceTest
     {
+        public static IEnumerable<object[]> EqualsTestData =>
+        new List<object[]>
+        {
+            new object[] { new Piece(true, true, false, true), new Board(4, 4), false },
+            new object[] { new Piece(true, true, false, true), new Piece(true, true, false, true), true }
+        };
+
         [Theory]
         [InlineData(true, true, true, true)]
         [InlineData(true, true, true, false)]
@@ -52,6 +59,40 @@ namespace TestModel
         {
             Piece piece = new Piece(isSquare, isLight, isBig, isFull);
             Assert.Equal(piece.ToString(), comparable);
+        }
+
+        [Theory]
+        [MemberData(nameof(EqualsTestData))]
+        public void TestIsEqualsObject(object obj1, object obj2, bool expectedResult)
+        {                       
+            var result = obj1.Equals(obj2);
+
+            Assert.Equal(result, expectedResult);
+        }
+
+        [Theory]
+        [InlineData(true, true, true, true)]
+        [InlineData(true, true, true, false)]
+        [InlineData(true, true, false, true)]
+        [InlineData(true, true, false, false)]
+        [InlineData(true, false, true, true)]
+        [InlineData(true, false, true, false)]
+        [InlineData(true, false, false, true)]
+        [InlineData(true, false, false, false)]
+        [InlineData(false, true, true, true)]
+        [InlineData(false, true, true, false)]
+        [InlineData(false, true, false, true)]
+        [InlineData(false, true, false, false)]
+        [InlineData(false, false, true, true)]
+        [InlineData(false, false, true, false)]
+        [InlineData(false, false, false, true)]
+        [InlineData(false, false, false, false)]
+        public void TestGetHashCodePiece(bool isSquare, bool isLight, bool isBig, bool isFull)
+        {
+            Piece piece = new Piece(isSquare, isLight, isBig, isFull);
+            var hash = piece.GetHashCode();
+
+            Assert.Equal(hash, piece.GetHashCode());
         }
     }
 }
