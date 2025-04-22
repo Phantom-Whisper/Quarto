@@ -28,10 +28,7 @@ namespace Model
 
         public void RemovePiece(Piece piece)
         {
-            if (piece == null)
-            {
-                throw new ArgumentNullException(nameof(piece));
-            }
+            ArgumentNullException.ThrowIfNull(piece, nameof(piece));
 
             if (!Baglist.Contains(piece))
             {
