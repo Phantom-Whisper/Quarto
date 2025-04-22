@@ -28,13 +28,14 @@ namespace Model
 
         public void RemovePiece(Piece piece)
         {
-            if (this == null || !Baglist.Contains(piece))
+            ArgumentNullException.ThrowIfNull(piece);
+
+            if (!Baglist.Contains(piece))
             {
                 throw new InvalidOperationException("The piece is not in the bag");
             }
 
             Baglist.Remove(piece);
-
         }
 
     }

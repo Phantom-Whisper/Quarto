@@ -22,8 +22,10 @@ new Piece(false, false, true, true),
 new Piece(false, false, false, false),
 new Piece(false, false, false, true)];
 
-
-board.InsertPiece(pieces[5], 2,2);
+Console.WriteLine("----------------------------------");
+Piece piecee = new(true,false, true, true);
+Console.WriteLine(piecee.ToString());
+board.InsertPiece(piecee, 1, 1);
 
 Console.WriteLine(board.ToString());
 int index = 0;
@@ -34,6 +36,3 @@ foreach (Piece piece in pieces)
     index++;
 }
 
-Console.WriteLine("----------------------------------");
-Piece piecee = new(true, true, true, true);
-Console.WriteLine(piecee.ToString());

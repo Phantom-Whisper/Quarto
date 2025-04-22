@@ -53,5 +53,57 @@ namespace TestModel
             Piece piece = new Piece(isSquare, isLight, isBig, isFull);
             Assert.Equal(piece.ToString(), comparable);
         }
+
+        [Fact]
+        public void Equals_ReturnsFalse_WhenObjectIsNotPiece()
+        {
+            var piece = new Piece(false, true, true, false);
+            var notPiece = "Not a piece";
+
+            Assert.False(piece.Equals(notPiece));
+        }
+
+        [Fact]
+        public void Equals_ReturnsFalse_WhenPropertiesDiffer()
+        {
+            var piece1 = new Piece(true, true, true, true);
+            var piece2 = new Piece(false, false, false, false);
+
+            Assert.False(piece1.Equals(piece2));
+        }
+
+        [Fact]
+        public void Equals_ReturnsTrue_WhenAllPropertiesMatch()
+        {
+            var piece1 = new Piece(true, true, true, true);
+            var piece2 = new Piece(true, true, true, true);
+
+            Assert.True(piece1.Equals(piece2));
+        }
+
+        [Theory]
+        [InlineData(true, true, true, true)]
+        [InlineData(true, true, true, false)]
+        [InlineData(true, true, false, true)]
+        [InlineData(true, true, false, false)]
+        [InlineData(true, false, true, true)]
+        [InlineData(true, false, true, false)]
+        [InlineData(true, false, false, true)]
+        [InlineData(true, false, false, false)]
+        [InlineData(false, true, true, true)]
+        [InlineData(false, true, true, false)]
+        [InlineData(false, true, false, true)]
+        [InlineData(false, true, false, false)]
+        [InlineData(false, false, true, true)]
+        [InlineData(false, false, true, false)]
+        [InlineData(false, false, false, true)]
+        [InlineData(false, false, false, false)]
+        public void TestGetHashCodePiece(bool isSquare, bool isLight, bool isBig, bool isFull)
+        {
+            Piece piece = new Piece(isSquare, isLight, isBig, isFull);
+            var hash = piece.GetHashCode();
+
+            Assert.Equal(hash, piece.GetHashCode());
+        }
     }
 }
