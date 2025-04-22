@@ -4,11 +4,10 @@ namespace TestModel
 {
     public class PieceTest
     {
-        public static IEnumerable<object[]> EqualsTestData =>
-        new List<object[]>
+        public static TheoryData<object, object, bool> EqualsTestData => new()        
         {
-            new object[] { new Piece(true, true, false, true), new Board(4, 4), false },
-            new object[] { new Piece(true, true, false, true), new Piece(true, true, false, true), true }
+            { new Piece(true, true, false, true), new Board(4, 4), false },
+            { new Piece(true, true, false, true), new Piece(true, true, false, true), true }
         };
 
         [Theory]
