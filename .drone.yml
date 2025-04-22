@@ -3,11 +3,6 @@ type: docker
 name: CI
 
 trigger:
-  branch:
-    - master 
-    - Develop
-    - Dev*
-    - Fix*
   event:
     - push
 
