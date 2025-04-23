@@ -1,8 +1,7 @@
 ﻿namespace Model
 {
-    public class Player : IEquatable<Player>
+    public abstract class Player : IEquatable<Player>
     {
-
         public Player(string pseudo)
         {
             Pseudo = pseudo ?? throw new ArgumentNullException(nameof(pseudo));
@@ -15,16 +14,10 @@
             init;
         }
 
-
         public int NbWin
         {
             get;
             set;
-        }
-
-        public void AddWin()
-        {
-            NbWin++;
         }
 
         /// <summary>
