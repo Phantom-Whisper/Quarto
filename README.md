@@ -20,6 +20,7 @@ Quarto est un jeu de société stratégique au tour par tour, le but est d'align
 ## Documentation
 Quelques liens utiles :
 * [Description de l'architecture](https://codefirst.iut.uca.fr/git/gabriel.coudel-koumba/Quarto/wiki/Jalon-2-:-Description-de-l%27architecture)
+* [Vidéo promotionnelle]()
 ## Prise en main
 Pour l'instant, vous n'avez besoin que d'un IDE pour créer des applications modernes pour Windows (comme Visual Studio Community).
 
@@ -28,6 +29,7 @@ Pour l'instant, vous n'avez besoin que d'un IDE pour créer des applications mod
 ✅ Classes (présente dans `Model`) <br>
 🔜 Interfaces et leurs implémentations <br>
 🔜 Application fonctionnelle en ligne de code <br>
+
 ## 🧪 Exécution des tests
 Pour exécuter les tests, il suffit de lancer Visual Studio et d'utiliser l'explorateur de tests 😜
 ## Auteurs
