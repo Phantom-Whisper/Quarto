@@ -29,7 +29,7 @@ Pour l'instant, vous n'avez besoin que d'un IDE pour créer des applications mod
 ✅ Classes (présente dans `Model`) <br>
 🔜 Interfaces et leurs implémentations <br>
 🔜 Application fonctionnelle en ligne de code <br>
-
+🔜 Stub IA permettant de jouer une partie en solitaire 
 ## 🧪 Exécution des tests
 Pour exécuter les tests, il suffit de lancer Visual Studio et d'utiliser l'explorateur de tests 😜
 ## Auteurs
