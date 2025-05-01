@@ -19,7 +19,7 @@ namespace Model
 
         public void AddPiece(bool isSquare, bool isLight, bool isBig, bool isFull)
         {
-            Baglist.Add(new Piece(isSquare,isLight,isBig,isFull));
+            Baglist.Add(new Piece(isSquare, isLight, isBig, isFull));
         }
 
         public void RemovePiece(Piece piece)
@@ -32,8 +32,24 @@ namespace Model
             {
                 throw new InvalidOperationException("La pièce n'est pas dans la liste");
             }
-            
+
         }
 
+        public Piece GetPiece(int index)
+        {
+            if (IsEmpty())
+            {
+                throw new InvalidOperationException("The bag is empty.");
+            }
+
+            if (index < 0 || index >= Baglist.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
+            }
+
+            Piece piece = Baglist[index];
+            Baglist.RemoveAt(index);
+            return piece;
+        }
     }
 }

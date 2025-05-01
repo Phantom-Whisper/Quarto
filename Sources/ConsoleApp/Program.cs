@@ -4,8 +4,9 @@
 Board board = new(4, 4);
 
 Piece piece = new Piece(true, true, true, false);
-
+var ia = new StubAI();
 board.InsertPiece(piece, 2,2);
+var list = ia.GetAvailablePositions(board);
 
 //Dictionary<string, int> dP1 =  board.PositionPiece(piece);
 //Console.WriteLine(dP1["y"]);
@@ -13,7 +14,12 @@ board.InsertPiece(piece, 2,2);
 PlayerIA playerIA = new();
 PlayerHumain playerHumain = new("joueur");
 var win = playerIA.NbWin;
+Console.WriteLine("-----------------------------------------------");
 Console.WriteLine(playerIA.Pseudo);
 Console.WriteLine(win);
 Console.WriteLine(playerHumain.Pseudo);
 Console.WriteLine(playerHumain.NbWin.ToString());
+Console.WriteLine("-----------------------------------------------");
+foreach(var item in list) { Console.WriteLine(item); }
+ia.Move(board, piece);
+Console.WriteLine(board.ToString());
