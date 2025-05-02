@@ -19,6 +19,11 @@ namespace Model
         /// </summary>
         public ObservableCollection<Piece> Baglist { get; private set; }
 
+        public bool IsEmpty()
+        {
+            return !Baglist.Any();
+        }
+
         /// <summary>
         /// This method create and add a <c>Piece</c> to the <c>Bag</c>.
         /// </summary>

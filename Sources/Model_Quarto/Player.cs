@@ -1,6 +1,6 @@
 ﻿namespace Model
 {
-    public class Player : IEquatable<Player>
+    public abstract class Player : IEquatable<Player>
     {
         /// <summary>
         /// This is the <c>Ctor</c> of the Class <c>Player</c>.
