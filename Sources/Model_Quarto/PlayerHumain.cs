@@ -2,9 +2,6 @@
 {
     public class PlayerHumain(string pseudo) : Player(pseudo)
     {
-        public void AddWin()
-        {
-            NbWin++;
-        }
+        public void AddWin() => NbWin++;
     }
 }

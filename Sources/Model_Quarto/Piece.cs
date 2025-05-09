@@ -71,19 +71,40 @@
             return piece;
         }
 
+        /// <summary>
+        /// This method tells if two <c>Piece</c> are the same.
+        /// </summary>
+        /// <param name="other">The other <c>Piece</c> we want to compare</param>
+        /// <returns>
+        /// If they're the same <c>true</c> or not <c>false</c>
+        /// </returns>
+        public bool Equals(Piece? other) => other != null
+            && IsSquare == other.IsSquare && IsLight == other.IsLight &&
+            IsBig == other.IsBig && IsFull == other.IsFull;
+
+        /// <summary>
+        /// This method tells if two objects are the same.
+        /// </summary>
+        /// <param name="obj">THe other object we want to compare</param>
+        /// <returns>
+        /// If they're the same <c>true</c> or not <c>false</c>
+        /// </returns>
         public override bool Equals(object? obj)
         {
-            if (obj is not Piece) return false;
-
-            return this.IsSquare == ((Piece)obj).IsSquare
-                && this.IsLight == ((Piece)obj).IsLight
-                && this.IsBig == ((Piece)obj).IsBig
-                && this.IsFull == ((Piece)obj).IsFull;
+            if (ReferenceEquals(obj, null)) return false;
+            if (ReferenceEquals(obj, this)) return true;
+            if (!obj.GetType().Equals(typeof(Piece))) return false;
+            return Equals(obj as Piece);
         }
 
+
+        /// <summary>
+        /// This method gives us the hashcode of a <c>Piece</c>
+        /// </summary>
+        /// <returns>The hash of the <c>Piece</c></returns>
         public override int GetHashCode()
         {
-            return HashCode.Combine(IsSquare, IsLight, IsBig, IsFull);
+            return IsSquare.GetHashCode() + IsLight.GetHashCode() + IsBig.GetHashCode() + IsFull.GetHashCode();
         }
     }
 }
