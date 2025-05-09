@@ -7,7 +7,7 @@
         /// </summary>
         /// <param name="pseudo"> name of the player </param>
         /// <exception cref="ArgumentNullException"> if the string is null</exception>
-        public Player(string pseudo)
+        protected Player(string pseudo)
         {
             Pseudo = !string.IsNullOrWhiteSpace(pseudo)
                 ? pseudo

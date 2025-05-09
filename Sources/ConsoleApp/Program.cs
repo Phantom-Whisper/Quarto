@@ -6,8 +6,6 @@ Board board = new(4, 4);
 Piece piece = new Piece(true, true, true, false);
 board.InsertPiece(piece, 2,2);
 
-//Dictionary<string, int> dP1 =  board.PositionPiece(piece);
-//Console.WriteLine(dP1["y"]);
 
 PlayerIA playerIA = new();
 PlayerHumain playerHumain = new("joueur");
@@ -26,11 +24,5 @@ Console.WriteLine(piecee.ToString());
 board.InsertPiece(piecee, 1, 1);
 
 Console.WriteLine(board.ToString());
-int index = 0;
-/*foreach (Piece pieceE in pieces)
-{
-    Console.Write($"{index}. ");
-    Console.WriteLine(pieceE.ToString());
-    index++;
-}*/
+
 
