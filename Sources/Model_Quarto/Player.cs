@@ -34,14 +34,6 @@
         }
 
         /// <summary>
-        /// This method increment the number of games won
-        /// </summary>
-        public void AddWin()
-        {
-            NbWin++;
-        }
-
-        /// <summary>
         /// This method tells if two <c>Player</c> are the same.
         /// </summary>
         /// <param name="other"></param>

@@ -91,7 +91,7 @@
         /// </returns>
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(obj, null)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(obj, this)) return true;
             if (!obj.GetType().Equals(typeof(Piece))) return false;
             return Equals(obj as Piece);

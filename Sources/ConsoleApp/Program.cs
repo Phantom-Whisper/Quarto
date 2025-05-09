@@ -1,5 +1,4 @@
 ﻿using Model;
-using System.IO.Pipelines;
 
 
 Board board = new(4, 4);
@@ -31,10 +30,10 @@ board.InsertPiece(piecee, 1, 1);
 
 Console.WriteLine(board.ToString());
 int index = 0;
-foreach (Piece piece in pieces)
+/*foreach (Piece pieceE in pieces)
 {
     Console.Write($"{index}. ");
-    Console.WriteLine(piece.ToString());
+    Console.WriteLine(pieceE.ToString());
     index++;
-}
+}*/
 

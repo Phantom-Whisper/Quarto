@@ -38,8 +38,8 @@ namespace Model
 
         private void CreatePlayers(string nom1, string nom2)
         {
-            players[0] = new Player(nom1);
-            players[1] = new Player(nom2);
+            //players[0] = new Player(nom1);
+            //players[1] = new Player(nom2);
         }
     }
 }

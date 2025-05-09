@@ -34,7 +34,7 @@ namespace Model
         public void AddPiece(bool isSquare, bool isLight, bool isBig, bool isFull)
         {
             Baglist.Add(new Piece(isSquare, isLight, isBig, isFull));
-            Piece newPiece = new Piece(isSquare, isLight, isBig, isFull);
+            Piece newPiece = new(isSquare, isLight, isBig, isFull);
 
             if (!Baglist.Contains(newPiece))
             {
@@ -78,12 +78,8 @@ namespace Model
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
             }
-
-            Baglist.Remove(piece);
-        }
-
             Piece piece = Baglist[index];
-            Baglist.RemoveAt(index);
+            Baglist.Remove(piece);
             return piece;
         }
     }
