@@ -287,14 +287,22 @@
             bool right = false;
             bool under = false;
             bool diagonal = false;
-            list.Append(board.PositionPiece(p1));
-            list.Append(board.PositionPiece(p2));
-            list.Append(board.PositionPiece(p3));
-            list.Append(board.PositionPiece(p4));
-
-            for (int i = 0; i < 5; i++) 
+            try
             {
-                for (int j = 0; j < 5; j++)
+                list.Append(board.PositionPiece(p1));
+                list.Append(board.PositionPiece(p2));
+                list.Append(board.PositionPiece(p3));
+                list.Append(board.PositionPiece(p4));
+            }
+            catch (InvalidOperationException e)
+            {
+                return false;
+            }
+            
+
+            for (int i = 0; i < 4; i++) 
+            {
+                for (int j = 0; j < 4; j++)
                 {
                     if (list[i].x < list[j].x && list[i].y < list[j].y)
                     {
@@ -308,7 +316,7 @@
                 return false;
             }
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 if (min.x == list[i].x - 1 && min.y == list[i].y-1)
                 {
