@@ -2,22 +2,41 @@
 {
     public abstract class Player : IEquatable<Player>
     {
+        /// <summary>
+        /// This is the <c>Ctor</c> of the Class <c>Player</c>.
+        /// </summary>
+        /// <param name="pseudo"> name of the player </param>
+        /// <exception cref="ArgumentNullException"> if the string is null</exception>
         public Player(string pseudo)
         {
             Pseudo = pseudo ?? throw new ArgumentNullException(nameof(pseudo));
             NbWin = 0;
         }
 
+        /// <summary>
+        /// This property contains the name of the <c>Player</c>
+        /// </summary>
         public string Pseudo
         {
             get;
             init;
         }
 
+        /// <summary>
+        /// This property contains the number of games won by the <c>Player</c>
+        /// </summary>
         public int NbWin
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// This method increment the number of games won
+        /// </summary>
+        public void AddWin()
+        {
+            NbWin++;
         }
 
         /// <summary>

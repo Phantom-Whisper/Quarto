@@ -5,10 +5,10 @@
         /// <summary>
         /// This is the <c>Ctor</c> of the Class <c>Piece</c>.
         /// </summary>
-        /// <param name="isSquare">Tells if the piece is squared or round.</param>
-        /// <param name="isLight">Tells if the piece is light or dark.</param>
-        /// <param name="isBig">Tells if the piece is big or small.</param>
-        /// <param name="isFull">Tells if the piece is full or hollow.</param>
+        /// <param name="isSquare"> boolean of the shape : true = Square and false = Round </param>
+        /// <param name="isLight"> boolean of the color : true = Light and false = Dark </param>
+        /// <param name="isBig"> boolean of the size : true = Big and false = Small </param>
+        /// <param name="isFull"> boolean of the state : true = Full and false = Hollow </param>
         public Piece(bool isSquare, bool isLight, bool isBig, bool isFull)
         {
             IsSquare = isSquare;
@@ -18,7 +18,7 @@
         }
 
         /// <summary>
-        /// This property tells if the piece is squared (true) or round (false).
+        /// This property tells if the  is squared (true) or round (false).
         /// </summary>
         public bool IsSquare
         {
@@ -27,7 +27,7 @@
         }
 
         /// <summary>
-        /// This property tells if the piece is light (true) or dark (false).
+        /// This property tells if the <c>Piece</c> is light (true) or dark (false).
         /// </summary>
         public bool IsLight
         {
@@ -36,7 +36,7 @@
         }
 
         /// <summary>
-        /// This property tells if the piece is big (true) or small (false).
+        /// This property tells if the <c>Piece</c> is big (true) or small (false).
         /// </summary>
         public bool IsBig
         {
@@ -45,7 +45,7 @@
         }
 
         /// <summary>
-        /// This property tells if the piece is full (true) or hollow (false).
+        /// This property tells if the <c>Piece</c> is full (true) or hollow (false).
         /// </summary>
         public bool IsFull
         {

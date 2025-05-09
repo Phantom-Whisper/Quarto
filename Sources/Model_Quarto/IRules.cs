@@ -280,19 +280,57 @@
             return false;
         }
 
-        /*public bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
+        public bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
         {
-            (int x, int y) tP1 = board.PositionPiece(p1);
-            (int x, int y) tP2 = board.PositionPiece(p2);
-            (int x, int y) tP3 = board.PositionPiece(p3);
-            (int x, int y) tP4 = board.PositionPiece(p4);
-            List<int> list = new List<int>();
+            (int x, int y) min = (-1, -1);
+            List<(int x, int y)> list = new List<(int x, int y)>();
+            bool right = false;
+            bool under = false;
+            bool diagonal = false;
+            list.Append(board.PositionPiece(p1));
+            list.Append(board.PositionPiece(p2));
+            list.Append(board.PositionPiece(p3));
+            list.Append(board.PositionPiece(p4));
 
-            for (int i = 1; i < 5; i++)
+            for (int i = 0; i < 5; i++) 
             {
-                list.Append();
+                for (int j = 0; j < 5; j++)
+                {
+                    if (list[i].x < list[j].x && list[i].y < list[j].y)
+                    {
+                        min=list[i];
+                    }
+                }
             }
-        }*/
+
+            if (min == (-1, -1))
+            {
+                return false;
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                if (min.x == list[i].x - 1 && min.y == list[i].y-1)
+                {
+                    diagonal = true;
+                }
+                else if (min.x == list[i].x - 1 && min.y == list[i].y)
+                {
+                    right = true;
+                }
+
+                else if (min.x == list[i].x && min.y == list[i].y - 1)
+                {
+                    under = true;
+                }
+            }
+
+            if (diagonal && right && under) 
+            { 
+                return true;
+            }
+            return false;
+        }
 
         public bool IsSameShape(Piece p1, Piece p2, Piece p3, Piece p4)
         {
@@ -341,7 +379,7 @@
                     || IsColumn(board, p1, p2, p3, p4)
                     || IsDiagonal1(board, p1, p2, p3, p4)
                     || IsDiagonal2(board, p1, p2, p3, p4)
-                    /*|| IsAround(board, p1, p2, p3, p4)*/)
+                    || IsAround(board, p1, p2, p3, p4))
                 {
                     return true;
                 }
