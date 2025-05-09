@@ -298,10 +298,10 @@
             bool diagonal = false;
             try
             {
-                list.Append(board.PositionPiece(p1));
-                list.Append(board.PositionPiece(p2));
-                list.Append(board.PositionPiece(p3));
-                list.Append(board.PositionPiece(p4));
+                list.Add(board.PositionPiece(p1));
+                list.Add(board.PositionPiece(p2));
+                list.Add(board.PositionPiece(p3));
+                list.Add(board.PositionPiece(p4));
             }
             catch (InvalidOperationException e)
             {
