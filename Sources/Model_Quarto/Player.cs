@@ -9,7 +9,9 @@
         /// <exception cref="ArgumentNullException"> if the string is null</exception>
         public Player(string pseudo)
         {
-            Pseudo = pseudo ?? throw new ArgumentNullException(nameof(pseudo));
+            Pseudo = !string.IsNullOrWhiteSpace(pseudo)
+                ? pseudo
+                : throw new ArgumentNullException(nameof(pseudo));
             NbWin = 0;
         }
 
@@ -29,14 +31,6 @@
         {
             get;
             set;
-        }
-
-        /// <summary>
-        /// This method increment the number of games won
-        /// </summary>
-        public void AddWin()
-        {
-            NbWin++;
         }
 
         /// <summary>

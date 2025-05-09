@@ -23,3 +23,17 @@ Console.WriteLine("-----------------------------------------------");
 foreach(var item in list) { Console.WriteLine(item); }
 ia.Move(board, piece);
 Console.WriteLine(board.ToString());
+Console.WriteLine("----------------------------------");
+Piece piecee = new(true,false, true, true);
+Console.WriteLine(piecee.ToString());
+board.InsertPiece(piecee, 1, 1);
+
+Console.WriteLine(board.ToString());
+int index = 0;
+/*foreach (Piece pieceE in pieces)
+{
+    Console.Write($"{index}. ");
+    Console.WriteLine(pieceE.ToString());
+    index++;
+}*/
+

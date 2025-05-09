@@ -33,7 +33,16 @@ namespace Model
         /// <param name="isFull"> boolean of the state : true = Full and false = Hollow </param>
         public void AddPiece(bool isSquare, bool isLight, bool isBig, bool isFull)
         {
-            Baglist.Add(new Piece(isSquare, isLight, isBig, isFull));
+            Piece newPiece = new(isSquare, isLight, isBig, isFull);
+
+            if (!Baglist.Contains(newPiece))
+            {
+                Baglist.Add(newPiece);
+            }
+            else
+            {
+                throw new InvalidOperationException("This piece already exist in the bag.");
+            }
         }
 
         /// <summary>
@@ -43,7 +52,9 @@ namespace Model
         /// <exception cref="InvalidOperationException"> when the piece is not in the collection </exception>
         public void RemovePiece(Piece piece)
         {
-            if (Baglist != null)
+            ArgumentNullException.ThrowIfNull(piece);
+
+            if (Baglist.Contains(piece))
             {
                 Baglist.Remove(piece);
             }
@@ -59,15 +70,15 @@ namespace Model
             if (IsEmpty())
             {
                 throw new InvalidOperationException("The bag is empty.");
+                throw new InvalidOperationException("The piece is not in the bag");
             }
 
             if (index < 0 || index >= Baglist.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
             }
-
             Piece piece = Baglist[index];
-            Baglist.RemoveAt(index);
+            Baglist.Remove(piece);
             return piece;
         }
     }

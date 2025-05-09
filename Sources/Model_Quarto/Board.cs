@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace Model
 {
@@ -16,6 +11,8 @@ namespace Model
         /// <param name="y">Number of cells in the y-axis.</param>
         public Board(int x, int y) 
         {
+            if (x != 4 || y != 4)
+                throw new ArgumentException($"The size of the board cannot be of this size {SizeX}*{SizeY}.");
             SizeX = x;
             SizeY = y;
             grid = new Piece[SizeX, SizeY];
@@ -40,10 +37,20 @@ namespace Model
         /// <summary>
         /// A grid of <c>Piece</c> making the <c>Board</c>.
         /// </summary>
-        public readonly Piece[,] grid;
+        private readonly Piece[,] grid;
 
         /// <summary>
-        /// This method insert a <c>Piece</c> at a certain position on the <c>Board</c>.
+        /// This property contains the status of the grid
+        /// </summary>
+        public Piece[,] Grid => grid;
+
+        public int NbCells
+        {
+            get => SizeX * SizeY;
+        }
+
+        /// <summary>
+        /// Thid method insert a piece at a certain position on the board.
         /// </summary>
         /// <param name="piece"></param>
         /// <param name="x">Position on the x-axis.</param>
@@ -54,7 +61,7 @@ namespace Model
             if (IsEmpty(x, y) && IsOnBoard(x, y))
                 grid[x, y] = piece;
             else
-                throw new InvalidOperationException("The piece cannot be placed in this position.");
+                throw new InvalidOperationException($"The piece cannot be placed in this position ({x},{y}).");
         }
 
         /// <summary>
@@ -65,69 +72,43 @@ namespace Model
         /// </returns>
         public override string ToString()
         {
-            string str = "";
+            var sb = new StringBuilder();
             int z = 0, x = 0;
+
             for (int i = -1; i < SizeY; i++)
             {
                 if (i == -1)
                 {
-                    str += "x/y";
+                    sb.Append("x/y | ");
                 }
                 else
                 {
-                    if (i < 10)
-                    {
-                        str += "  " + i + "  ";
-                    }
-                    else
-                    {
-                        str += "  " + i + " ";
-                    }
+                    sb.AppendFormat("{0,4} | ", i); 
                 }
-                str += " | ";
             }
-            str += "\n";
-            for (int y = 0; y < SizeX; y++)
-            {
-                str += "--------";
-            }
-            str += "\n";
-            str += z + "   |";
+            sb.AppendLine();
+
+            string horizontalSeparator = new string('-', (SizeY + 1) * 7); 
+            sb.AppendLine(horizontalSeparator);
+
+            sb.AppendFormat("{0,2}  |", z); 
+
             foreach (var piece in grid)
             {
                 if (x == SizeX)
                 {
                     x = 0;
-                    str += "\n";
-                    for (int y = 0; y < SizeX; y++)
-                    {
-                        str += "--------";
-                    }
-                    str += "\n";
+                    sb.AppendLine();
+                    sb.AppendLine(horizontalSeparator);
                     z++;
-                    if (z < 10)
-                    {
-                        str += z + "   |";
-                    }
-                    else
-                    {
-                        str += z + "  |";
-                    }
+                    sb.AppendFormat("{0,2}  |", z);
                 }
 
-                if (piece != null)
-                {
-                    str += piece.ToString();
-                }
-                else
-                {
-                    str += "     ";
-                }
-
-                str += " | ";
+                sb.AppendFormat("{0,5} |", piece?.ToString() ?? ""); 
                 x++;
             }
-            return str;
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -138,8 +119,8 @@ namespace Model
         /// <returns> a boolean : true = the <c>Board</c> is empty and false = the <c>Board</c> is not empty </returns>
         public bool IsEmpty(int x, int y)
         {
-            if (grid[x, y] == null)
-                return true;
+            if (IsOnBoard(x,y) && grid[x, y] == null)
+                    return true;
             return false;
         }
 
@@ -148,8 +129,13 @@ namespace Model
         /// </summary>
         /// <param name="x">Position on the x-axis</param>
         /// <param name="y">Position on the y-axis</param>
-        /// <returns> piece wanted </returns>
-        public Piece GetPiece(int x, int y) => grid[x, y];
+        /// <returns></returns>
+        public Piece GetPiece(int x, int y)
+        {
+            if (!IsOnBoard(x, y))
+                throw new ArgumentException("There's no Piece outside the board.");
+            return grid[x, y];
+        }
 
         /// <summary>
         /// This method tells if the coordinates are within the limits of the <c>Board</c>
@@ -159,7 +145,7 @@ namespace Model
         /// <returns> boolean : true = is on the board and false = is out of the board </returns>
         public bool IsOnBoard(int x, int y)
         {
-            if (x < 0 || y < 0 || x > SizeX || y > SizeY)
+            if (x < 0 || y < 0 || x >= SizeX || y >= SizeY)
                 return false;
             return true;
         }

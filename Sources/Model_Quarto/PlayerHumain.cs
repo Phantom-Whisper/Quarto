@@ -2,9 +2,10 @@
 {
     public class PlayerHumain(string pseudo) : Player(pseudo)
     {
-        public void AddWin()
-        {
-            NbWin++;
-        }
+
+        /// <summary>
+        /// This method increment the number of games won
+        /// </summary>
+        public void AddWin() => NbWin++;
     }
 }

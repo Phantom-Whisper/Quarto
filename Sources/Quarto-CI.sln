@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartoApp", "QuartoApp\QuartoApp.csproj", "{867865C0-1D12-4C33-9383-C9AE4B1E835E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model_Quarto\Model.csproj", "{E1F14081-AB4D-47C2-BEDA-DB9DBC13237C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{303192DF-F8E2-45C1-A70E-27E16484C0BC}"
@@ -17,11 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{867865C0-1D12-4C33-9383-C9AE4B1E835E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{867865C0-1D12-4C33-9383-C9AE4B1E835E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{867865C0-1D12-4C33-9383-C9AE4B1E835E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{867865C0-1D12-4C33-9383-C9AE4B1E835E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{867865C0-1D12-4C33-9383-C9AE4B1E835E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E1F14081-AB4D-47C2-BEDA-DB9DBC13237C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E1F14081-AB4D-47C2-BEDA-DB9DBC13237C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1F14081-AB4D-47C2-BEDA-DB9DBC13237C}.Release|Any CPU.ActiveCfg = Release|Any CPU
