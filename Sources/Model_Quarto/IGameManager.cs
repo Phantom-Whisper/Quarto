@@ -20,7 +20,7 @@ namespace Model
 
         Bag bag;
 
-        GameManager(Board board, Bag bag)
+        public GameManager(Board board, Bag bag)
         {
             this.board = board;
             this.bag = bag;
