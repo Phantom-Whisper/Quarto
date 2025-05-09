@@ -164,7 +164,7 @@ namespace Model
             {
                 for (int y = 0; y < SizeY; y++)
                 {
-                    if (IsEmpty(x, y) == true)
+                    if (IsEmpty(x, y))
                     {
                         return false;
                     }
