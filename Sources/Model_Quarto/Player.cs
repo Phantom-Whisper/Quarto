@@ -48,6 +48,7 @@
         /// <returns></returns>
         public override bool Equals(object? obj)
         {
+            if (obj == null) return false;
             return Equals(obj);
         }
 
