@@ -4,24 +4,26 @@ using System.IO.Pipelines;
 
 Board board = new(4, 4);
 
-List<Piece> pieces = [new Piece(true, true, true, false),
-new Piece(true, true, true, true),
-new Piece(true, true, false, false),
-new Piece(true, true, false, true),
-new Piece(true, false, true, false),
-new Piece(true, false, true, true),
-new Piece(true, false, false, false),
-new Piece(true, false, false, true),
+Piece piece = new Piece(true, true, true, false);
+var ia = new StubAI();
+board.InsertPiece(piece, 2,2);
+var list = ia.GetAvailablePositions(board);
 
-new Piece(false, true, true, false),
-new Piece(false, true, true, true),
-new Piece(false, true, false, false),
-new Piece(false, true, false, true),
-new Piece(false, false, true, false),
-new Piece(false, false, true, true),
-new Piece(false, false, false, false),
-new Piece(false, false, false, true)];
+//Dictionary<string, int> dP1 =  board.PositionPiece(piece);
+//Console.WriteLine(dP1["y"]);
 
+PlayerIA playerIA = new();
+PlayerHumain playerHumain = new("joueur");
+var win = playerIA.NbWin;
+Console.WriteLine("-----------------------------------------------");
+Console.WriteLine(playerIA.Pseudo);
+Console.WriteLine(win);
+Console.WriteLine(playerHumain.Pseudo);
+Console.WriteLine(playerHumain.NbWin.ToString());
+Console.WriteLine("-----------------------------------------------");
+foreach(var item in list) { Console.WriteLine(item); }
+ia.Move(board, piece);
+Console.WriteLine(board.ToString());
 Console.WriteLine("----------------------------------");
 Piece piecee = new(true,false, true, true);
 Console.WriteLine(piecee.ToString());

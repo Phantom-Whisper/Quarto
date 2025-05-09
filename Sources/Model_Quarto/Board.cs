@@ -55,7 +55,7 @@ namespace Model
         /// <param name="piece"></param>
         /// <param name="x">Position on the x-axis.</param>
         /// <param name="y">Position on the y-axis.</param>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="InvalidOperationException"> when the <c>Piece</c> can't be placed in the position </exception>
         public void InsertPiece(Piece piece, int x, int y)
         {
             if (IsEmpty(x, y) && IsOnBoard(x, y))
@@ -116,7 +116,7 @@ namespace Model
         /// </summary>
         /// <param name="x">Position on the x-axis</param>
         /// <param name="y">Position on the y-axis</param>
-        /// <returns></returns>
+        /// <returns> a boolean : true = the <c>Board</c> is empty and false = the <c>Board</c> is not empty </returns>
         public bool IsEmpty(int x, int y)
         {
             if (IsOnBoard(x,y) && grid[x, y] == null)
@@ -125,7 +125,7 @@ namespace Model
         }
 
         /// <summary>
-        /// This method returns a piece at a specific position on the board
+        /// This method returns a <c>Piece</c> at a specific position on the <c>Board</c>
         /// </summary>
         /// <param name="x">Position on the x-axis</param>
         /// <param name="y">Position on the y-axis</param>
@@ -138,11 +138,11 @@ namespace Model
         }
 
         /// <summary>
-        /// This method tells if the coordinates are within the limits of the board
+        /// This method tells if the coordinates are within the limits of the <c>Board</c>
         /// </summary>
         /// <param name="x">Position on the x-axis</param>
         /// <param name="y">Position on the y-axis</param>
-        /// <returns></returns>
+        /// <returns> boolean : true = is on the board and false = is out of the board </returns>
         public bool IsOnBoard(int x, int y)
         {
             if (x < 0 || y < 0 || x >= SizeX || y >= SizeY)
@@ -151,12 +151,74 @@ namespace Model
         }
 
         /// <summary>
-        /// This method removes the board of all the <c>pieces</c> on it
+        /// This method removes the <c>Board</c> of all the <c>Pieces</c> on it
         /// </summary>
         public void ClearBoard()
         {
             Array.Clear(grid, 0, grid.Length);
         }
 
+        public bool IsBoardFull()
+        {
+            for (int x = 0; x < SizeX; x++)
+            {
+                for (int y = 0; y < SizeY; y++)
+                {
+                    if (IsEmpty(x, y) == true)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public int PositionXPiece(Piece piece)
+        {
+
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    if (GetPiece(i, j) == piece)
+                    {
+                        return i;
+                    }
+                }
+            }
+            throw new InvalidOperationException("Piece not in the board !");
+        }
+
+        public int PositionYPiece(Piece piece)
+        {
+
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    if (GetPiece(i, j) == piece)
+                    {
+                        return j;
+                    }
+                }
+            }
+            throw new InvalidOperationException("Piece not in the board !");
+        }
+
+        public (int x, int y) PositionPiece(Piece piece)
+        {
+
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    if (GetPiece(i, j) == piece)
+                    {
+                        return (i, j);
+                    }
+                }
+            }
+            throw new InvalidOperationException("Piece not in the board !");
+        }
     }
 }
