@@ -280,6 +280,15 @@
             return false;
         }
 
+        /// <summary>
+        /// Method that tells if the 4 pieces selected are around each other by comparing their position
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="p3"></param>
+        /// <param name="p4"></param>
+        /// <returns></returns>
         public bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
         {
             (int x, int y) min = (-1, -1);
