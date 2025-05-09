@@ -33,7 +33,7 @@ namespace Model
         /// <param name="isFull"> boolean of the state : true = Full and false = Hollow </param>
         public void AddPiece(bool isSquare, bool isLight, bool isBig, bool isFull)
         {
-            Baglist.Add(new Piece(isSquare,isLight,isBig,isFull));
+            Baglist.Add(new Piece(isSquare, isLight, isBig, isFull));
         }
 
         /// <summary>
@@ -51,8 +51,24 @@ namespace Model
             {
                 throw new InvalidOperationException("The piece is not in the bag");
             }
-            
+
         }
 
+        public Piece GetPiece(int index)
+        {
+            if (IsEmpty())
+            {
+                throw new InvalidOperationException("The bag is empty.");
+            }
+
+            if (index < 0 || index >= Baglist.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
+            }
+
+            Piece piece = Baglist[index];
+            Baglist.RemoveAt(index);
+            return piece;
+        }
     }
 }
