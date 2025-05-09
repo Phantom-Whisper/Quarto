@@ -4,7 +4,7 @@ namespace TestModel
 {
     public class PlayerTest
     {
-        readonly Player player = new("JoueurTest");
+        readonly PlayerHumain player = new("JoueurTest");
 
         [Theory]
         [InlineData("Shadow Fox")]
@@ -13,7 +13,7 @@ namespace TestModel
         [InlineData("Z3r0Blade")]
         public void TestCtorPlayer(string pseudo)
         {
-            Player player = new(pseudo);
+            PlayerHumain player = new(pseudo);
             Assert.NotNull(player);
             Assert.NotNull(player.Pseudo);
             Assert.Equal(pseudo, player.Pseudo);
@@ -26,7 +26,7 @@ namespace TestModel
         [InlineData("  ")]
         public void TestCtorPlayerArgumentException(string pseudo)
         {
-            Assert.Throws<ArgumentNullException>(() => { Player player = new(pseudo); });
+            Assert.Throws<ArgumentNullException>(() => { PlayerHumain player = new(pseudo); });
         }
 
 

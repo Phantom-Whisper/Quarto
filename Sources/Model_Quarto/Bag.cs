@@ -33,7 +33,6 @@ namespace Model
         /// <param name="isFull"> boolean of the state : true = Full and false = Hollow </param>
         public void AddPiece(bool isSquare, bool isLight, bool isBig, bool isFull)
         {
-            Baglist.Add(new Piece(isSquare, isLight, isBig, isFull));
             Piece newPiece = new(isSquare, isLight, isBig, isFull);
 
             if (!Baglist.Contains(newPiece))
@@ -55,7 +54,7 @@ namespace Model
         {
             ArgumentNullException.ThrowIfNull(piece);
 
-            if (!Baglist.Contains(piece))
+            if (Baglist.Contains(piece))
             {
                 Baglist.Remove(piece);
             }
