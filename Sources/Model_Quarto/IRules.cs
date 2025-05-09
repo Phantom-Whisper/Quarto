@@ -280,6 +280,15 @@
             return false;
         }
 
+        /// <summary>
+        /// Method that tells if the 4 pieces selected are around each other by comparing their position
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="p3"></param>
+        /// <param name="p4"></param>
+        /// <returns></returns>
         public bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
         {
             (int x, int y) min = (-1, -1);
@@ -287,14 +296,22 @@
             bool right = false;
             bool under = false;
             bool diagonal = false;
-            list.Append(board.PositionPiece(p1));
-            list.Append(board.PositionPiece(p2));
-            list.Append(board.PositionPiece(p3));
-            list.Append(board.PositionPiece(p4));
-
-            for (int i = 0; i < 5; i++) 
+            try
             {
-                for (int j = 0; j < 5; j++)
+                list.Add(board.PositionPiece(p1));
+                list.Add(board.PositionPiece(p2));
+                list.Add(board.PositionPiece(p3));
+                list.Add(board.PositionPiece(p4));
+            }
+            catch (InvalidOperationException e)
+            {
+                return false;
+            }
+            
+
+            for (int i = 0; i < 4; i++) 
+            {
+                for (int j = 0; j < 4; j++)
                 {
                     if (list[i].x < list[j].x && list[i].y < list[j].y)
                     {
@@ -308,7 +325,7 @@
                 return false;
             }
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 if (min.x == list[i].x - 1 && min.y == list[i].y-1)
                 {
