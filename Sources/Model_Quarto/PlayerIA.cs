@@ -30,7 +30,7 @@ namespace Model
             return list;
         }
 
-        public void Move(Board board, Piece piece)
+        public static void Move(Board board, Piece piece)
         {
             List<(int x, int y)> positions = GetAvailablePositions(board);
             if (positions.Count == 0) throw new InvalidOperationException("No position available.");

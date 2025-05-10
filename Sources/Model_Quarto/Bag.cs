@@ -54,11 +54,7 @@ namespace Model
         {
             ArgumentNullException.ThrowIfNull(piece);
 
-            if (Baglist.Remove(piece))
-            {
-                return;
-            }
-            else
+            if (!Baglist.Remove(piece))
             {
                 throw new InvalidOperationException("The piece is not in the bag");
             }
