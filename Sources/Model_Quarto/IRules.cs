@@ -90,27 +90,29 @@
             return false;
         }
 
+        public virtual bool HasCommonAttribute(Piece p1, Piece p2, Piece p3, Piece p4)
+        {
+            return IsSameColor(p1, p2, p3, p4) || IsSameShape(p1, p2, p3, p4);
+        }
+
+        public virtual bool AreAligned(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
+        {
+            return IsRow(board, p1, p2, p3, p4)
+                || IsColumn(board, p1, p2, p3, p4)
+                || IsDiagonal1(board, p1, p2, p3, p4)
+                || IsDiagonal2(board, p1, p2, p3, p4);
+        }
+
         public virtual bool IsQuarto(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
         {
-            if (IsSameColor(p1, p2, p3, p4)
-                || IsSameShape(p1, p2, p3, p4))
-            {
-                if (IsRow(board, p1, p2, p3, p4)
-                    || IsColumn(board, p1, p2, p3, p4)
-                    || IsDiagonal1(board, p1, p2, p3, p4)
-                    || IsDiagonal2(board, p1, p2, p3, p4))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return HasCommonAttribute(p1, p2, p3, p4) && AreAligned(board, p1, p2, p3, p4);
         }
     }
 
     public class Rules : RulesBeginner
     {
 
-        public bool IsSameSize(Piece p1, Piece p2, Piece p3, Piece p4)
+        public static bool IsSameSize(Piece p1, Piece p2, Piece p3, Piece p4)
         {
             if (p1.IsBig == p2.IsBig && p1.IsBig == p3.IsBig && p1.IsBig == p4.IsBig)
             {
@@ -119,7 +121,7 @@
             return false;
         }
 
-        public bool IsSameState(Piece p1, Piece p2, Piece p3, Piece p4)
+        public static bool IsSameState(Piece p1, Piece p2, Piece p3, Piece p4)
         {
             if (p1.IsFull == p2.IsFull && p1.IsFull == p3.IsFull && p1.IsFull == p4.IsFull)
             {
@@ -128,22 +130,10 @@
             return false;
         }
 
-        public override bool IsQuarto(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
+        public override bool HasCommonAttribute(Piece p1, Piece p2, Piece p3, Piece p4)
         {
-            if (IsSameColor(p1, p2, p3, p4)
-                || IsSameShape(p1, p2, p3, p4)
-                || IsSameSize(p1, p2, p3, p4)
-                || IsSameState(p1, p2, p3, p4))
-            {
-                if (IsRow(board, p1, p2, p3, p4)
-                    || IsColumn(board, p1, p2, p3, p4)
-                    || IsDiagonal1(board, p1, p2, p3, p4)
-                    || IsDiagonal2(board, p1, p2, p3, p4))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return base.HasCommonAttribute(p1, p2, p3, p4) || IsSameSize(p1, p2, p3, p4)
+                || IsSameState(p1, p2, p3, p4);
         }
     }
 
@@ -159,83 +149,49 @@
         /// <param name="p3"></param>
         /// <param name="p4"></param>
         /// <returns></returns>
-        public bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
+        public static bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
         {
-            (int x, int y) min = (-1, -1);
-            List<(int x, int y)> list = new List<(int x, int y)>();
-            bool right = false;
-            bool under = false;
-            bool diagonal = false;
+            List<(int x, int y)> list;
+            bool right = false, under = false, diagonal = false;
+
             try
             {
-                list.Add(board.PositionPiece(p1));
-                list.Add(board.PositionPiece(p2));
-                list.Add(board.PositionPiece(p3));
-                list.Add(board.PositionPiece(p4));
+                list = new List<(int x, int y)>
+                {
+                    board.PositionPiece(p1),
+                    board.PositionPiece(p2),
+                    board.PositionPiece(p3),
+                    board.PositionPiece(p4)
+                };
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 return false;
             }
             
-
-            for (int i = 0; i < 4; i++) 
+            var min = list[0];
+            foreach (var pos in list)
             {
-                for (int j = 0; j < 4; j++)
+                if (pos.x < min.x || (pos.x == min.x && pos.y < min.y))
                 {
-                    if (list[i].x < list[j].x && list[i].y < list[j].y)
-                    {
-                        min=list[i];
-                    }
+                    min = pos;
                 }
             }
 
-            if (min == (-1, -1))
+            foreach (var pos in list)
             {
-                return false;
+                if (pos.x == min.x + 1 && pos.y == min.y) right = true;
+                else if (pos.x == min.x && pos.y == min.y + 1) under = true;
+                else if (pos.x == min.x + 1 && pos.y == min.y + 1) diagonal = true;
             }
 
-            for (int i = 0; i < 4; i++)
-            {
-                if (min.x == list[i].x - 1 && min.y == list[i].y-1)
-                {
-                    diagonal = true;
-                }
-                else if (min.x == list[i].x - 1 && min.y == list[i].y)
-                {
-                    right = true;
-                }
-
-                else if (min.x == list[i].x && min.y == list[i].y - 1)
-                {
-                    under = true;
-                }
-            }
-
-            if (diagonal && right && under) 
-            { 
-                return true;
-            }
-            return false;
+            return right && under && diagonal;
         }
 
-        public override bool IsQuarto(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
+        public override bool AreAligned(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
         {
-            if (IsSameColor(p1, p2, p3, p4)
-                || IsSameShape(p1, p2, p3, p4)
-                || IsSameSize(p1, p2, p3, p4)
-                || IsSameState(p1, p2, p3, p4))
-            {
-                if (IsRow(board, p1, p2, p3, p4)
-                    || IsColumn(board, p1, p2, p3, p4)
-                    || IsDiagonal1(board, p1, p2, p3, p4)
-                    || IsDiagonal2(board, p1, p2, p3, p4)
-                    || IsAround(board, p1, p2, p3, p4))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return base.AreAligned(board, p1, p2, p3, p4)
+                || IsAround(board, p1, p2, p3, p4);
         }
     }
 }
