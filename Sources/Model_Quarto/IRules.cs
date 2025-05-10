@@ -151,7 +151,6 @@
         /// <returns></returns>
         public static bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
         {
-            (int x, int y) min = (int.MaxValue, int.MaxValue);
             List<(int x, int y)> list = new List<(int x, int y)>();
             bool right = false, under = false, diagonal = false;
 
@@ -167,6 +166,7 @@
                 return false;
             }
             
+            (int x, int y) min = list[0];
             foreach (var pos in list)
             {
                 if (pos.x < min.x || (pos.x == min.x && pos.y < min.y))
