@@ -38,9 +38,6 @@
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        /*public bool Equals(Player? other) => other != null
-            && Pseudo == other.Pseudo;*/
-
         public bool Equals(Player? p1, Player? p2)
         {
             if (ReferenceEquals(p1, p2)) return true;
@@ -51,22 +48,9 @@
         }
 
         /// <summary>
-        /// This method tells if two objects are the same.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        /*public override bool Equals(object? obj)
-        {
-            if (obj == null) return false;
-            return Equals(obj);
-        }*/
-
-        /// <summary>
         /// This method gives us the hashcode of a <c>Player</c>.
         /// </summary>
         /// <returns></returns>
-        /*public override int GetHashCode() => Pseudo.GetHashCode();*/
-
         public int GetHashCode(Player player) => Pseudo.GetHashCode();
     }
 }
