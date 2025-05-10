@@ -161,7 +161,7 @@
         /// <returns></returns>
         public static bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
         {
-            (int x, int y) min = (-1, -1);
+            (int x, int y) min = (int.MaxValue, int.MaxValue);
             List<(int x, int y)> list = new List<(int x, int y)>();
             bool right = false, under = false, diagonal = false;
 
@@ -177,45 +177,25 @@
                 return false;
             }
             
-
-            for (int i = 0; i < 4; i++) 
+            foreach (var pos in list)
             {
-                for (int j = 0; j < 4; j++)
+                if (pos.x < min.x || (pos.x == min.x && pos.y < min.y))
                 {
-                    if (list[i].x < list[j].x && list[i].y < list[j].y)
-                    {
-                        min=list[i];
-                    }
+                    min = pos;
                 }
             }
 
-            if (min == (-1, -1))
+            foreach (var pos in list)
             {
-                return false;
-            }
-
-            for (int i = 0; i < 4; i++)
-            {
-                if (min.x == list[i].x - 1 && min.y == list[i].y-1)
-                {
+                if (pos == (min.x + 1, min.y + 1))
                     diagonal = true;
-                }
-                else if (min.x == list[i].x - 1 && min.y == list[i].y)
-                {
+                else if (pos == (min.x + 1, min.y))
                     right = true;
-                }
-
-                else if (min.x == list[i].x && min.y == list[i].y - 1)
-                {
+                else if (pos == (min.x, min.y + 1))
                     under = true;
-                }
             }
 
-            if (diagonal && right && under) 
-            { 
-                return true;
-            }
-            return false;
+                return diagonal && right && under;
         }
 
         public override bool IsQuarto(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
