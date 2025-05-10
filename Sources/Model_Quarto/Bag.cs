@@ -56,7 +56,6 @@ namespace Model
 
             if (Baglist.Remove(piece))
             {
-                return;
             }
             else
             {
