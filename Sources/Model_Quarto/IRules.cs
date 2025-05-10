@@ -180,7 +180,7 @@
 
             foreach (var pos in list)
             {
-                if (pos.x == min.x + 1 && pos.y == min.y + 1) right = true;
+                if (pos.x == min.x + 1 && pos.y == min.y) right = true;
                 else if (pos.x == min.x && pos.y == min.y + 1) under = true;
                 else if (pos.x == min.x + 1 && pos.y == min.y + 1) diagonal = true;
             }
