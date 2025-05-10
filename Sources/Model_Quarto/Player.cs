@@ -7,7 +7,7 @@
         /// </summary>
         /// <param name="pseudo"> name of the player </param>
         /// <exception cref="ArgumentNullException"> if the string is null</exception>
-        public Player(string pseudo)
+        protected Player(string pseudo)
         {
             Pseudo = !string.IsNullOrWhiteSpace(pseudo)
                 ? pseudo
@@ -48,7 +48,8 @@
         /// <returns></returns>
         public override bool Equals(object? obj)
         {
-            return base.Equals(obj);
+            if (obj == null) return false;
+            return Equals(obj);
         }
 
         /// <summary>

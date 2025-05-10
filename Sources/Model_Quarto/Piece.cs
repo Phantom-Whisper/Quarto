@@ -1,6 +1,6 @@
 ﻿namespace Model
 {
-    public class Piece : IEquatable<Piece>
+    public sealed class Piece : IEquatable<Piece>
     {
         /// <summary>
         /// This is the <c>Ctor</c> of the Class <c>Piece</c>.
