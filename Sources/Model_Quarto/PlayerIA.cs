@@ -12,7 +12,7 @@ namespace Model
         {
         }
 
-        public List<(int x, int y)> GetAvailablePositions(Board board)
+        public static List<(int x, int y)> GetAvailablePositions(Board board)
         {
             var list = new List<(int x, int y)>();
 
@@ -50,7 +50,7 @@ namespace Model
 
         }
 
-        public Piece ChooseNextPiece(Bag bag)
+        public static Piece ChooseNextPiece(Bag bag)
         {
             using (var randomGenerator = RandomNumberGenerator.Create())
             {

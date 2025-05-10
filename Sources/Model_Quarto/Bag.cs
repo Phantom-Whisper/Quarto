@@ -54,9 +54,9 @@ namespace Model
         {
             ArgumentNullException.ThrowIfNull(piece);
 
-            if (Baglist.Contains(piece))
+            if (Baglist.Remove(piece))
             {
-                Baglist.Remove(piece);
+                return;
             }
             else
             {
@@ -70,7 +70,6 @@ namespace Model
             if (IsEmpty())
             {
                 throw new InvalidOperationException("The bag is empty.");
-                throw new InvalidOperationException("The piece is not in the bag");
             }
 
             if (index < 0 || index >= Baglist.Count)
