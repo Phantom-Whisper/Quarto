@@ -163,9 +163,8 @@
         {
             (int x, int y) min = (-1, -1);
             List<(int x, int y)> list = new List<(int x, int y)>();
-            bool right = false;
-            bool under = false;
-            bool diagonal = false;
+            bool right = false, under = false, diagonal = false;
+
             try
             {
                 list.Add(board.PositionPiece(p1));
