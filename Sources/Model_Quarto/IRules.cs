@@ -110,7 +110,7 @@
     public class Rules : RulesBeginner
     {
 
-        public bool IsSameSize(Piece p1, Piece p2, Piece p3, Piece p4)
+        public static bool IsSameSize(Piece p1, Piece p2, Piece p3, Piece p4)
         {
             if (p1.IsBig == p2.IsBig && p1.IsBig == p3.IsBig && p1.IsBig == p4.IsBig)
             {
@@ -119,7 +119,7 @@
             return false;
         }
 
-        public bool IsSameState(Piece p1, Piece p2, Piece p3, Piece p4)
+        public static bool IsSameState(Piece p1, Piece p2, Piece p3, Piece p4)
         {
             if (p1.IsFull == p2.IsFull && p1.IsFull == p3.IsFull && p1.IsFull == p4.IsFull)
             {
@@ -159,7 +159,7 @@
         /// <param name="p3"></param>
         /// <param name="p4"></param>
         /// <returns></returns>
-        public bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
+        public static bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
         {
             (int x, int y) min = (-1, -1);
             List<(int x, int y)> list = new List<(int x, int y)>();
@@ -173,7 +173,7 @@
                 list.Add(board.PositionPiece(p3));
                 list.Add(board.PositionPiece(p4));
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 return false;
             }
