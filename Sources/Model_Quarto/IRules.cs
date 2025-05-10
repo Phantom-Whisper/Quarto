@@ -151,22 +151,25 @@
         /// <returns></returns>
         public static bool IsAround(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
         {
-            List<(int x, int y)> list = new List<(int x, int y)>();
+            List<(int x, int y)> list;
             bool right = false, under = false, diagonal = false;
 
             try
             {
-                list.Add(board.PositionPiece(p1));
-                list.Add(board.PositionPiece(p2));
-                list.Add(board.PositionPiece(p3));
-                list.Add(board.PositionPiece(p4));
+                list = new List<(int x, int y)>
+                {
+                    board.PositionPiece(p1),
+                    board.PositionPiece(p2),
+                    board.PositionPiece(p3),
+                    board.PositionPiece(p4)
+                };
             }
             catch (InvalidOperationException)
             {
                 return false;
             }
             
-            (int x, int y) min = list[0];
+            var min = list[0];
             foreach (var pos in list)
             {
                 if (pos.x < min.x || (pos.x == min.x && pos.y < min.y))
@@ -177,15 +180,12 @@
 
             foreach (var pos in list)
             {
-                if (pos == (min.x + 1, min.y + 1))
-                    diagonal = true;
-                else if (pos == (min.x + 1, min.y))
-                    right = true;
-                else if (pos == (min.x, min.y + 1))
-                    under = true;
+                if (pos.x == min.x + 1 && pos.y == min.y + 1) right = true;
+                else if (pos.x == min.x && pos.y == min.y + 1) under = true;
+                else if (pos.x == min.x + 1 && pos.y == min.y + 1) diagonal = true;
             }
 
-                return diagonal && right && under;
+            return right && under && diagonal;
         }
 
         public override bool AreAligned(Board board, Piece p1, Piece p2, Piece p3, Piece p4)
