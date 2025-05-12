@@ -25,4 +25,8 @@ board.InsertPiece(piecee, 1, 1);
 
 Console.WriteLine(board.ToString());
 
+Console.WriteLine("----------------------------------");
 
+GameManager gameManager = new GameManager();
+
+gameManager.LaunchGame();
