@@ -1,5 +1,7 @@
 ﻿using Manager;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace Model
 {
@@ -85,6 +87,20 @@ namespace Model
             {
                 AddPiece(piece);
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            int i = 1;
+            foreach (var piece in Baglist)
+            { 
+                sb.Append($"{i}. {piece.ToString()}\n");
+                i++;
+            }
+
+            return sb.ToString();
         }
     }
 }

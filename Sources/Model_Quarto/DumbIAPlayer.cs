@@ -8,7 +8,7 @@ namespace Model
 
         public override void PlayTurn(IBoard board)
         {
-            // Implémentation d’une IA bête (ex: choisir un coup au hasard)
+            // Implémentation d'une IA bête (ex: choisir un coup au hasard)
         }
     }
 }

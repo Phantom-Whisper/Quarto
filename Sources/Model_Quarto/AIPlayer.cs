@@ -46,7 +46,5 @@ namespace Model
     public abstract class AIPlayer : Player
     {
         protected AIPlayer(string name) : base(name) { }
-
-        // Tu pourrais ajouter ici une méthode de décision commune à toutes les IA
     }
 }

@@ -7,6 +7,6 @@ namespace Manager
         event EventHandler<MessageEventArgs> OnDisplayMessage;
         event EventHandler<PlayerNameRequestedEventArgs> OnPlayerNameRequested;
 
-        void LaunchGame();
+        void Run();
     }
 }

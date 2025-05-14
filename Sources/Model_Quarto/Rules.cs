@@ -9,6 +9,8 @@ namespace Model
             // Faut vérifier si il y a quarto mais ça implique une conversion de IPiece en Piece 
             // Ou de passer des méthodes de caractéristiques communes ailleurs
             if (bag.IsEmpty() && board.IsBoardFull()) return null; 
+            //if(IsQuarto(board, p1, p2, p3, p4))
+               // return null;
             return null;
         }
 
