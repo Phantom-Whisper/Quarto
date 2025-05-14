@@ -4,34 +4,39 @@ namespace Model
 {
     public class Board
     {
+        private const int MAXSIZE = 4;
+
+        public Board() 
+        {
+            grid = new Piece[MAXSIZE, MAXSIZE];
+        }
+
         /// <summary>
         /// This is the <c>Ctor</c> of the Class <c>Board</c>.
         /// </summary>
-        /// <param name="x">Number of cells in the x-axis.</param>
-        /// <param name="y">Number of cells in the y-axis.</param>
-        public Board(int x, int y) 
+        /// <param name="row">Number of cells in the row-axis.</param>
+        /// <param name="col">Number of cells in the col-axis.</param>
+        public Board(int row, int col) 
         {
-            if (x != 4 || y != 4)
-                throw new ArgumentException($"The size of the board cannot be of this size {SizeX}*{SizeY}.");
-            SizeX = x;
-            SizeY = y;
-            grid = new Piece[SizeX, SizeY];
+            if (row != MAXSIZE || col != MAXSIZE)
+                throw new ArgumentException($"The maximum alowed size of the board is : {MAXSIZE}*{MAXSIZE}.");
+            grid = new Piece[row, col];
         }
 
         /// <summary>
-        /// This property contains the number of cells in the x-axis.
+        /// This property contains the number of cells in the row-axis.
         /// </summary>
         public int SizeX
         {
-            get;
+            get => grid.GetLength(0);
         }
 
         /// <summary>
-        /// This property contains the number of cells in the y-axis.
+        /// This property contains the number of cells in the col-axis.
         /// </summary>
         public int SizeY
         {
-            get;
+            get => grid.GetLength(1);
         }
 
         /// <summary>
@@ -42,7 +47,15 @@ namespace Model
         /// <summary>
         /// This property contains the status of the grid
         /// </summary>
-        public Piece[,] Grid => grid;
+        public Piece[,] Grid
+        {
+            get
+            {
+                var copy = new Piece[grid.GetLength(0), grid.GetLength(1)];
+                Array.Copy(grid, copy, grid.Length);
+                return copy;
+            }
+        }
 
         public int NbCells
         {
@@ -53,15 +66,15 @@ namespace Model
         /// Thid method insert a piece at a certain position on the board.
         /// </summary>
         /// <param name="piece"></param>
-        /// <param name="x">Position on the x-axis.</param>
-        /// <param name="y">Position on the y-axis.</param>
+        /// <param name="row">Position on the row-axis.</param>
+        /// <param name="col">Position on the col-axis.</param>
         /// <exception cref="InvalidOperationException"> when the <c>Piece</c> can't be placed in the position </exception>
-        public void InsertPiece(Piece piece, int x, int y)
+        public void InsertPiece(Piece piece, int row, int col)
         {
-            if (IsEmpty(x, y) && IsOnBoard(x, y))
-                grid[x, y] = piece;
+            if (IsEmpty(row, col) && IsOnBoard(row, col))
+                grid[row, col] = piece;
             else
-                throw new InvalidOperationException($"The piece cannot be placed in this position ({x},{y}).");
+                throw new InvalidOperationException($"The piece cannot be placed in this position ({row},{col}).");
         }
 
         /// <summary>
@@ -73,13 +86,13 @@ namespace Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            int z = 0, x = 0;
+            int z = 0, row = 0;
 
             for (int i = -1; i < SizeY; i++)
             {
                 if (i == -1)
                 {
-                    sb.Append("x/y | ");
+                    sb.Append("row/y | ");
                 }
                 else
                 {
@@ -95,9 +108,9 @@ namespace Model
 
             foreach (var piece in grid)
             {
-                if (x == SizeX)
+                if (row == SizeX)
                 {
-                    x = 0;
+                    row = 0;
                     sb.AppendLine();
                     sb.AppendLine(horizontalSeparator);
                     z++;
@@ -105,7 +118,7 @@ namespace Model
                 }
 
                 sb.AppendFormat("{0,5} |", piece?.ToString() ?? ""); 
-                x++;
+                row++;
             }
 
             return sb.ToString();
@@ -114,12 +127,12 @@ namespace Model
         /// <summary>
         /// This method tells if the cell at a certain position is empty or not
         /// </summary>
-        /// <param name="x">Position on the x-axis</param>
-        /// <param name="y">Position on the y-axis</param>
+        /// <param name="row">Position on the row-axis</param>
+        /// <param name="col">Position on the col-axis</param>
         /// <returns> a boolean : true = the <c>Board</c> is empty and false = the <c>Board</c> is not empty </returns>
-        public bool IsEmpty(int x, int y)
+        public bool IsEmpty(int row, int col)
         {
-            if (IsOnBoard(x,y) && grid[x, y] == null)
+            if (IsOnBoard(row,col) && grid[row, col] == null)
                     return true;
             return false;
         }
@@ -127,25 +140,25 @@ namespace Model
         /// <summary>
         /// This method returns a <c>Piece</c> at a specific position on the <c>Board</c>
         /// </summary>
-        /// <param name="x">Position on the x-axis</param>
-        /// <param name="y">Position on the y-axis</param>
+        /// <param name="row">Position on the row-axis</param>
+        /// <param name="col">Position on the col-axis</param>
         /// <returns></returns>
-        public Piece GetPiece(int x, int y)
+        public Piece GetPiece(int row, int col)
         {
-            if (!IsOnBoard(x, y))
+            if (!IsOnBoard(row, col))
                 throw new ArgumentException("There's no Piece outside the board.");
-            return grid[x, y];
+            return grid[row, col];
         }
 
         /// <summary>
         /// This method tells if the coordinates are within the limits of the <c>Board</c>
         /// </summary>
-        /// <param name="x">Position on the x-axis</param>
-        /// <param name="y">Position on the y-axis</param>
+        /// <param name="row">Position on the row-axis</param>
+        /// <param name="col">Position on the col-axis</param>
         /// <returns> boolean : true = is on the board and false = is out of the board </returns>
-        public bool IsOnBoard(int x, int y)
+        public bool IsOnBoard(int row, int col)
         {
-            if (x < 0 || y < 0 || x >= SizeX || y >= SizeY)
+            if (row < 0 || col < 0 || row >= SizeX || col >= SizeY)
                 return false;
             return true;
         }
@@ -160,11 +173,11 @@ namespace Model
 
         public bool IsBoardFull()
         {
-            for (int x = 0; x < SizeX; x++)
+            for (int row = 0; row < SizeX; row++)
             {
-                for (int y = 0; y < SizeY; y++)
+                for (int col = 0; col < SizeY; col++)
                 {
-                    if (IsEmpty(x, y))
+                    if (IsEmpty(row, col))
                     {
                         return false;
                     }
@@ -205,7 +218,7 @@ namespace Model
             throw new InvalidOperationException("Piece not in the board !");
         }
 
-        public (int x, int y) PositionPiece(Piece piece)
+        public (int row, int y) PositionPiece(Piece piece)
         {
 
             for (int i = 0; i < grid.GetLength(0); i++)

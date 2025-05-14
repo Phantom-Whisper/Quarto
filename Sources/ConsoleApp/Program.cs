@@ -1,18 +1,20 @@
-﻿using Model;
+﻿using Manager;
+using Manager.CustomEventArgs;
+using Model;
 
-
+/*
 Board board = new(4, 4);
 
 Piece piece = new Piece(true, true, true, false);
 board.InsertPiece(piece, 2,2);
 
 
-PlayerIA playerIA = new();
-PlayerHumain playerHumain = new("joueur");
-var win = playerIA.NbWin;
+//IAPlayer playerIA = new();
+HumanPlayer playerHumain = new("joueur");
+//var win = playerIA.NbWin;
 Console.WriteLine("-----------------------------------------------");
-Console.WriteLine(playerIA.Pseudo);
-Console.WriteLine(win);
+//Console.WriteLine(playerIA.Pseudo);
+//Console.WriteLine(win);
 Console.WriteLine(playerHumain.Pseudo);
 Console.WriteLine(playerHumain.NbWin.ToString());
 Console.WriteLine("-----------------------------------------------");
@@ -29,4 +31,27 @@ Console.WriteLine("----------------------------------");
 
 GameManager gameManager = new GameManager();
 
-gameManager.LaunchGame();
+gameManager.LaunchGame();*/
+
+namespace ConsoleApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var gameManager = new GameManager();
+
+            gameManager.OnPlayerNameRequested += PlayerNameRequested;
+
+            gameManager.CreatePlayers(false);
+
+            Console.WriteLine("point d'arrêt");
+        }
+
+        private static void PlayerNameRequested(object? sender, PlayerNameRequestedEventArgs e)
+        {
+            Console.Write($"Entrez le nom du Joueur {e.PlayerIndex + 1} : ");
+            e.PlayerName = Console.ReadLine();
+        }
+    }
+}

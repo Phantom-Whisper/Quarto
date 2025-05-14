@@ -1,6 +1,9 @@
-﻿namespace Model
+﻿using Manager;
+using System.Text;
+
+namespace Model
 {
-    public sealed class Piece : IEquatable<Piece>
+    public sealed class Piece : IPiece, IEquatable<Piece>
     {
         /// <summary>
         /// This is the <c>Ctor</c> of the Class <c>Piece</c>.
@@ -23,7 +26,7 @@
         public bool IsSquare
         {
             get;
-            init;
+            private init;
         }
 
         /// <summary>
@@ -32,7 +35,7 @@
         public bool IsLight
         {
             get;
-            init;
+            private init;
         }
 
         /// <summary>
@@ -41,7 +44,7 @@
         public bool IsBig
         {
             get;
-            init;
+            private init;
         }
 
         /// <summary>
@@ -50,7 +53,7 @@
         public bool IsFull
         {
             get;
-            init;
+            private init;
         }
 
         /// <summary>
@@ -61,14 +64,13 @@
         /// </returns>
         public override string ToString()
         {
-            string piece = "";
+            StringBuilder sb = new StringBuilder();
+            sb.Append(IsSquare ? "Square" : "Round");
+            sb.Append(IsLight ? " Light" : " Dark");
+            sb.Append(IsBig ? " Big" : " Small");
+            sb.Append(IsFull ? " Full" : " Hollow");
 
-            piece += IsSquare ? "Square" : "Round";
-            piece += IsLight ? " Light" : " Dark";
-            piece += IsBig ? " Big" : " Small";
-            piece += IsFull ? " Full" : " Hollow";
-
-            return piece;
+            return sb.ToString();
         }
 
         /// <summary>

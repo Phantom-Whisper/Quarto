@@ -1,43 +1,46 @@
-﻿using System.Collections;
+﻿using Manager;
 using System.Collections.ObjectModel;
 
 namespace Model
 {
-    public class Bag
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Bag : IBag
     {
-
         /// <summary>
-        /// This is the <c>Ctor</c> of the Class <c>Bag</c>.
+        /// <c>Ctor</c> of the Class <c>Bag</c>.
         /// </summary>
         public Bag()
         {
             Baglist = new ObservableCollection<Piece>();
+            Init();
         }
 
         /// <summary>
-        /// This property contains the collection of <c>Piece</c> that the player can put on the <c>Board</c>.
+        /// Contains the collection of <c>Piece</c> that the player can put on the <c>Board</c>.
         /// </summary>
         public ObservableCollection<Piece> Baglist { get; private set; }
 
+        /// <summary>
+        /// Checks if the <c>Bag</c>
+        /// </summary>
+        /// <returns></returns>
         public bool IsEmpty()
         {
             return !Baglist.Any();
         }
 
         /// <summary>
-        /// This method create and add a <c>Piece</c> to the <c>Bag</c>.
+        /// Adds a <c>Piece</c> object to the <c>Bag</c>.
         /// </summary>
-        /// <param name="isSquare"> boolean of the shape : true = Square and false = Round </param>
-        /// <param name="isLight"> boolean of the color : true = Light and false = Dark </param>
-        /// <param name="isBig"> boolean of the size : true = Big and false = Small </param>
-        /// <param name="isFull"> boolean of the state : true = Full and false = Hollow </param>
-        public void AddPiece(bool isSquare, bool isLight, bool isBig, bool isFull)
+        /// <param name="piece"> The <c>Piece</c> we want to add into the bag </param>
+        /// <exception cref="InvalidOperationException"> when the piece is already in the collection </exception>
+        public void AddPiece(Piece piece)
         {
-            Piece newPiece = new(isSquare, isLight, isBig, isFull);
-
-            if (!Baglist.Contains(newPiece))
+            if (!Baglist.Contains(piece))
             {
-                Baglist.Add(newPiece);
+                Baglist.Add(piece);
             }
             else
             {
@@ -46,35 +49,42 @@ namespace Model
         }
 
         /// <summary>
-        /// This method remove a <c>Piece</c> from the <c>Bag</c>.
+        /// Retrieves and removes a <c>Piece</c> at the specified index from the <c>Bag</c>.
         /// </summary>
-        /// <param name="piece"> <c>Piece</c> removed </param>
-        /// <exception cref="InvalidOperationException"> when the piece is not in the collection </exception>
-        public void RemovePiece(Piece piece)
+        /// <param name="index">The index of the <c>Piece</c> to retrieve and remove.</param>
+        /// <returns>The <c>Piece</c> removed from the bag.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the index is out of range.</exception>
+        public Piece? TakePiece(Piece piece)
         {
             ArgumentNullException.ThrowIfNull(piece);
-
-            if (!Baglist.Remove(piece))
-            {
-                throw new InvalidOperationException("The piece is not in the bag");
-            }
-
+            return Baglist.Remove(piece) ? piece : null;
         }
 
-        public Piece GetPiece(int index)
+        private void Init()
         {
-            if (IsEmpty())
-            {
-                throw new InvalidOperationException("The bag is empty.");
-            }
+            List<Piece> listPiece = new List<Piece> {
+                new(true, true, true, true),
+                new(true, true, true, false),
+                new(true, true, false, true),
+                new(true, true, false, false),
+                new(true, false, true, true),
+                new(true, false, true, false),
+                new(true, false, false, true),
+                new(true, false, false, false),
+                new(false, true, true, true),
+                new(false, true, true, false),
+                new(false, true, false, true),
+                new(false, true, false, false),
+                new(false, false, true, true),
+                new(false, false, true, false),
+                new(false, false, false, true),
+                new(false, false, false, false)
+                };
 
-            if (index < 0 || index >= Baglist.Count)
+            foreach (var piece in listPiece)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
+                AddPiece(piece);
             }
-            Piece piece = Baglist[index];
-            Baglist.Remove(piece);
-            return piece;
         }
     }
 }

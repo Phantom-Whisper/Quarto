@@ -1,6 +1,8 @@
-﻿namespace Model
+﻿using Manager;
+
+namespace Model
 {
-    public abstract class Player : IEqualityComparer<Player>
+    /*public abstract class Player : IEqualityComparer<Player>
     {
         /// <summary>
         /// This is the <c>Ctor</c> of the Class <c>Player</c>.
@@ -53,4 +55,16 @@
         /// <returns></returns>
         public int GetHashCode(Player player) => Pseudo.GetHashCode();
     }
+    */
+        public abstract class Player : IPlayer
+        {
+            public string Name { get; protected set; }
+
+            protected Player(string name)
+            {
+                Name = name;
+            }
+
+            public abstract void PlayTurn(IBoard board); // comportement à définir par les sous-classes
+        }
 }
