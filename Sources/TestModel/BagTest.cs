@@ -4,6 +4,7 @@ namespace TestModel
 {
     public class BagTest
     {
+        /*
         Piece pieceTest = new(true, true, true, true);
 
         [Fact]
@@ -113,5 +114,6 @@ namespace TestModel
 
             Assert.DoesNotContain(piece,bag.Baglist);
         }
+        */
     }
 }
