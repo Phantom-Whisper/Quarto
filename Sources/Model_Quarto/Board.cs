@@ -1,14 +1,15 @@
-﻿using System.Text;
+﻿using Manager;
+using System.Text;
 
 namespace Model
 {
-    public class Board
+    public class Board : IBoard
     {
         private const int MAXSIZE = 4;
 
         public Board() 
         {
-            grid = new Piece[MAXSIZE, MAXSIZE];
+            grid = new IPiece[MAXSIZE, MAXSIZE];
         }
 
         /// <summary>
@@ -20,38 +21,32 @@ namespace Model
         {
             if (row != MAXSIZE || col != MAXSIZE)
                 throw new ArgumentException($"The maximum alowed size of the board is : {MAXSIZE}*{MAXSIZE}.");
-            grid = new Piece[row, col];
+            grid = new IPiece[row, col];
         }
 
         /// <summary>
         /// This property contains the number of cells in the row-axis.
         /// </summary>
-        public int SizeX
-        {
-            get => grid.GetLength(0);
-        }
+        public int SizeX => grid.GetLength(0);
 
         /// <summary>
         /// This property contains the number of cells in the col-axis.
         /// </summary>
-        public int SizeY
-        {
-            get => grid.GetLength(1);
-        }
+        public int SizeY => grid.GetLength(1);
 
         /// <summary>
         /// A grid of <c>Piece</c> making the <c>Board</c>.
         /// </summary>
-        private readonly Piece[,] grid;
+        private readonly IPiece[,] grid;
 
         /// <summary>
         /// This property contains the status of the grid
         /// </summary>
-        public Piece[,] Grid
+        public IPiece[,] Grid
         {
             get
             {
-                var copy = new Piece[grid.GetLength(0), grid.GetLength(1)];
+                var copy = new IPiece[grid.GetLength(0), grid.GetLength(1)];
                 Array.Copy(grid, copy, grid.Length);
                 return copy;
             }
@@ -69,7 +64,7 @@ namespace Model
         /// <param name="row">Position on the row-axis.</param>
         /// <param name="col">Position on the col-axis.</param>
         /// <exception cref="InvalidOperationException"> when the <c>Piece</c> can't be placed in the position </exception>
-        public void InsertPiece(Piece piece, int row, int col)
+        public void InsertPiece(IPiece piece, int row, int col)
         {
             if (IsEmpty(row, col) && IsOnBoard(row, col))
                 grid[row, col] = piece;
@@ -143,7 +138,7 @@ namespace Model
         /// <param name="row">Position on the row-axis</param>
         /// <param name="col">Position on the col-axis</param>
         /// <returns></returns>
-        public Piece GetPiece(int row, int col)
+        public IPiece GetPiece(int row, int col)
         {
             if (!IsOnBoard(row, col))
                 throw new ArgumentException("There's no Piece outside the board.");
@@ -186,7 +181,7 @@ namespace Model
             return true;
         }
 
-        public int PositionXPiece(Piece piece)
+        public int PositionXPiece(IPiece piece)
         {
 
             for (int i = 0; i < grid.GetLength(0); i++)
@@ -202,7 +197,7 @@ namespace Model
             throw new InvalidOperationException("Piece not in the board !");
         }
 
-        public int PositionYPiece(Piece piece)
+        public int PositionYPiece(IPiece piece)
         {
 
             for (int i = 0; i < grid.GetLength(0); i++)
@@ -218,7 +213,7 @@ namespace Model
             throw new InvalidOperationException("Piece not in the board !");
         }
 
-        public (int row, int y) PositionPiece(Piece piece)
+        public (int row, int col) PositionPiece(IPiece piece)
         {
 
             for (int i = 0; i < grid.GetLength(0); i++)

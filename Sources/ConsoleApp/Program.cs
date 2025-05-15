@@ -36,6 +36,8 @@ namespace ConsoleApp
         {
             var gameManager = new GameManager();
 
+            gameManager.OnDisplayMessage += DisplayMessage;
+            gameManager.OnInputRequested += RequestInput;
             gameManager.OnPlayerNameRequested += PlayerNameRequested;
 
             int choice = Menu();
@@ -43,16 +45,8 @@ namespace ConsoleApp
             switch(choice)
             {
                 case 1:
-                    Console.Write("Playing against an AI (Y/N) ? ");
-                    string? input = Console.ReadLine();
-                    bool solo = false;
-                    while ((input != "Y" && input != "N" && input != "y" && input != "n"))
-                    {
-                        Console.WriteLine("Invalid choice. Please enter Y or N.");
-                        input = Console.ReadLine();
-                    }
-                    if (input == "Y" || input == "y")
-                        solo = true;
+                    Console.Write("Mode solo ? (y/n) ");
+                    bool solo = Console.ReadLine()?.Trim().ToLower() == "y";
                     gameManager.CreatePlayers(solo);
                     gameManager.Run();
                     break;
@@ -70,5 +64,13 @@ namespace ConsoleApp
             e.PlayerName = Console.ReadLine();
         }
 
+        private static void DisplayMessage(object? sender, MessageEventArgs e) => Console.WriteLine(e.Message);
+
+        private static void RequestInput(object? sender, InputRequestedEventArgs e)
+        {
+            Console.WriteLine(e.Prompt);
+            string? input = Console.ReadLine();
+            e.Callback(input);
+        }
     }
 }

@@ -1,6 +1,10 @@
 ﻿namespace Manager
 {
-    public class IPiece
+    public interface IPiece
     {
+        bool IsSquare { get; }
+        bool IsLight { get; }
+        bool IsBig { get; }
+        bool IsFull { get; }
     }
 }

@@ -65,6 +65,6 @@ namespace Model
                 Name = name;
             }
 
-            public abstract void PlayTurn(IBoard board); // comportement à définir par les sous-classes
+            public abstract IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager); // comportement à définir par les sous-classes
         }
 }

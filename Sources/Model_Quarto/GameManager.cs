@@ -1,5 +1,6 @@
 ﻿using Manager;
 using Manager.CustomEventArgs;
+using System.Security.Cryptography;
 
 namespace Model
 {
@@ -8,30 +9,90 @@ namespace Model
         private int TURNNUMBER = 0;
 
         public event EventHandler<MessageEventArgs>? OnDisplayMessage;
+        public event EventHandler<InputRequestedEventArgs>? OnInputRequested;
         public event EventHandler<PlayerNameRequestedEventArgs>? OnPlayerNameRequested;
 
-        private IPlayer[] players = new IPlayer[2];
-        private int currentPlayerIndex = 0;
+        private readonly IPlayer[] players = new IPlayer[2];
+        private int currentPlayerIndex = 1;
 
-        // private IRulesManager rulesManager;
+        private IRulesManager rulesManager = new Rules();
         
-        Bag bag = new() { };
-        private readonly Board board = new();
+        readonly Bag bag = new() { };
+        public List<IPiece> GetAvailablePieces() => [.. bag.Baglist];
+        private readonly Board board = new() { };
 
         public IPlayer CurrentPlayer => players[currentPlayerIndex];
 
-        Piece pieceToPlay = null;
+        private IPiece? pieceToPlay = null;
 
-        public void SwitchCurrentPlayer()
+        public void Run()
         {
-            currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
+            ChooseDifficulty();
+            pieceToPlay = FirstTurn();
+            while (!rulesManager.IsGameOver(bag, board))
+            {
+                Turn();
+            }
         }
 
-        private void FirstTurn()
+        private IPiece FirstTurn()
         {
-            // demande au J2 de choisir une piece dans le bag
-            Console.WriteLine("Choose a piece to play");
-            string? tile = Console.ReadLine();
+            IPiece? selectedPiece = null;
+            using ManualResetEvent waitHandle = new(false);
+
+            void RequestPiece()
+            {
+                OnInputRequested?.Invoke(this, new InputRequestedEventArgs(
+                    "Enter the number of the piece:",
+                    input =>
+                    {
+                        if (int.TryParse(input, out int index))
+                        {
+                            index -= 1;
+                            if (index >= 0 && index < bag.Baglist.Count)
+                            {
+                                selectedPiece = bag.Baglist[index];
+                                bag.TakePiece((Piece)selectedPiece);
+                                waitHandle.Set();
+                                return;
+                            }
+                        }
+
+                        OnDisplayMessage?.Invoke(this, new MessageEventArgs("Invalid selection. Please try again."));
+                        RequestPiece();
+                    }));
+            }
+
+            if (CurrentPlayer is AIPlayer)
+            {
+                using var randomGenerator = RandomNumberGenerator.Create();
+                byte[] data = new byte[4];
+                randomGenerator.GetBytes(data);
+
+                int randomInt = BitConverter.ToInt32(data, 0);
+
+                randomInt = Math.Abs(randomInt);
+
+                SwitchCurrentPlayer();
+                return bag.Baglist[randomInt % bag.Baglist.Count];                
+            }
+
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"{CurrentPlayer.Name} choose a piece to give to your opponent:"));
+
+            RequestPiece(); 
+            waitHandle.WaitOne();
+            SwitchCurrentPlayer();
+            return selectedPiece!;
+        }
+
+        public void DisplayMessage(string message)
+        {
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs(message));
+        }
+
+        public void RequestInput(string prompt, Action<string?> callback)
+        {
+            OnInputRequested?.Invoke(this, new InputRequestedEventArgs(prompt, callback));
         }
 
         public void Turn()
@@ -40,27 +101,90 @@ namespace Model
                 TURNNUMBER++;
             Display();
 
+            if (TURNNUMBER >= 4)
+                TryDeclareQuarto(board, rulesManager);
 
-
-           // Console.WriteLine("Point d'arrêt");
+            if (pieceToPlay is null)
+                throw new InvalidOperationException("Piece not selected before usage.");
+            pieceToPlay = CurrentPlayer.PlayTurn(board, pieceToPlay, this);
+            SwitchCurrentPlayer();
+           Console.WriteLine("Point d'arrêt");
         }
 
-        public void Run()
+        private void TryDeclareQuarto(Board board, IRulesManager rulesManager)
         {
-            FirstTurn();
-            /*
-            while(!rulesManager.IsGameOver())
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"{CurrentPlayer.Name}, do you want to declare a Quarto? (y/n)"));
+            string? response = Console.ReadLine()?.Trim().ToLower();
+
+            if (response != "y") return;
+
+            List<(int row, int col)> selectedPositions = new();
+
+            for (int i = 1; i <= 4; i++)
             {
-                Turn();
+                OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Select piece {i}: enter row:"));
+                if (!int.TryParse(Console.ReadLine(), out int row))
+                {
+                    OnDisplayMessage?.Invoke(this, new MessageEventArgs("Invalid input. Aborting Quarto attempt."));
+                    return;
+                }
+
+                OnDisplayMessage?.Invoke(this, new MessageEventArgs("Enter column:"));
+                if (!int.TryParse(Console.ReadLine(), out int col))
+                {
+                    OnDisplayMessage?.Invoke(this, new MessageEventArgs("Invalid input. Aborting Quarto attempt."));
+                    return;
+                }
+
+                if (!board.IsOnBoard(row, col) || board.IsEmpty(row, col))
+                {
+                    OnDisplayMessage?.Invoke(this, new MessageEventArgs("Invalid selection. Aborting Quarto attempt."));
+                    return;
+                }
+
+                selectedPositions.Add((row, col));
             }
-            */
+
+            var selectedPieces = selectedPositions
+                .Select(pos => board.GetPiece(pos.row, pos.col))
+                .ToList();
+
+            if (rulesManager.IsQuarto(board, selectedPieces))
+            {
+                OnDisplayMessage?.Invoke(this, new MessageEventArgs($"{CurrentPlayer.Name} wins with a Quarto!"));
+            }
+            else
+            {
+                OnDisplayMessage?.Invoke(this, new MessageEventArgs("Incorrect Quarto declaration. The game continues."));
+            }
+        }
+
+        public void SwitchCurrentPlayer()
+        {
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
+        }
+
+        private void ChooseDifficulty()
+        {
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs("Choisissez la difficulté :"));
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs("1. Débutant"));
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs("2. Normal"));
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs("3. Avancé"));
+
+            string? input = Console.ReadLine();
+            rulesManager = input switch
+            {
+                "1" => new RulesBeginner(),
+                "2" => new Rules(),
+                "3" => new RulesAdvanced(),
+                _ => new Rules(),
+            };
         }
 
         public void CreatePlayers(bool solo)
         {
             if (solo)
             {
-                // Joueur Humain
                 var args = new PlayerNameRequestedEventArgs(0);
                 OnPlayerNameRequested?.Invoke(this, args);
 
@@ -70,7 +194,6 @@ namespace Model
 
                 players[0] = new HumanPlayer(name);
 
-                // Joueur IA
                 players[1] = new DumbAIPlayer();
             }
             else
@@ -91,12 +214,11 @@ namespace Model
 
         private void Display()
         {
-            Console.WriteLine($"Tour: {TURNNUMBER}");
-            Console.WriteLine($"Joueur courant: {CurrentPlayer.Name}");
-            Console.WriteLine(board.ToString());
-            Console.WriteLine(bag.ToString());
-            Console.WriteLine($"Piece à jouer: {pieceToPlay}");
-
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Tour: {TURNNUMBER}"));
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Joueur courant: {CurrentPlayer.Name}"));
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs(board.ToString())); // Faire des méthodes Display parcourant les éléments
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs(bag.ToString())); // Faire des méthodes Display parcourant les éléments
+            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Piece à jouer: {pieceToPlay}"));
         }
     }
 }

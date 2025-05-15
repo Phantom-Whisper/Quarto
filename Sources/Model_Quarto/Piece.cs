@@ -25,8 +25,7 @@ namespace Model
         /// </summary>
         public bool IsSquare
         {
-            get;
-            private init;
+            get; private init;
         }
 
         /// <summary>
@@ -34,8 +33,7 @@ namespace Model
         /// </summary>
         public bool IsLight
         {
-            get;
-            private init;
+            get; private init;
         }
 
         /// <summary>
@@ -43,8 +41,7 @@ namespace Model
         /// </summary>
         public bool IsBig
         {
-            get;
-            private init;
+            get; private init;
         }
 
         /// <summary>
@@ -52,8 +49,7 @@ namespace Model
         /// </summary>
         public bool IsFull
         {
-            get;
-            private init;
+            get; private init;
         }
 
         /// <summary>
