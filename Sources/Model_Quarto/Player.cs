@@ -11,7 +11,7 @@ namespace Model
                 Name = name;
             }
 
-            public abstract IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager); // comportement à définir par les sous-classes
+            public abstract void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager); // comportement à définir par les sous-classes
 
             /// <summary>
             /// This method tells if two <c>Player</c> are the same.

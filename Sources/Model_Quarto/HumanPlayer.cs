@@ -7,7 +7,7 @@ namespace Model
     {
         public HumanPlayer(string name) : base(name) { }
 
-        public override IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
+        public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
         {
             bool placed = false;
 
@@ -34,37 +34,6 @@ namespace Model
                     gameManager.DisplayMessage("Invalid move. Try again.");
                 }
             }
-
-            return ChoosePieceForOpponent(gameManager);
-        }
-
-        private static IPiece ChoosePieceForOpponent(IGameManager gameManager)
-        {
-            IPiece? selectedPiece = null;
-            var availablePieces = gameManager.GetAvailablePieces();
-
-            while (selectedPiece == null)
-            {
-                gameManager.DisplayMessage("Choose a piece to give to your opponent:");
-                gameManager.DisplayMessage(availablePieces.ToString());
-
-                Console.Write("Enter the number of the piece: ");
-                string? input = Console.ReadLine();
-
-                if (int.TryParse(input, out int index))
-                {
-                    index -= 1;
-                    if (index >= 0 && index < availablePieces.Count)
-                    {
-                        selectedPiece = availablePieces[index];
-                        return selectedPiece;
-                    }
-                }
-
-                gameManager.DisplayMessage("Invalid selection. Try again.");
-            }
-
-            return selectedPiece!; // never null at this point
         }
     }
 }

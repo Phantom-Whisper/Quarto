@@ -8,7 +8,7 @@ namespace Model
     {
         public DumbAIPlayer() : base("Dumb AI") { }
 
-        public override IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
+        public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
         {
             using var randomGenerator = RandomNumberGenerator.Create();
             byte[] data = new byte[4];
@@ -35,12 +35,10 @@ namespace Model
             if (availablePieces.Count == 0)
             {
                 gameManager.DisplayMessage($"{Name}: No pieces left to give.");
-                return null;
+                return ;
             }
             randomInt = Math.Abs(randomInt);
             var selectedPiece = availablePieces[randomInt % availablePieces.Count];
-
-            return selectedPiece;
         }
     }
 }
