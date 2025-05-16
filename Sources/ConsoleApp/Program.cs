@@ -34,11 +34,10 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            var gameManager = new GameManager();
+            IRulesManager rulesManager = new Rules();
+            IPlayer[] players = new IPlayer[2];
 
-            gameManager.OnDisplayMessage += DisplayMessage;
-            gameManager.OnInputRequested += RequestInput;
-            gameManager.OnPlayerNameRequested += PlayerNameRequested;
+            
 
             int choice = Menu();
 
@@ -47,7 +46,15 @@ namespace ConsoleApp
                 case 1:
                     Console.Write("Mode solo ? (y/n) ");
                     bool solo = Console.ReadLine()?.Trim().ToLower() == "y";
-                    gameManager.CreatePlayers(solo);
+                    ChooseDifficulty(rulesManager);
+                    CreatePlayers(solo, players);
+
+                    var gameManager = new GameManager(rulesManager, players);
+                    gameManager.GameStarted += GameStarted;
+                    gameManager.OnDisplayMessage += DisplayMessage;
+                    gameManager.OnInputRequested += RequestInput;
+                    gameManager.OnPlayerNameRequested += PlayerNameRequested;
+                    //gameManager.CreatePlayers(solo);
                     gameManager.Run();
                     break;
                 default:
@@ -58,6 +65,60 @@ namespace ConsoleApp
             Console.WriteLine("point d'arrêt");
         }
 
+        private static void ChooseDifficulty(IRulesManager rulesManager)
+        {
+            Console.WriteLine("Choisissez la difficulté :");
+            Console.WriteLine("1. Débutant");
+            Console.WriteLine("2. Normal");
+            Console.WriteLine("3. Avancé");
+
+            string? input = Console.ReadLine();
+            rulesManager = input switch
+            {
+                "1" => new RulesBeginner(),
+                "2" => new Rules(),
+                "3" => new RulesAdvanced(),
+                _ => new Rules(),
+            };
+        }
+
+        private static void CreatePlayers(bool solo, IPlayer[] players)
+        {
+            if (solo)
+            {
+                var args = new PlayerNameRequestedEventArgs(0);
+                //OnPlayerNameRequested?.Invoke(this, args);
+
+                string name = string.IsNullOrWhiteSpace(args.PlayerName)
+                    ? "Player1"
+                    : args.PlayerName;
+
+                players[0] = new HumanPlayer(name);
+
+                players[1] = new DumbAIPlayer();
+            }
+            else
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    var args = new PlayerNameRequestedEventArgs(i);
+                    //OnPlayerNameRequested?.Invoke(this, args);
+
+                    string name = string.IsNullOrWhiteSpace(args.PlayerName)
+                        ? $"Player{i + 1}"
+                        : args.PlayerName;
+
+                    players[i] = new HumanPlayer(name);
+                }
+            }
+        }
+
+        private static void GameStarted(object? sender, GameStartedEventArgs e)
+        {
+            Console.WriteLine(e.Board.ToString());
+            Console.WriteLine(e.Bag.ToString());
+            Console.WriteLine(e.CurrentPlayer.Name);
+        }
         private static void PlayerNameRequested(object? sender, PlayerNameRequestedEventArgs e)
         {
             Console.Write($"Entrez le nom du Joueur {e.PlayerIndex + 1} : ");
