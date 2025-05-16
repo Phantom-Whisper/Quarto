@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
+using System.Text;
 using Manager;
 using Manager.CustomEventArgs;
 using Model;
@@ -50,12 +51,15 @@ namespace ConsoleApp
                     CreatePlayers(solo, players);
 
                     var gameManager = new GameManager(rulesManager, players);
+                    
                     gameManager.GameStarted += GameStarted;
                     gameManager.OnDisplayMessage += DisplayMessage;
                     gameManager.OnInputRequested += RequestInput;
                     gameManager.OnPlayerNameRequested += PlayerNameRequested;
                     gameManager.Quarto += Quarto;
-                    //gameManager.CreatePlayers(solo);
+                    gameManager.BoardChanged += BoardChange;
+                    gameManager.AskPieceToPlay += AskPieceToPlay;
+
                     gameManager.Run();
                     break;
                 default:
@@ -88,7 +92,6 @@ namespace ConsoleApp
             if (solo)
             {
                 var args = new PlayerNameRequestedEventArgs(0);
-                //OnPlayerNameRequested?.Invoke(this, args);
 
                 string name = string.IsNullOrWhiteSpace(args.PlayerName)
                     ? "Player1"
@@ -103,7 +106,6 @@ namespace ConsoleApp
                 for (int i = 0; i < 2; i++)
                 {
                     var args = new PlayerNameRequestedEventArgs(i);
-                    //OnPlayerNameRequested?.Invoke(this, args);
 
                     string name = string.IsNullOrWhiteSpace(args.PlayerName)
                         ? $"Player{i + 1}"
@@ -182,6 +184,52 @@ namespace ConsoleApp
             Console.WriteLine(e.Prompt);
             string? input = Console.ReadLine();
             e.Callback(input);
+        }
+
+        private static void BoardChange(object? sender, BoardChangedEventArgs e)
+        {
+            var sb = new StringBuilder();
+            int col = 0, row = 0;
+
+            for (int i = -1; i < e.Board.SizeY; i++)
+            {
+                if (i == -1)
+                {
+                    sb.Append("row/y | ");
+                }
+                else
+                {
+                    sb.AppendFormat("{0,4} | ", i);
+                }
+            }
+            sb.AppendLine();
+
+            string horizontalSeparator = new string('-', (e.Board.SizeY + 1) * 7);
+            sb.AppendLine(horizontalSeparator);
+
+            sb.AppendFormat("{0,2}  |", col);
+
+            foreach (var piece in e.Board.Grid)
+            {
+                if (row == e.Board.SizeX)
+                {
+                    row = 0;
+                    sb.AppendLine();
+                    sb.AppendLine(horizontalSeparator);
+                    col++;
+                    sb.AppendFormat("{0,2}  |", col);
+                }
+
+                sb.AppendFormat("{0,5} |", piece?.ToString() ?? "");
+                row++;
+            }
+
+            Console.WriteLine(sb.ToString());
+        }
+
+        private static void AskPieceToPlay(object? sender, AskPieceToPlayEventArgs e)
+        {
+
         }
     }
 }

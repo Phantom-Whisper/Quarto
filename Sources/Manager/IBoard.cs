@@ -4,6 +4,7 @@
     {
         int SizeX { get; }
         int SizeY { get; }
+        public IPiece[,] Grid { get; }
         bool IsBoardFull();
         bool IsEmpty(int row, int col);
         IPiece GetPiece(int row, int col);

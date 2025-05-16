@@ -4,12 +4,13 @@ using System.Security.Cryptography;
 
 namespace Model
 {
-    public class GameManager : IGameManager
+    public class GameManager(IRulesManager rules, IPlayer[] players) : IGameManager
     {
         private int TURNNUMBER = 0;
 
         public event EventHandler<MessageEventArgs>? OnDisplayMessage;
         public event EventHandler<InputRequestedEventArgs>? OnInputRequested;
+
         public event EventHandler<PlayerNameRequestedEventArgs>? OnPlayerNameRequested;
 
         public event EventHandler<GameStartedEventArgs>? GameStarted;
@@ -19,15 +20,27 @@ namespace Model
         }
 
         /// <summary>
-        /// Evenement to say Quarto
+        /// Event to declare a Quarto
         /// </summary>
         public event EventHandler<QuartoEventArgs>? Quarto;
         private void OnQuarto(QuartoEventArgs args) => Quarto?.Invoke(this, args);
 
-        private readonly IPlayer[] players = new IPlayer[2];
+        public event EventHandler<BoardChangedEventArgs>? BoardChanged;
+        private void OnBoardChanged(BoardChangedEventArgs args)
+        {
+            BoardChanged?.Invoke(this, args);
+        }
+
+        public event EventHandler<AskPieceToPlayEventArgs> ? AskPieceToPlay;
+        private void OnAskPieceToPlay(AskPieceToPlayEventArgs args)
+        {
+            AskPieceToPlay?.Invoke(this, args);
+        }
+
+        private readonly IPlayer[] players = players;
         private int currentPlayerIndex = 1;
 
-        private IRulesManager rulesManager = new Rules();
+        private readonly IRulesManager rulesManager = rules;
         
         readonly Bag bag = new() { };
         public List<IPiece> GetAvailablePieces() => [.. bag.Baglist];
@@ -36,12 +49,6 @@ namespace Model
         public IPlayer CurrentPlayer => players[currentPlayerIndex];
 
         private IPiece? pieceToPlay = null;
-
-        public GameManager(IRulesManager rules, IPlayer[] players)
-        {
-            rulesManager = rules;
-            this.players = players;
-        }
 
         public void Run()
         {
@@ -70,7 +77,7 @@ namespace Model
                             if (index >= 0 && index < bag.Baglist.Count)
                             {
                                 selectedPiece = bag.Baglist[index];
-                                bag.TakePiece((Piece)selectedPiece);
+                                bag.TakePiece(selectedPiece);
                                 waitHandle.Set();
                                 return;
                             }
@@ -139,7 +146,7 @@ namespace Model
         {
             OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Tour: {TURNNUMBER}"));
             OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Joueur courant: {CurrentPlayer.Name}"));
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs(board.ToString())); // Faire des méthodes Display parcourant les éléments
+            BoardChanged?.Invoke(this, new BoardChangedEventArgs(board)); // Faire des méthodes Display parcourant les éléments
             OnDisplayMessage?.Invoke(this, new MessageEventArgs(bag.ToString())); // Faire des méthodes Display parcourant les éléments
             OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Piece à jouer: {pieceToPlay}"));
         }

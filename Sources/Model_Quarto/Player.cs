@@ -2,62 +2,8 @@
 
 namespace Model
 {
-    /*public abstract class Player : IEqualityComparer<Player>
+    public abstract class Player : IPlayer, IEqualityComparer<Player>
     {
-        /// <summary>
-        /// This is the <c>Ctor</c> of the Class <c>Player</c>.
-        /// </summary>
-        /// <param name="pseudo"> name of the player </param>
-        /// <exception cref="ArgumentNullException"> if the string is null</exception>
-        protected Player(string pseudo)
-        {
-            Pseudo = !string.IsNullOrWhiteSpace(pseudo)
-                ? pseudo
-                : throw new ArgumentNullException(nameof(pseudo));
-            NbWin = 0;
-        }
-
-        /// <summary>
-        /// This property contains the name of the <c>Player</c>
-        /// </summary>
-        public string Pseudo
-        {
-            get;
-            init;
-        }
-
-        /// <summary>
-        /// This property contains the number of games won by the <c>Player</c>
-        /// </summary>
-        public int NbWin
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// This method tells if two <c>Player</c> are the same.
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public bool Equals(Player? p1, Player? p2)
-        {
-            if (ReferenceEquals(p1, p2)) return true;
-
-            if (p1 == null || p2 == null) return false;
-
-            return p1.Pseudo == p2.Pseudo;
-        }
-
-        /// <summary>
-        /// This method gives us the hashcode of a <c>Player</c>.
-        /// </summary>
-        /// <returns></returns>
-        public int GetHashCode(Player player) => Pseudo.GetHashCode();
-    }
-    */
-        public abstract class Player : IPlayer
-        {
             public string Name { get; protected set; }
 
             protected Player(string name)
@@ -66,5 +12,25 @@ namespace Model
             }
 
             public abstract IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager); // comportement à définir par les sous-classes
-        }
+
+            /// <summary>
+            /// This method tells if two <c>Player</c> are the same.
+            /// </summary>
+            /// <param name="other"></param>
+            /// <returns></returns>
+            public bool Equals(Player? p1, Player? p2)
+            {
+                if (ReferenceEquals(p1, p2)) return true;
+
+                if (p1 == null || p2 == null) return false;
+
+                return p1.Name == p2.Name;
+            }
+
+            /// <summary>
+            /// This method gives us the hashcode of a <c>Player</c>.
+            /// </summary>
+            /// <returns></returns>
+            public int GetHashCode(Player player) => Name.GetHashCode();
+    }
 }

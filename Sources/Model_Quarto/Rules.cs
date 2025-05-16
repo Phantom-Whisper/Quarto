@@ -93,7 +93,7 @@ namespace Model
             return list;
         }
 
-        public static bool PlayAMove(Piece piece, int row, int col, Board board)
+        public static bool PlayAMove(IPiece piece, int row, int col, Board board)
         {
             if (!IsMoveValid(board, row, col))
             {
@@ -135,7 +135,7 @@ namespace Model
             List<(int row, int col)> positions;
             try
             {
-                positions = pieces.Select(p => board.PositionPiece((Piece)p)).ToList();
+                positions = pieces.Select(p => board.PositionPiece(p)).ToList();
             }
             catch (InvalidCastException)
             {
