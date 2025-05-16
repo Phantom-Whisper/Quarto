@@ -7,21 +7,23 @@ namespace Model
     /// <summary>
     /// 
     /// </summary>
-    public class Bag : IBag
+    internal class Bag : IBag
     {
         /// <summary>
         /// <c>Ctor</c> of the Class <c>Bag</c>.
         /// </summary>
         public Bag()
         {
-            Baglist = new ObservableCollection<Piece>();
+            Baglist = new ReadOnlyObservableCollection<IPiece>(pieces);
             Init();
         }
 
         /// <summary>
         /// Contains the collection of <c>Piece</c> that the player can put on the <c>Board</c>.
         /// </summary>
-        public ObservableCollection<Piece> Baglist { get; private set; }
+        public ReadOnlyObservableCollection<IPiece> Baglist { get; private set; }
+
+        private readonly ObservableCollection<IPiece> pieces = new();
 
         /// <summary>
         /// Checks if the <c>Bag</c>
@@ -37,11 +39,11 @@ namespace Model
         /// </summary>
         /// <param name="piece"> The <c>Piece</c> we want to add into the bag </param>
         /// <exception cref="InvalidOperationException"> when the piece is already in the collection </exception>
-        public void AddPiece(Piece piece)
+        public void AddPiece(IPiece piece)
         {
             if (!Baglist.Contains(piece))
             {
-                Baglist.Add(piece);
+                pieces.Add(piece);
             }
             else
             {
@@ -58,7 +60,7 @@ namespace Model
         public Piece? TakePiece(Piece piece)
         {
             ArgumentNullException.ThrowIfNull(piece);
-            return Baglist.Remove(piece) ? piece : null;
+            return pieces.Remove(piece) ? piece : null;
         }
 
         private void Init()

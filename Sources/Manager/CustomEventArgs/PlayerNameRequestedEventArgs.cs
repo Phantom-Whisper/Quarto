@@ -1,6 +1,6 @@
 ﻿namespace Manager.CustomEventArgs
 {
-    public class PlayerNameRequestedEventArgs
+    public class PlayerNameRequestedEventArgs : EventArgs
     {
         public int PlayerIndex { get; }
         public string? PlayerName { get; set; }

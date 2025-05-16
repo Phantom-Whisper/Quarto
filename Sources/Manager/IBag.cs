@@ -1,4 +1,7 @@
-﻿namespace Manager
+﻿using System.Collections.ObjectModel;
+using System.IO.Pipelines;
+
+namespace Manager
 {
     public interface IBag
     {
@@ -7,5 +10,7 @@
         /// </summary>
         /// <returns><c>true</c> if the bag is empty; otherwise, <c>false</c>.</returns>
         bool IsEmpty();
+
+        ReadOnlyObservableCollection<IPiece> Baglist { get; }
     }
 }

@@ -12,6 +12,12 @@ namespace Model
         public event EventHandler<InputRequestedEventArgs>? OnInputRequested;
         public event EventHandler<PlayerNameRequestedEventArgs>? OnPlayerNameRequested;
 
+        public event EventHandler<GameStartedEventArgs>? GameStarted;
+        private void OnGameStarted(GameStartedEventArgs args)
+        {
+            GameStarted?.Invoke(this, args);
+        }
+
         private readonly IPlayer[] players = new IPlayer[2];
         private int currentPlayerIndex = 1;
 
@@ -25,9 +31,15 @@ namespace Model
 
         private IPiece? pieceToPlay = null;
 
+        public GameManager(IRulesManager rules, IPlayer[] players)
+        {
+            rulesManager = rules;
+            this.players = players;
+        }
+
         public void Run()
         {
-            ChooseDifficulty();
+            OnGameStarted(new GameStartedEventArgs(board, bag, CurrentPlayer));
             pieceToPlay = FirstTurn();
             while (!rulesManager.IsGameOver(bag, board))
             {
@@ -162,55 +174,7 @@ namespace Model
         public void SwitchCurrentPlayer()
         {
             currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
-        }
-
-        private void ChooseDifficulty()
-        {
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs("Choisissez la difficulté :"));
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs("1. Débutant"));
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs("2. Normal"));
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs("3. Avancé"));
-
-            string? input = Console.ReadLine();
-            rulesManager = input switch
-            {
-                "1" => new RulesBeginner(),
-                "2" => new Rules(),
-                "3" => new RulesAdvanced(),
-                _ => new Rules(),
-            };
-        }
-
-        public void CreatePlayers(bool solo)
-        {
-            if (solo)
-            {
-                var args = new PlayerNameRequestedEventArgs(0);
-                OnPlayerNameRequested?.Invoke(this, args);
-
-                string name = string.IsNullOrWhiteSpace(args.PlayerName)
-                    ? "Player1"
-                    : args.PlayerName;
-
-                players[0] = new HumanPlayer(name);
-
-                players[1] = new DumbAIPlayer();
-            }
-            else
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    var args = new PlayerNameRequestedEventArgs(i);
-                    OnPlayerNameRequested?.Invoke(this, args);
-
-                    string name = string.IsNullOrWhiteSpace(args.PlayerName)
-                        ? $"Player{i + 1}"
-                        : args.PlayerName;
-
-                    players[i] = new HumanPlayer(name);
-                }
-            }
-        }
+        }        
 
         private void Display()
         {
