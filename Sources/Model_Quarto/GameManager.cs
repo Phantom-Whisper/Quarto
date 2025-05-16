@@ -50,13 +50,21 @@ namespace Model
             }
         }
 
+        private void RequestNewPiece()
+        {
+            var args = new AskPieceToPlayEventArgs(CurrentPlayer, GetAvailablePieces(), pieceToPlay);
+            AskPieceToPlay?.Invoke(this, args);
+
+            if (args.PieceToPlay is null)
+                throw new InvalidOperationException("No piece was selected.");
+
+            pieceToPlay = args.PieceToPlay;
+        }
+
         private void FirstTurn()
         {
             SwitchCurrentPlayer();
-            var args = new AskPieceToPlayEventArgs(CurrentPlayer, GetAvailablePieces(), pieceToPlay);
-            AskPieceToPlay?.Invoke(this, args);
-            pieceToPlay = args.PieceToPlay;
-
+            RequestNewPiece();
             SwitchCurrentPlayer();
         }
 
@@ -74,7 +82,6 @@ namespace Model
         {
             if (currentPlayerIndex == 0)
                 turnNumber ++;
-            Display();
 
             if (turnNumber  >= 4)
                 OnQuarto(new QuartoEventArgs(_rulesManager, board, CurrentPlayer));
@@ -82,9 +89,7 @@ namespace Model
             if (pieceToPlay is null)
                 throw new InvalidOperationException("Piece not selected before usage.");
             CurrentPlayer.PlayTurn(board, pieceToPlay, this);
-            var args = new AskPieceToPlayEventArgs(CurrentPlayer, GetAvailablePieces(), pieceToPlay);
-            AskPieceToPlay?.Invoke(this, args);
-            pieceToPlay = args.PieceToPlay;
+            RequestNewPiece();
             SwitchCurrentPlayer();
         }
 
@@ -98,7 +103,7 @@ namespace Model
         {
             OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Tour: {turnNumber}"));
             OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Joueur courant: {CurrentPlayer.Name}"));
-            BoardChanged?.Invoke(this, new BoardChangedEventArgs(board)); // Faire des méthodes Display parcourant les éléments
+            OnBoardChanged(new BoardChangedEventArgs(board));
             OnDisplayMessage?.Invoke(this, new MessageEventArgs(bag.ToString())); // Faire des méthodes Display parcourant les éléments
             OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Piece à jouer: {pieceToPlay}"));
         }

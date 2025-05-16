@@ -30,15 +30,6 @@ namespace Model
             {
                 gameManager.DisplayMessage($"{Name}: Failed to place the piece. This should not happen.");
             }
-
-            var availablePieces = gameManager.GetAvailablePieces();
-            if (availablePieces.Count == 0)
-            {
-                gameManager.DisplayMessage($"{Name}: No pieces left to give.");
-                return ;
-            }
-            randomInt = Math.Abs(randomInt);
-            var selectedPiece = availablePieces[randomInt % availablePieces.Count];
         }
     }
 }

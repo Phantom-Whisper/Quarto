@@ -261,8 +261,8 @@ namespace ConsoleApp
                 if (index >= 0 && index < e.Pieces.Count)
                 {
                     e.PieceToPlay = e.Pieces[index];
+                    break;
                 }
-                break;
             }
         }
     }
