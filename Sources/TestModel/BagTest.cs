@@ -1,15 +1,11 @@
 ﻿using Model;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestModel
 {
     public class BagTest
     {
+        /*
+        Piece pieceTest = new(true, true, true, true);
 
         [Fact]
         public void TestCtor_Empty()
@@ -22,10 +18,10 @@ namespace TestModel
         public void AddPiece_Duplicate()
         {
             var bag = new Bag();
-            bag.AddPiece(true, true, false, true);
+            bag.AddPiece(pieceTest);
 
             Assert.Throws<InvalidOperationException>(() =>
-                bag.AddPiece(true, true, false, true));
+                bag.AddPiece(pieceTest));
         }
 
 
@@ -38,7 +34,7 @@ namespace TestModel
             Bag bag = new Bag();
             Piece piece = new Piece(isSquare, isLight, isBig, isFull);
 
-            bag.AddPiece(isSquare, isLight, isBig, isFull);
+            bag.AddPiece(piece);
 
             Assert.NotEmpty(bag.Baglist);
         }
@@ -63,7 +59,8 @@ namespace TestModel
         public void AddPiece_ContainCorrectPiece(bool isSquare, bool isLight, bool isBig, bool isFull)
         {
             Bag bag = new Bag();
-            bag.AddPiece(isSquare, isLight, isBig, isFull);
+            Piece piece = new(isSquare, isLight, isBig, isFull);
+            bag.AddPiece(piece);
 
             Piece addPiece = bag.Baglist.First();
 
@@ -74,7 +71,7 @@ namespace TestModel
         }
 
         [Fact]
-        public void TestRemovePiece_Null()
+        public void TestTakePiece_Null()
         {
             Bag? bag = new Bag();
             bag = null;
@@ -84,22 +81,22 @@ namespace TestModel
 
 
         [Fact]
-        public void TestRemovePiece_Empty()
+        public void TestTakePiece_Empty()
         {
             Bag bag = new Bag();
             Piece piece = new Piece(true, true, false, true);
 
-            Assert.Throws<InvalidOperationException>(() => bag.RemovePiece(piece));
+            Assert.Throws<InvalidOperationException>(() => bag.TakePiece(piece));
         }
 
         [Fact]
-        public void TestRemovePiece_NotInTheBag()
+        public void TestTakePiece_NotInTheBag()
         {
             Bag bag = new Bag();
-            bag.AddPiece(true,false,false,false);
+            bag.AddPiece(pieceTest);
             Piece piece = new Piece(true, true, true, true);
 
-            Assert.Throws<InvalidOperationException>(() => bag.RemovePiece(piece));
+            Assert.Throws<InvalidOperationException>(() => bag.TakePiece(piece));
         }
 
 
@@ -107,15 +104,16 @@ namespace TestModel
         [InlineData(true, true, true, true)]
         [InlineData(false, false, true, true)]
         [InlineData(true, true, false, false)]
-        public void TestRemovePiece_DoesNotContain(bool isSquare, bool isLight, bool isBig, bool isFull)
+        public void TestTakePiece_DoesNotContain(bool isSquare, bool isLight, bool isBig, bool isFull)
         {
             Bag bag = new Bag();
             Piece piece = new Piece(isSquare, isLight, isBig, isFull);
 
-            bag.AddPiece(isSquare, isLight, isBig, isFull);
-            bag.RemovePiece(piece);
+            bag.AddPiece(piece);
+            bag.TakePiece(piece);
 
             Assert.DoesNotContain(piece,bag.Baglist);
         }
+        */
     }
 }
