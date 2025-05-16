@@ -18,6 +18,12 @@ namespace Model
             GameStarted?.Invoke(this, args);
         }
 
+        /// <summary>
+        /// Evenement to say Quarto
+        /// </summary>
+        public event EventHandler<QuartoEventArgs>? Quarto;
+        private void OnQuarto(QuartoEventArgs args) => Quarto?.Invoke(this, args);
+
         private readonly IPlayer[] players = new IPlayer[2];
         private int currentPlayerIndex = 1;
 
@@ -114,62 +120,15 @@ namespace Model
             Display();
 
             if (TURNNUMBER >= 4)
-                TryDeclareQuarto(board, rulesManager);
+                OnQuarto(new QuartoEventArgs(rulesManager, board, CurrentPlayer));
 
             if (pieceToPlay is null)
                 throw new InvalidOperationException("Piece not selected before usage.");
             pieceToPlay = CurrentPlayer.PlayTurn(board, pieceToPlay, this);
             SwitchCurrentPlayer();
-           Console.WriteLine("Point d'arrêt");
+            //Console.WriteLine("Point d'arrêt");
         }
 
-        private void TryDeclareQuarto(Board board, IRulesManager rulesManager)
-        {
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"{CurrentPlayer.Name}, do you want to declare a Quarto? (y/n)"));
-            string? response = Console.ReadLine()?.Trim().ToLower();
-
-            if (response != "y") return;
-
-            List<(int row, int col)> selectedPositions = new();
-
-            for (int i = 1; i <= 4; i++)
-            {
-                OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Select piece {i}: enter row:"));
-                if (!int.TryParse(Console.ReadLine(), out int row))
-                {
-                    OnDisplayMessage?.Invoke(this, new MessageEventArgs("Invalid input. Aborting Quarto attempt."));
-                    return;
-                }
-
-                OnDisplayMessage?.Invoke(this, new MessageEventArgs("Enter column:"));
-                if (!int.TryParse(Console.ReadLine(), out int col))
-                {
-                    OnDisplayMessage?.Invoke(this, new MessageEventArgs("Invalid input. Aborting Quarto attempt."));
-                    return;
-                }
-
-                if (!board.IsOnBoard(row, col) || board.IsEmpty(row, col))
-                {
-                    OnDisplayMessage?.Invoke(this, new MessageEventArgs("Invalid selection. Aborting Quarto attempt."));
-                    return;
-                }
-
-                selectedPositions.Add((row, col));
-            }
-
-            var selectedPieces = selectedPositions
-                .Select(pos => board.GetPiece(pos.row, pos.col))
-                .ToList();
-
-            if (rulesManager.IsQuarto(board, selectedPieces))
-            {
-                OnDisplayMessage?.Invoke(this, new MessageEventArgs($"{CurrentPlayer.Name} wins with a Quarto!"));
-            }
-            else
-            {
-                OnDisplayMessage?.Invoke(this, new MessageEventArgs("Incorrect Quarto declaration. The game continues."));
-            }
-        }
 
         public void SwitchCurrentPlayer()
         {

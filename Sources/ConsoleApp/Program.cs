@@ -54,6 +54,7 @@ namespace ConsoleApp
                     gameManager.OnDisplayMessage += DisplayMessage;
                     gameManager.OnInputRequested += RequestInput;
                     gameManager.OnPlayerNameRequested += PlayerNameRequested;
+                    gameManager.Quarto += Quarto;
                     //gameManager.CreatePlayers(solo);
                     gameManager.Run();
                     break;
@@ -119,6 +120,55 @@ namespace ConsoleApp
             Console.WriteLine(e.Bag.ToString());
             Console.WriteLine(e.CurrentPlayer.Name);
         }
+
+        private static void Quarto(object? sender, QuartoEventArgs e)
+        {
+            Console.WriteLine($"{e.CurrentPlayer.Name}, do you want to declare a Quarto? (y/n)");
+            string? response = Console.ReadLine()?.Trim().ToLower();
+
+            if (response != "y") return;
+
+            List<(int row, int col)> selectedPositions = new();
+
+            for (int i = 1; i <= 4; i++)
+            {
+                Console.WriteLine($"Select piece {i}: enter row:");
+                if (!int.TryParse(Console.ReadLine(), out int row))
+                {
+                    Console.WriteLine("Invalid input. Aborting Quarto attempt.");
+                    return;
+                }
+
+                Console.WriteLine("Enter column:");
+                if (!int.TryParse(Console.ReadLine(), out int col))
+                {
+                    Console.WriteLine("Invalid input. Aborting Quarto attempt.");
+                    return;
+                }
+
+                if (!e.Board.IsOnBoard(row, col) || e.Board.IsEmpty(row, col))
+                {
+                    Console.WriteLine("Invalid selection. Aborting Quarto attempt.");
+                    return;
+                }
+
+                selectedPositions.Add((row, col));
+            }
+
+            var selectedPieces = selectedPositions
+                .Select(pos => e.Board.GetPiece(pos.row, pos.col))
+                .ToList();
+
+            if (e.RulesManager.IsQuarto(e.Board, selectedPieces))
+            {
+                Console.WriteLine($"{e.CurrentPlayer.Name} wins with a Quarto!");
+            }
+            else
+            {
+                Console.WriteLine("Incorrect Quarto declaration. The game continues.");
+            }
+        }
+
         private static void PlayerNameRequested(object? sender, PlayerNameRequestedEventArgs e)
         {
             Console.Write($"Entrez le nom du Joueur {e.PlayerIndex + 1} : ");
