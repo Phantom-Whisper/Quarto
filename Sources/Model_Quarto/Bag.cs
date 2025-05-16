@@ -63,6 +63,9 @@ namespace Model
             return pieces.Remove(piece) ? piece : null;
         }
 
+        /// <summary>
+        /// Create every <c>Piece</c> of the game which is added to the <c>Baglist</c>
+        /// </summary>
         private void Init()
         {
             List<Piece> listPiece = new List<Piece> {
@@ -90,6 +93,10 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Construct a display of all the <c>Piece</c>
+        /// </summary>
+        /// <returns> String of the list of <c>Piece</c> with their number </returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
