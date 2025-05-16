@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public enum DifficultyEnum
+    public enum Dificulty
     {
         Easy,
         Normal,

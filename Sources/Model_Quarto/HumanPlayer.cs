@@ -38,7 +38,7 @@ namespace Model
             return ChoosePieceForOpponent(gameManager);
         }
 
-        private IPiece ChoosePieceForOpponent(IGameManager gameManager)
+        private static IPiece ChoosePieceForOpponent(IGameManager gameManager)
         {
             IPiece? selectedPiece = null;
             var availablePieces = gameManager.GetAvailablePieces();
