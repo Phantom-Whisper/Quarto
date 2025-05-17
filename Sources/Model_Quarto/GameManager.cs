@@ -14,9 +14,6 @@ namespace Model
         public event EventHandler<MessageEventArgs>? MessageRequested;
         public void OnDisplayMessage(string message) => MessageRequested?.Invoke(this, new MessageEventArgs(message));
 
-        public event EventHandler<InputRequestedEventArgs>? InputRequested;
-        public void OnRequestInput(string prompt, Action<string?> callback) => InputRequested?.Invoke(this, new InputRequestedEventArgs(prompt, callback));
-
         /// <summary>
         /// Event telling that the game has started
         /// </summary>

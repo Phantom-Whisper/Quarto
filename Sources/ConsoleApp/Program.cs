@@ -60,7 +60,6 @@ namespace ConsoleApp
                     
                     gameManager.GameStarted += GameStarted;
                     gameManager.MessageRequested += DisplayMessage;
-                    gameManager.InputRequested += RequestInput;
                     gameManager.Quarto += Quarto;
                     gameManager.BoardChanged += BoardChange;
                     gameManager.AskPieceToPlay += AskPieceToPlay;
@@ -181,13 +180,6 @@ namespace ConsoleApp
         }
 
         private static void DisplayMessage(object? sender, MessageEventArgs e) => Console.WriteLine(e.Message);
-
-        private static void RequestInput(object? sender, InputRequestedEventArgs e)
-        {
-            Console.WriteLine(e.Prompt);
-            string? input = Console.ReadLine();
-            e.Callback(input);
-        }
 
         private static void BoardChange(object? sender, BoardChangedEventArgs e)
         {
