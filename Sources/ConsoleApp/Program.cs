@@ -10,7 +10,7 @@ using Model;
 
 namespace ConsoleApp
 {
-    class Program
+    static class Program
     {
         private static int Menu()
         {
