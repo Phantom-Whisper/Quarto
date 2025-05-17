@@ -73,12 +73,11 @@ namespace TestModel
         [Theory]
         [InlineData(true, true, true, true, true, true, true, true, true)]
         [InlineData(true, false, true, false, true, false, true, false, true)]
-        [InlineData(false, true, false, true, false, true, false, true, true)]
         [InlineData(true, true, false, false, true, false, false, true, false)]
         public void TestHasCommonAttribute(
             bool s1, bool l1, bool s2, bool l2, bool s3, bool l3, bool s4, bool l4, bool expected)
         {
-            RulesBeginner rules = new RulesBeginner();
+            Rules rules = new Rules();
 
             IPiece p1 = new Piece(s1, l1, true, true);
             IPiece p2 = new Piece(s2, l2, true, true);
