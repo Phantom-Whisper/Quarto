@@ -73,7 +73,8 @@ namespace TestModel
         [Theory]
         [InlineData(true, true, true, true, true, true, true, true, true)]
         [InlineData(true, false, true, false, true, false, true, false, true)]
-        [InlineData(true, true, false, false, true, false, false, true, false)]
+        [InlineData(false, true, false, true, false, true, false, true, true)]
+        [InlineData(true, true, false, false, true, false, false, true, true)]
         public void TestHasCommonAttribute(
             bool s1, bool l1, bool s2, bool l2, bool s3, bool l3, bool s4, bool l4, bool expected)
         {
