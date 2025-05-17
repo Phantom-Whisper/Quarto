@@ -41,7 +41,7 @@ namespace Model
         /// <summary>
         /// List of players
         /// </summary>
-        private readonly IPlayer[] _players = playersParam;
+        private IPlayer[] _players => playersParam;
 
         /// <summary>
         /// The index of the current player in the list
@@ -51,7 +51,7 @@ namespace Model
         /// <summary>
         /// Rules of the game according to the level chosen (easy, normal and advanced)
         /// </summary>
-        private readonly IRulesManager _rulesManager = rules;
+        private IRulesManager _rulesManager => rules;
         
         /// <summary>
         /// <c>Bag</c> contaning the piece that the players can play
@@ -86,6 +86,7 @@ namespace Model
             FirstTurn();
             while (!_rulesManager.IsGameOver(bag, board))
             {
+                Display();
                 Turn();
             }
             // fin du jeu -> si un joueur à gagner ou si baglist est vide et board plein
@@ -157,7 +158,7 @@ namespace Model
         public void SwitchCurrentPlayer()
         {
             currentPlayerIndex = (currentPlayerIndex + 1) % _players.Length;
-        }        
+        }
 
         private void Display()
         {

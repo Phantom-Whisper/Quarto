@@ -58,7 +58,7 @@ namespace Model
             while (selectedPiece == null)
             {
                 gameManager.DisplayMessage("Choose a piece to give to your opponent:");
-                gameManager.DisplayMessage(availablePieces.ToString());
+                gameManager.DisplayMessage(availablePieces?.ToString() ?? "No pieces available.");
 
                 Console.Write("Enter the number of the piece: ");
                 string? input = Console.ReadLine();
@@ -66,7 +66,7 @@ namespace Model
                 if (int.TryParse(input, out int index))
                 {
                     index -= 1;
-                    if (index >= 0 && index < availablePieces.Count)
+                    if (availablePieces != null && index >= 0 && index < availablePieces.Count)
                     {
                         selectedPiece = availablePieces[index];
                         return selectedPiece;
