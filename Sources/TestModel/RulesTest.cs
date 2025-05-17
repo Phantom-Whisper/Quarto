@@ -69,5 +69,27 @@ namespace TestModel
             
             Assert.Equal(res, result);
         }
+        
+        [Theory]
+        [InlineData(true, true, true, true, true, true, true, true, true)]
+        [InlineData(true, false, true, false, true, false, true, false, true)]
+        [InlineData(false, true, false, true, false, true, false, true, true)]
+        [InlineData(true, true, false, false, true, false, false, true, false)]
+        public void TestHasCommonAttribute(
+            bool s1, bool l1, bool s2, bool l2, bool s3, bool l3, bool s4, bool l4, bool expected)
+        {
+            RulesBeginner rules = new RulesBeginner();
+
+            IPiece p1 = new Piece(s1, l1, true, true);
+            IPiece p2 = new Piece(s2, l2, true, true);
+            IPiece p3 = new Piece(s3, l3, true, true);
+            IPiece p4 = new Piece(s4, l4, true, true);
+
+            var pieces = new List<IPiece> { p1, p2, p3, p4 };
+            
+            bool result = rules.HasCommonAttribute(pieces);
+            
+            Assert.Equal(expected, result);
+        }
     }
 }
