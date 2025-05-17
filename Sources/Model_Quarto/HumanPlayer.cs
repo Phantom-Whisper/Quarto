@@ -7,6 +7,7 @@ namespace Model
     {
         public HumanPlayer(string name) : base(name) { }
 
+<<<<<<< HEAD
         /// <summary>
         /// method which make a player play a turn by choosing a place for the piece and choose the piece for the opponent
         /// </summary>
@@ -15,6 +16,9 @@ namespace Model
         /// <param name="gameManager"> the main interface that manage the game</param>
         /// <returns>the piece chosen for the opponent</returns>
         public override IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
+=======
+        public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
+>>>>>>> origin/ConsoleApp
         {
             bool placed = false;
 
@@ -41,6 +45,7 @@ namespace Model
                     gameManager.DisplayMessage("Invalid move. Try again.");
                 }
             }
+<<<<<<< HEAD
 
             return ChoosePieceForOpponent(gameManager);
         }
@@ -77,6 +82,8 @@ namespace Model
             }
 
             return selectedPiece!; // never null at this point
+=======
+>>>>>>> origin/ConsoleApp
         }
     }
 }

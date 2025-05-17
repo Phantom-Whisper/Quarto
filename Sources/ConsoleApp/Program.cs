@@ -1,5 +1,9 @@
-﻿using System.ComponentModel.Design;
+﻿using System;
+using System.ComponentModel.Design;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
 using Manager;
 using Manager.CustomEventArgs;
 using Model;
@@ -50,12 +54,14 @@ namespace ConsoleApp
                     CreatePlayers(solo, players);
 
                     var gameManager = new GameManager(rulesManager, players);
+                    
                     gameManager.GameStarted += GameStarted;
                     gameManager.OnDisplayMessage += DisplayMessage;
                     gameManager.OnInputRequested += RequestInput;
-                    gameManager.OnPlayerNameRequested += PlayerNameRequested;
                     gameManager.Quarto += Quarto;
-                    //gameManager.CreatePlayers(solo);
+                    gameManager.BoardChanged += BoardChange;
+                    gameManager.AskPieceToPlay += AskPieceToPlay;
+
                     gameManager.Run();
                     break;
                 default:
@@ -87,27 +93,28 @@ namespace ConsoleApp
         {
             if (solo)
             {
-                var args = new PlayerNameRequestedEventArgs(0);
-                //OnPlayerNameRequested?.Invoke(this, args);
+                Console.Write($"Entrez votre nom de joueur: ");
 
-                string name = string.IsNullOrWhiteSpace(args.PlayerName)
-                    ? "Player1"
-                    : args.PlayerName;
+                string? name = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    name = "Player1";
+                }
 
                 players[0] = new HumanPlayer(name);
-
                 players[1] = new DumbAIPlayer();
             }
             else
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    var args = new PlayerNameRequestedEventArgs(i);
-                    //OnPlayerNameRequested?.Invoke(this, args);
+                    Console.Write($"Entrez votre nom de joueur: ");
 
-                    string name = string.IsNullOrWhiteSpace(args.PlayerName)
-                        ? $"Player{i + 1}"
-                        : args.PlayerName;
+                    string? name = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        name = $"Player{i+1}";
+                    }
 
                     players[i] = new HumanPlayer(name);
                 }
@@ -169,12 +176,6 @@ namespace ConsoleApp
             }
         }
 
-        private static void PlayerNameRequested(object? sender, PlayerNameRequestedEventArgs e)
-        {
-            Console.Write($"Entrez le nom du Joueur {e.PlayerIndex + 1} : ");
-            e.PlayerName = Console.ReadLine();
-        }
-
         private static void DisplayMessage(object? sender, MessageEventArgs e) => Console.WriteLine(e.Message);
 
         private static void RequestInput(object? sender, InputRequestedEventArgs e)
@@ -182,6 +183,87 @@ namespace ConsoleApp
             Console.WriteLine(e.Prompt);
             string? input = Console.ReadLine();
             e.Callback(input);
+        }
+
+        private static void BoardChange(object? sender, BoardChangedEventArgs e)
+        {
+            StringBuilder sb = new();
+            int col = 0, row = 0;
+
+            for (int i = -1; i < e.Board.SizeY; i++)
+            {
+                if (i == -1)
+                {
+                    sb.Append("row/y | ");
+                }
+                else
+                {
+                    sb.AppendFormat("{0,4} | ", i);
+                }
+            }
+            sb.AppendLine();
+
+            string horizontalSeparator = new string('-', (e.Board.SizeY + 1) * 7);
+            sb.AppendLine(horizontalSeparator);
+
+            sb.AppendFormat("{0,2}  |", col);
+
+            foreach (var piece in e.Board.Grid)
+            {
+                if (row == e.Board.SizeX)
+                {
+                    row = 0;
+                    sb.AppendLine();
+                    sb.AppendLine(horizontalSeparator);
+                    col++;
+                    sb.AppendFormat("{0,2}  |", col);
+                }
+
+                sb.AppendFormat("{0,5} |", piece?.ToString() ?? "");
+                row++;
+            }
+
+            Console.WriteLine(sb.ToString());
+        }
+
+        private static void AskPieceToPlay(object? sender, AskPieceToPlayEventArgs e)
+        {
+            if (e.Player is AIPlayer)
+            {
+                using var randomGenerator = RandomNumberGenerator.Create();
+                byte[] data = new byte[4];
+                randomGenerator.GetBytes(data);
+
+                int randomInt = BitConverter.ToInt32(data, 0);
+
+                randomInt = Math.Abs(randomInt);
+
+                e.PieceToPlay = e.Pieces[randomInt % e.Pieces.Count];
+                return;
+            }
+            StringBuilder sb = new();
+
+            int i = 1;
+            foreach (IPiece? piece in e.Pieces)
+            {
+                sb.Append($"{i}. {piece.ToString()}\n");
+                i++;
+            }
+
+            Console.WriteLine(sb.ToString());
+
+            Console.Write("Enter the number of the piece: ");
+            string? input = Console.ReadLine();
+
+            while (int.TryParse(input, out int index))
+            {
+                index -= 1;
+                if (index >= 0 && index < e.Pieces.Count)
+                {
+                    e.PieceToPlay = e.Pieces[index];
+                    break;
+                }
+            }
         }
     }
 }

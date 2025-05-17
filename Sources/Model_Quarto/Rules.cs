@@ -177,6 +177,7 @@ namespace Model
             return list;
         }
 
+<<<<<<< HEAD
         /// <summary>
         /// method to play a piece with a verification if the move is valid by looking if the position is on the board 
         /// and if this position is not already taken
@@ -187,6 +188,9 @@ namespace Model
         /// <param name="board">board of the game</param>
         /// <returns>if the move is played or not due to the validity of the move </returns>
         public static bool PlayAMove(Piece piece, int row, int col, Board board)
+=======
+        public static bool PlayAMove(IPiece piece, int row, int col, Board board)
+>>>>>>> origin/ConsoleApp
         {
             if (!IsMoveValid(board, row, col))
             {
@@ -263,7 +267,7 @@ namespace Model
             List<(int row, int col)> positions;
             try
             {
-                positions = pieces.Select(p => board.PositionPiece((Piece)p)).ToList();
+                positions = pieces.Select(p => board.PositionPiece(p)).ToList();
             }
             catch (InvalidCastException)
             {
