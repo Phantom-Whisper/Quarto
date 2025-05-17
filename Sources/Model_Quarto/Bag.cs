@@ -5,7 +5,7 @@ using System.Text;
 namespace Model
 {
     /// <summary>
-    /// 
+    /// Class of the bag containing the piece available to play on the board
     /// </summary>
     internal class Bag : IBag
     {

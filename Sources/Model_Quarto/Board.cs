@@ -3,6 +3,9 @@ using System.Text;
 
 namespace Model
 {
+    /// <summary>
+    /// CLass of the board containing the piece played and their position
+    /// </summary>
     public class Board : IBoard
     {
         /// <summary>
