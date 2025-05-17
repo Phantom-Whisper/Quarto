@@ -1,6 +1,5 @@
 ﻿using Manager;
 using System.Security.Cryptography;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Model
 {
@@ -19,7 +18,7 @@ namespace Model
         /// <param name="currentPiece">the piece chosen by the opponent</param>
         /// <param name="gameManager"> the main interface that manage the game</param>
         /// <returns>the piece chosen for the opponent</returns>
-        public override IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
+        public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
         {
             using var randomGenerator = RandomNumberGenerator.Create();
             byte[] data = new byte[4];
@@ -46,12 +45,10 @@ namespace Model
             if (availablePieces.Count == 0)
             {
                 gameManager.DisplayMessage($"{Name}: No pieces left to give.");
-                return null;
+                return;
             }
             randomInt = Math.Abs(randomInt);
             var selectedPiece = availablePieces[randomInt % availablePieces.Count];
-
-            return selectedPiece;
         }
     }
 }

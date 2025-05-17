@@ -1,5 +1,6 @@
 ﻿using Manager;
 using Manager.CustomEventArgs;
+using System.Security.Cryptography;
 
 namespace Model
 {
@@ -14,7 +15,7 @@ namespace Model
         /// <param name="currentPiece">the piece chosen by the opponent</param>
         /// <param name="gameManager"> the main interface that manage the game</param>
         /// <returns>the piece chosen for the opponent</returns>
-        public override IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
+        public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
         {
             bool placed = false;
 
@@ -41,42 +42,6 @@ namespace Model
                     gameManager.DisplayMessage("Invalid move. Try again.");
                 }
             }
-
-            return ChoosePieceForOpponent(gameManager);
-        }
-
-        /// <summary>
-        /// method to chose a piece for the opponent
-        /// </summary>
-        /// <param name="gameManager">the main interface that manage the game</param>
-        /// <returns>the piece chosen for the opponent</returns>
-        private static IPiece ChoosePieceForOpponent(IGameManager gameManager)
-        {
-            IPiece? selectedPiece = null;
-            var availablePieces = gameManager.GetAvailablePieces();
-
-            while (selectedPiece == null)
-            {
-                gameManager.DisplayMessage("Choose a piece to give to your opponent:");
-                gameManager.DisplayMessage(availablePieces?.ToString() ?? "No pieces available.");
-
-                Console.Write("Enter the number of the piece: ");
-                string? input = Console.ReadLine();
-
-                if (int.TryParse(input, out int index))
-                {
-                    index -= 1;
-                    if (availablePieces != null && index >= 0 && index < availablePieces.Count)
-                    {
-                        selectedPiece = availablePieces[index];
-                        return selectedPiece;
-                    }
-                }
-
-                gameManager.DisplayMessage("Invalid selection. Try again.");
-            }
-
-            return selectedPiece!; // never null at this point
         }
     }
 }

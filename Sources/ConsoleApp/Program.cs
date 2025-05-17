@@ -124,9 +124,8 @@ namespace ConsoleApp
 
         private static void GameStarted(object? sender, GameStartedEventArgs e)
         {
-            Console.WriteLine(e.Board.ToString());
-            Console.WriteLine(e.Bag.ToString());
-            Console.WriteLine(e.CurrentPlayer.Name);
+            Console.Clear();
+            Console.WriteLine("The game has started !");
         }
 
         private static void Quarto(object? sender, QuartoEventArgs e)
@@ -262,7 +261,7 @@ namespace ConsoleApp
                 if (index >= 0 && index < e.Pieces.Count)
                 {
                     e.PieceToPlay = e.Pieces[index];
-                    break;
+                    return;
                 }
             }
         }

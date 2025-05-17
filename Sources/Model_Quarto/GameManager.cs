@@ -100,7 +100,7 @@ namespace Model
         private void RequestNewPiece()
         {
             var args = new AskPieceToPlayEventArgs(CurrentPlayer, GetAvailablePieces(), pieceToPlay);
-            AskPieceToPlay?.Invoke(this, args);
+            OnAskPieceToPlay(args);
 
             if (args.PieceToPlay is null)
                 throw new InvalidOperationException("No piece was selected.");
