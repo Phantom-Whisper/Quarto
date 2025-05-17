@@ -91,5 +91,35 @@ namespace TestModel
             
             Assert.Equal(expected, result);
         }
+        
+        [Theory]
+        [InlineData(0, 0, 1, 0, 0, 1, 1, 1, true)]
+        [InlineData(2, 2, 3, 2, 2, 3, 3, 3, true)]
+        [InlineData(0, 0, 1, 0, 2, 0, 3, 0, true)]
+        [InlineData(0, 0, 0, 1, 0, 2, 0, 3, true)]
+        [InlineData(0, 0, 1, 1, 2, 2, 3, 3, true)]
+        public void TestIsAroundAreAlignedAdvanced(
+            int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, bool expected)
+        {
+            var board = new Board();
+            var rules = new RulesAdvanced();
+
+            var p1 = new Piece(true, true, true, true);
+            var p2 = new Piece(true, true, true, true);
+            var p3 = new Piece(true, true, true, true);
+            var p4 = new Piece(true, true, true, true);
+
+            board.InsertPiece(p1, x1, y1);
+            board.InsertPiece(p2, x2, y2);
+            board.InsertPiece(p3, x3, y3);
+            board.InsertPiece(p4, x4, y4);
+
+            var pieces = new List<IPiece> { p1, p2, p3, p4 };
+
+            
+            bool result = rules.AreAligned(board, pieces);
+            
+            Assert.Equal(expected, result);
+        }
     }
 }
