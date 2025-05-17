@@ -159,13 +159,5 @@ namespace Model
             currentPlayerIndex = (currentPlayerIndex + 1) % _players.Length;
         }        
 
-        private void Display()
-        {
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Tour: {turnNumber}"));
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Joueur courant: {CurrentPlayer.Name}"));
-            OnBoardChanged(new BoardChangedEventArgs(board));
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs(bag.ToString())); // Faire des méthodes Display parcourant les éléments
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Piece à jouer: {pieceToPlay}"));
-        }
     }
 }
