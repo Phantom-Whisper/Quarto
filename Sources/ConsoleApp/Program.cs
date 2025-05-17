@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel.Design;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using Manager;
 using Manager.CustomEventArgs;
@@ -43,7 +39,12 @@ namespace ConsoleApp
             IPlayer[] players = new IPlayer[2];
             IBoard board = new Board();
 
-            
+            /// <summary>
+            /// <c>Bag</c> contaning the piece that the players can play
+            /// </summary>
+            IBag bag = new Bag();
+
+
 
             int choice = Menu();
 
@@ -52,17 +53,21 @@ namespace ConsoleApp
                 case 1:
                     Console.Write("Mode solo ? (y/n) ");
                     bool solo = Console.ReadLine()?.Trim().ToLower() == "y";
-                    ChooseDifficulty(rulesManager);
+                    rulesManager = ChooseDifficulty();
                     CreatePlayers(solo, players);
 
-                    var gameManager = new GameManager(rulesManager, board, players);
+                    var gameManager = new GameManager(rulesManager, board, bag, players);
                     
                     gameManager.GameStarted += GameStarted;
-                    gameManager.OnDisplayMessage += DisplayMessage;
-                    gameManager.OnInputRequested += RequestInput;
+                    gameManager.MessageRequested += DisplayMessage;
+                    gameManager.InputRequested += RequestInput;
                     gameManager.Quarto += Quarto;
                     gameManager.BoardChanged += BoardChange;
                     gameManager.AskPieceToPlay += AskPieceToPlay;
+                    gameManager.AskCoordinate += AskCoordinate;
+                    gameManager.BagChanged += BagChange;
+                    gameManager.GameEnd += GameEnd;
+
 
                     gameManager.Run();
                     break;
@@ -70,11 +75,9 @@ namespace ConsoleApp
                     break;
 
             }
-
-            Console.WriteLine("point d'arrêt");
         }
 
-        private static void ChooseDifficulty(IRulesManager rulesManager)
+        private static IRulesManager ChooseDifficulty()
         {
             Console.WriteLine("Choisissez la difficulté :");
             Console.WriteLine("1. Débutant");
@@ -82,7 +85,7 @@ namespace ConsoleApp
             Console.WriteLine("3. Avancé");
 
             string? input = Console.ReadLine();
-            rulesManager = input switch
+            return input switch
             {
                 "1" => new RulesBeginner(),
                 "2" => new Rules(),
@@ -242,18 +245,8 @@ namespace ConsoleApp
                 e.PieceToPlay = e.Pieces[randomInt % e.Pieces.Count];
                 return;
             }
-            StringBuilder sb = new();
 
-            int i = 1;
-            foreach (IPiece? piece in e.Pieces)
-            {
-                sb.Append($"{i}. {piece.ToString()}\n");
-                i++;
-            }
-
-            Console.WriteLine(sb.ToString());
-
-            Console.Write("Enter the number of the piece: ");
+            Console.Write("Enter the number of the piece you to your opponent: ");
             string? input = Console.ReadLine();
 
             while (int.TryParse(input, out int index))
@@ -262,9 +255,55 @@ namespace ConsoleApp
                 if (index >= 0 && index < e.Pieces.Count)
                 {
                     e.PieceToPlay = e.Pieces[index];
-                    return;
+                    break;
                 }
             }
+        }
+
+        private static void BagChange(object? sender, BagChangedEventArgs e)
+        {
+            int i = 1;
+            foreach (var piece in e.Bag.Baglist)
+            {
+                Console.WriteLine($"{i}. {piece}");
+                i++;
+            }
+        }
+
+        private static void GameEnd(object? sender, GameEndEventArgs e)
+        {
+            Console.WriteLine($"Game Over! Winner: {e.Winner.Name}");
+        }
+
+        private static void AskCoordinate(object? sender, AskCoordinatesEventArgs e)
+        {
+            Console.WriteLine($"{e.Player.Name}, it's your turn to play.");
+
+            int row = -1, col = -1;
+
+            while (true)
+            {
+                Console.Write("Enter row (0 to 3): ");
+                string? rowInput = Console.ReadLine();
+                if (int.TryParse(rowInput, out row) && e.Board.IsOnBoard(row, 0))
+                {
+                    break;
+                }
+                Console.WriteLine("Invalid row. Please enter a number between 0 and 3.");
+            }
+
+            while (true)
+            {
+                Console.Write("Enter column (0 to 3): ");
+                string? colInput = Console.ReadLine();
+                if (int.TryParse(colInput, out col) && e.Board.IsOnBoard(0, col))
+                {
+                    break;
+                }
+                Console.WriteLine("Invalid column. Please enter a number between 0 and 3.");
+            }
+
+            e.CoordinateCallback((row, col));
         }
     }
 }

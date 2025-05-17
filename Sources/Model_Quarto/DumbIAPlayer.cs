@@ -1,4 +1,5 @@
 ﻿using Manager;
+using Manager.CustomEventArgs;
 using System.Security.Cryptography;
 
 namespace Model
@@ -24,29 +25,32 @@ namespace Model
             byte[] data = new byte[4];
             randomGenerator.GetBytes(data);
 
-            int randomInt = BitConverter.ToInt32(data, 0);
-
-            randomInt = Math.Abs(randomInt);
+            int randomInt = Math.Abs(BitConverter.ToInt32(data, 0));
             List<(int row, int col)> availablePositions = Rules.GetAvailablePositions((Board)board);
-            var (row, col) = availablePositions[randomInt % availablePositions.Count];
 
+            var (row, col) = availablePositions[randomInt % availablePositions.Count];
             bool success = Rules.PlayAMove((Piece)currentPiece, row, col, (Board)board);
 
             if (success)
             {
-                gameManager.DisplayMessage($"{Name} placed a piece at ({row}, {col}).");
+                gameManager.OnDisplayMessage($"{Name} placed a piece at ({row}, {col}).");
             }
             else
             {
-                gameManager.DisplayMessage($"{Name}: Failed to place the piece. This should not happen.");
+                gameManager.OnDisplayMessage($"{Name}: Failed to place the piece. This should not happen.");
             }
 
             var availablePieces = gameManager.GetAvailablePieces();
             if (availablePieces.Count == 0)
             {
-                gameManager.DisplayMessage($"{Name}: No pieces left to give.");
+                gameManager.OnDisplayMessage($"{Name}: No pieces left to give.");
                 return;
             }
+            IPiece pieceToGive = availablePieces[randomInt % availablePieces.Count];
+
+            var args = new AskPieceToPlayEventArgs(this, availablePieces, pieceToGive);
+            gameManager.OnAskPieceToPlay(args);
         }
+
     }
 }

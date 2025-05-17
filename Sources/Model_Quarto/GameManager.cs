@@ -7,12 +7,15 @@ namespace Model
     /// <summary>
     /// Main class that manage the game by setting up events
     /// </summary>
-    public class GameManager(IRulesManager rules, IBoard board, IPlayer[] _players) : IGameManager
+    public class GameManager(IRulesManager rules, IBoard board, IBag bag, IPlayer[] _players) : IGameManager
     {
         private int turnNumber  = 0;
 
-        public event EventHandler<MessageEventArgs>? OnDisplayMessage;
-        public event EventHandler<InputRequestedEventArgs>? OnInputRequested;
+        public event EventHandler<MessageEventArgs>? MessageRequested;
+        public void OnDisplayMessage(string message) => MessageRequested?.Invoke(this, new MessageEventArgs(message));
+
+        public event EventHandler<InputRequestedEventArgs>? InputRequested;
+        public void OnRequestInput(string prompt, Action<string?> callback) => InputRequested?.Invoke(this, new InputRequestedEventArgs(prompt, callback));
 
         /// <summary>
         /// Event telling that the game has started
@@ -33,10 +36,25 @@ namespace Model
         private void OnBoardChanged(BoardChangedEventArgs args) => BoardChanged?.Invoke(this, args);
 
         /// <summary>
+        /// Tells the bag has changed
+        /// </summary>
+        public event EventHandler<BagChangedEventArgs>? BagChanged;
+        private void OnBagChanged(BagChangedEventArgs args) => BagChanged?.Invoke(this, args);
+
+        /// <summary>
         /// Event telling that someone choose the piece that the opponent gonna play
         /// </summary>
         public event EventHandler<AskPieceToPlayEventArgs> ? AskPieceToPlay;
-        private void OnAskPieceToPlay(AskPieceToPlayEventArgs args) => AskPieceToPlay?.Invoke(this, args);
+        public void OnAskPieceToPlay(AskPieceToPlayEventArgs args) => AskPieceToPlay?.Invoke(this, args);
+
+        /// <summary>
+        /// Tells we have a winner
+        /// </summary>
+        public event EventHandler<GameEndEventArgs>? GameEnd;
+        private void OnGameEnd(GameEndEventArgs args) => GameEnd?.Invoke(this, args);
+
+        public event EventHandler<AskCoordinatesEventArgs>? AskCoordinate;
+        private void OnAskedCoordinate(AskCoordinatesEventArgs args) => AskCoordinate?.Invoke(this, args);
 
         /// <summary>
         /// List of players
@@ -50,12 +68,7 @@ namespace Model
         /// <summary>
         /// Rules of the game according to the level chosen (easy, normal and advanced)
         /// </summary>
-        private IRulesManager _rulesManager => rules;
-        
-        /// <summary>
-        /// <c>Bag</c> contaning the piece that the players can play
-        /// </summary>
-        readonly Bag bag = new();
+        private IRulesManager rulesManager => rules;
 
         /// <summary>
         /// List of the piece available
@@ -82,12 +95,13 @@ namespace Model
         {
             OnGameStarted(new GameStartedEventArgs(board, bag, CurrentPlayer));
             FirstTurn();
-            while (!_rulesManager.IsGameOver(bag, board))
+            while (!rulesManager.IsGameOver(bag, board))
             {
                 Display();
                 Turn();
             }
             // fin du jeu -> si un joueur à gagner ou si baglist est vide et board plein
+
         }
 
         /// <summary>
@@ -114,17 +128,8 @@ namespace Model
         {
             SwitchCurrentPlayer();
             RequestNewPiece();
+            bag.Remove(pieceToPlay);
             SwitchCurrentPlayer();
-        }
-
-        public void DisplayMessage(string message)
-        {
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs(message));
-        }
-
-        public void RequestInput(string prompt, Action<string?> callback)
-        {
-            OnInputRequested?.Invoke(this, new InputRequestedEventArgs(prompt, callback));
         }
 
         /// <summary>
@@ -138,14 +143,18 @@ namespace Model
         public void Turn()
         {
             if (currentPlayerIndex == 0)
-                turnNumber ++;
+                turnNumber++;
 
-            if (turnNumber  >= 4)
-                OnQuarto(new QuartoEventArgs(_rulesManager, board, CurrentPlayer));
+            if (turnNumber >= 4)
+                OnQuarto(new QuartoEventArgs(rulesManager, board, CurrentPlayer));
 
             if (pieceToPlay is null)
                 throw new InvalidOperationException("Piece not selected before usage.");
+
             CurrentPlayer.PlayTurn(board, pieceToPlay, this);
+
+            bag.Remove(pieceToPlay);
+
             RequestNewPiece();
             SwitchCurrentPlayer();
         }
@@ -158,13 +167,26 @@ namespace Model
             currentPlayerIndex = (currentPlayerIndex + 1) % _players.Length;
         }
 
+        public (int row, int col) RequestCoordinates(IPlayer player)
+        {
+            var tcs = new TaskCompletionSource<(int row, int col)>();
+
+            OnAskedCoordinate(new AskCoordinatesEventArgs(player, board, coords =>
+            {
+                tcs.SetResult(coords);
+            }));
+
+            return tcs.Task.Result; // Bloque jusqu’à réception de la réponse
+        }
+
+
         private void Display()
         {
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Tour: {turnNumber}"));
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Joueur courant: {CurrentPlayer.Name}"));
+            OnDisplayMessage($"Tour: {turnNumber}");
+            OnDisplayMessage($"Joueur courant: {CurrentPlayer.Name}");
             OnBoardChanged(new BoardChangedEventArgs(board));
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs(bag.ToString())); // Faire des méthodes Display parcourant les éléments
-            OnDisplayMessage?.Invoke(this, new MessageEventArgs($"Piece à jouer: {pieceToPlay}"));
+            OnBagChanged(new BagChangedEventArgs(bag));
+            OnDisplayMessage($"Piece à jouer: {pieceToPlay}");
         }
     }
 }

@@ -17,30 +17,13 @@ namespace Model
         /// <returns>the piece chosen for the opponent</returns>
         public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
         {
-            bool placed = false;
+            var (row, col) = gameManager.RequestCoordinates(this);
 
-            while (!placed)
+            bool placed = Rules.PlayAMove((Piece)currentPiece, row, col, (Board)board);
+
+            if (!placed)
             {
-                gameManager.DisplayMessage($"{Name}, enter the row where you want to place the piece:");
-                if (!int.TryParse(Console.ReadLine(), out int row))
-                {
-                    gameManager.DisplayMessage("Invalid row input.");
-                    continue;
-                }
-
-                gameManager.DisplayMessage("Enter the column:");
-                if (!int.TryParse(Console.ReadLine(), out int col))
-                {
-                    gameManager.DisplayMessage("Invalid column input.");
-                    continue;
-                }
-
-                placed = Rules.PlayAMove((Piece)currentPiece, row, col, (Board)board);
-
-                if (!placed)
-                {
-                    gameManager.DisplayMessage("Invalid move. Try again.");
-                }
+                gameManager.OnDisplayMessage("Invalid move. The move will be skipped.");
             }
         }
     }

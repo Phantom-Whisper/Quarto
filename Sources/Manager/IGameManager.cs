@@ -5,14 +5,11 @@ namespace Manager
 {
     public interface IGameManager
     {
-        event EventHandler<MessageEventArgs> OnDisplayMessage;
-
-        void DisplayMessage(string message);
-        void RequestInput(string prompt, Action<string?> callback);
-
+        event EventHandler<AskPieceToPlayEventArgs>? AskPieceToPlay;
+        void OnAskPieceToPlay(AskPieceToPlayEventArgs args);
         List<IPiece> GetAvailablePieces();
-
-
+        void OnDisplayMessage(string message);
+        (int row, int col) RequestCoordinates(IPlayer player);
         void Run();
     }
 }
