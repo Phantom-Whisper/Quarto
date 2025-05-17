@@ -47,8 +47,6 @@ namespace Model
                 gameManager.DisplayMessage($"{Name}: No pieces left to give.");
                 return;
             }
-            randomInt = Math.Abs(randomInt);
-            var selectedPiece = availablePieces[randomInt % availablePieces.Count];
         }
     }
 }

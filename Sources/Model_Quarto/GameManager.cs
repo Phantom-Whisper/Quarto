@@ -7,7 +7,7 @@ namespace Model
     /// <summary>
     /// Main class that manage the game by setting up events
     /// </summary>
-    public class GameManager(IRulesManager rules, IPlayer[] playersParam) : IGameManager
+    public class GameManager(IRulesManager rules, IBoard board, IPlayer[] _players) : IGameManager
     {
         private int turnNumber  = 0;
 
@@ -41,7 +41,6 @@ namespace Model
         /// <summary>
         /// List of players
         /// </summary>
-        private IPlayer[] _players => playersParam;
 
         /// <summary>
         /// The index of the current player in the list
@@ -63,7 +62,6 @@ namespace Model
         /// </summary>
         /// <returns>the list of the <c>Piece available</c></returns>
         public List<IPiece> GetAvailablePieces() => [.. bag.Baglist];
-        private readonly Board board = new();
 
         /// <summary>
         /// Player which is playing 

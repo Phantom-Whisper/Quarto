@@ -41,6 +41,7 @@ namespace ConsoleApp
         {
             IRulesManager rulesManager = new Rules();
             IPlayer[] players = new IPlayer[2];
+            IBoard board = new Board();
 
             
 
@@ -54,7 +55,7 @@ namespace ConsoleApp
                     ChooseDifficulty(rulesManager);
                     CreatePlayers(solo, players);
 
-                    var gameManager = new GameManager(rulesManager, players);
+                    var gameManager = new GameManager(rulesManager, board, players);
                     
                     gameManager.GameStarted += GameStarted;
                     gameManager.OnDisplayMessage += DisplayMessage;
