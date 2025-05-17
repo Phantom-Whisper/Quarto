@@ -3,6 +3,6 @@
     public interface IPlayer
     {
         string Name { get; }
-        IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager);
+        void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager);
     }
 }
