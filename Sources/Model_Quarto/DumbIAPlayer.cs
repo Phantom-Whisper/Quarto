@@ -1,6 +1,6 @@
 ﻿using Manager;
+using Manager.CustomEventArgs;
 using System.Security.Cryptography;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Model
 {
@@ -19,39 +19,38 @@ namespace Model
         /// <param name="currentPiece">the piece chosen by the opponent</param>
         /// <param name="gameManager"> the main interface that manage the game</param>
         /// <returns>the piece chosen for the opponent</returns>
-        public override IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
+        public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
         {
             using var randomGenerator = RandomNumberGenerator.Create();
             byte[] data = new byte[4];
             randomGenerator.GetBytes(data);
 
-            int randomInt = BitConverter.ToInt32(data, 0);
-
-            randomInt = Math.Abs(randomInt);
+            int randomInt = Math.Abs(BitConverter.ToInt32(data, 0));
             List<(int row, int col)> availablePositions = Rules.GetAvailablePositions((Board)board);
-            var (row, col) = availablePositions[randomInt % availablePositions.Count];
 
+            var (row, col) = availablePositions[randomInt % availablePositions.Count];
             bool success = Rules.PlayAMove((Piece)currentPiece, row, col, (Board)board);
 
             if (success)
             {
-                gameManager.DisplayMessage($"{Name} placed a piece at ({row}, {col}).");
+                gameManager.OnDisplayMessage($"{Name} placed a piece at ({row}, {col}).");
             }
             else
             {
-                gameManager.DisplayMessage($"{Name}: Failed to place the piece. This should not happen.");
+                gameManager.OnDisplayMessage($"{Name}: Failed to place the piece. This should not happen.");
             }
 
             var availablePieces = gameManager.GetAvailablePieces();
             if (availablePieces.Count == 0)
             {
-                gameManager.DisplayMessage($"{Name}: No pieces left to give.");
-                return null;
+                gameManager.OnDisplayMessage($"{Name}: No pieces left to give.");
+                return;
             }
-            randomInt = Math.Abs(randomInt);
-            var selectedPiece = availablePieces[randomInt % availablePieces.Count];
+            IPiece pieceToGive = availablePieces[randomInt % availablePieces.Count];
 
-            return selectedPiece;
+            var args = new AskPieceToPlayEventArgs(this, availablePieces, pieceToGive);
+            gameManager.OnAskPieceToPlay(args);
         }
+
     }
 }

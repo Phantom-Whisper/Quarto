@@ -7,7 +7,7 @@ namespace Model
     /// <summary>
     /// Class of the bag containing the piece available to play on the board
     /// </summary>
-    internal class Bag : IBag
+    public class Bag : IBag
     {
         /// <summary>
         /// <c>Ctor</c> of the Class <c>Bag</c>.
@@ -61,6 +61,16 @@ namespace Model
         {
             ArgumentNullException.ThrowIfNull(piece);
             return pieces.Remove(piece) ? piece : null;
+        }
+
+        /// <summary>
+        /// Removes a <c>Piece</c> object from the bag
+        /// </summary>
+        /// <param name="piece"></param>
+        public void Remove(IPiece? piece)
+        {
+            if (piece is not null)
+                pieces.Remove(piece);
         }
 
         /// <summary>
