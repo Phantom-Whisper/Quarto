@@ -3,10 +3,19 @@ using System.Text;
 
 namespace Model
 {
+    /// <summary>
+    /// CLass of the board containing the piece played and their position
+    /// </summary>
     public class Board : IBoard
     {
+        /// <summary>
+        /// Constante of the size of the board
+        /// </summary>
         private const int MAXSIZE = 4;
 
+        /// <summary>
+        /// Constructor of the board, the size depend on the constant <c>MAXSIZE</c>
+        /// </summary>
         public Board() 
         {
             grid = new IPiece[MAXSIZE, MAXSIZE];
@@ -52,6 +61,9 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// This property contains the number of Cells on the board
+        /// </summary>
         public int NbCells
         {
             get => SizeX * SizeY;
@@ -166,6 +178,10 @@ namespace Model
             Array.Clear(grid, 0, grid.Length);
         }
 
+        /// <summary>
+        /// This method tells if the board is full by looking at every cells and searching for an empty one
+        /// </summary>
+        /// <returns>True if the board is full and false if is not </returns>
         public bool IsBoardFull()
         {
             for (int row = 0; row < SizeX; row++)
@@ -181,6 +197,12 @@ namespace Model
             return true;
         }
 
+        /// <summary>
+        /// method that search the absissa axis of a piece
+        /// </summary>
+        /// <param name="piece">the piece</param>
+        /// <returns>the absissa axis of the piece </returns>
+        /// <exception cref="InvalidOperationException"> if the piece is not on the board</exception>
         public int PositionXPiece(IPiece piece)
         {
 
@@ -197,6 +219,12 @@ namespace Model
             throw new InvalidOperationException("Piece not in the board !");
         }
 
+        /// <summary>
+        /// method that search the ordinate axis of a piece
+        /// </summary>
+        /// <param name="piece">the piece</param>
+        /// <returns>the ordinate axis of the piece </returns>
+        /// <exception cref="InvalidOperationException"> if the piece is not on the board</exception>
         public int PositionYPiece(IPiece piece)
         {
 
@@ -213,6 +241,12 @@ namespace Model
             throw new InvalidOperationException("Piece not in the board !");
         }
 
+        /// <summary>
+        /// method that search the coordinate of a piece
+        /// </summary>
+        /// <param name="piece">the piece</param>
+        /// <returns> tuple of the coordinate of a piece </returns>
+        /// <exception cref="InvalidOperationException"> if the piece is not on the board</exception>
         public (int row, int col) PositionPiece(IPiece piece)
         {
 

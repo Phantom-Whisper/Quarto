@@ -7,7 +7,18 @@ namespace Model
     {
         public HumanPlayer(string name) : base(name) { }
 
+<<<<<<< HEAD
+        /// <summary>
+        /// method which make a player play a turn by choosing a place for the piece and choose the piece for the opponent
+        /// </summary>
+        /// <param name="board">the board of the game</param>
+        /// <param name="currentPiece">the piece chosen by the opponent</param>
+        /// <param name="gameManager"> the main interface that manage the game</param>
+        /// <returns>the piece chosen for the opponent</returns>
+        public override IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
+=======
         public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
+>>>>>>> origin/ConsoleApp
         {
             bool placed = false;
 
@@ -34,6 +45,45 @@ namespace Model
                     gameManager.DisplayMessage("Invalid move. Try again.");
                 }
             }
+<<<<<<< HEAD
+
+            return ChoosePieceForOpponent(gameManager);
+        }
+
+        /// <summary>
+        /// method to chose a piece for the opponent
+        /// </summary>
+        /// <param name="gameManager">the main interface that manage the game</param>
+        /// <returns>the piece chosen for the opponent</returns>
+        private static IPiece ChoosePieceForOpponent(IGameManager gameManager)
+        {
+            IPiece? selectedPiece = null;
+            var availablePieces = gameManager.GetAvailablePieces();
+
+            while (selectedPiece == null)
+            {
+                gameManager.DisplayMessage("Choose a piece to give to your opponent:");
+                gameManager.DisplayMessage(availablePieces.ToString());
+
+                Console.Write("Enter the number of the piece: ");
+                string? input = Console.ReadLine();
+
+                if (int.TryParse(input, out int index))
+                {
+                    index -= 1;
+                    if (index >= 0 && index < availablePieces.Count)
+                    {
+                        selectedPiece = availablePieces[index];
+                        return selectedPiece;
+                    }
+                }
+
+                gameManager.DisplayMessage("Invalid selection. Try again.");
+            }
+
+            return selectedPiece!; // never null at this point
+=======
+>>>>>>> origin/ConsoleApp
         }
     }
 }

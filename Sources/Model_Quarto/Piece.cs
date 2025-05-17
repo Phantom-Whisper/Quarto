@@ -3,6 +3,14 @@ using System.Text;
 
 namespace Model
 {
+    /// <summary>
+    /// Class of a piece in the game that will by stock in the bag and played by a player on a board
+    /// they have 4 characteristic : 
+    ///     - the Shape : round or square
+    ///     - the Color : light or dark
+    ///     - the Size : big or small
+    ///     - the State : full or hollow
+    /// </summary>
     public sealed class Piece : IPiece, IEquatable<Piece>
     {
         /// <summary>
