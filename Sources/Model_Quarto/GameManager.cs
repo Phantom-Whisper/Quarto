@@ -4,6 +4,9 @@ using System.Security.Cryptography;
 
 namespace Model
 {
+    /// <summary>
+    /// Main class that manage the game by setting up events
+    /// </summary>
     public class GameManager(IRulesManager rules, IPlayer[] playersParam) : IGameManager
     {
         private int turnNumber  = 0;

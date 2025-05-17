@@ -2,7 +2,7 @@
 
 namespace Model
 {
-    public abstract class Player : IPlayer, IEqualityComparer<Player>
+    /*public abstract class Player : IPlayer, IEqualityComparer<Player>
     {
 <<<<<<< HEAD
         /// <summary>
@@ -57,9 +57,9 @@ namespace Model
         public int GetHashCode(Player player) => Pseudo.GetHashCode();
     }
     */
-        /// <summary>
-        /// Abstract Class player used by <c>HumanPlayer</c> and <c>AIPlayer</c>
-        /// </summary>
+    /// <summary>
+    /// Abstract Class player used by <c>HumanPlayer</c> and <c>AIPlayer</c>
+    /// </summary>
     public abstract class Player : IPlayer
     {
         /// <summary>
@@ -84,35 +84,5 @@ namespace Model
         /// <param name="gameManager"> the main interface that manage the game</param>
         /// <returns>the piece chosen for the opponent</returns>
         public abstract IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager); // comportement à définir par les sous-classes
-=======
-            public string Name { get; protected set; }
-
-            protected Player(string name)
-            {
-                Name = name;
-            }
-
-            public abstract void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager); // comportement à définir par les sous-classes
-
-            /// <summary>
-            /// This method tells if two <c>Player</c> are the same.
-            /// </summary>
-            /// <param name="other"></param>
-            /// <returns></returns>
-            public bool Equals(Player? p1, Player? p2)
-            {
-                if (ReferenceEquals(p1, p2)) return true;
-
-                if (p1 == null || p2 == null) return false;
-
-                return p1.Name == p2.Name;
-            }
-
-            /// <summary>
-            /// This method gives us the hashcode of a <c>Player</c>.
-            /// </summary>
-            /// <returns></returns>
-            public int GetHashCode(Player player) => Name.GetHashCode();
->>>>>>> origin/ConsoleApp
     }
 }

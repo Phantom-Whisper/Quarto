@@ -11,7 +11,7 @@ namespace Model
     {
         public DumbAIPlayer() : base("Dumb AI") { }
 
-<<<<<<< HEAD
+
         /// <summary>
         /// method that this fake player uses to play a game randomly by chosing a empty case on the board
         /// </summary>
@@ -20,9 +20,6 @@ namespace Model
         /// <param name="gameManager"> the main interface that manage the game</param>
         /// <returns>the piece chosen for the opponent</returns>
         public override IPiece? PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
-=======
-        public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
->>>>>>> origin/ConsoleApp
         {
             using var randomGenerator = RandomNumberGenerator.Create();
             byte[] data = new byte[4];
@@ -44,6 +41,17 @@ namespace Model
             {
                 gameManager.DisplayMessage($"{Name}: Failed to place the piece. This should not happen.");
             }
+
+            var availablePieces = gameManager.GetAvailablePieces();
+            if (availablePieces.Count == 0)
+            {
+                gameManager.DisplayMessage($"{Name}: No pieces left to give.");
+                return null;
+            }
+            randomInt = Math.Abs(randomInt);
+            var selectedPiece = availablePieces[randomInt % availablePieces.Count];
+
+            return selectedPiece;
         }
     }
 }
