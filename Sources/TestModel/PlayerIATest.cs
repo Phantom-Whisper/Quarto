@@ -21,10 +21,13 @@ namespace TestModel
             public AskPieceToPlayEventArgs? LastAskArgs { get; private set; }
 
             public event EventHandler<AskPieceToPlayEventArgs>? AskPieceToPlay;
-
+            public void OnAskPieceToPlay(AskPieceToPlayEventArgs args)
+            {
+                LastAskArgs = args;
+                AskPieceToPlay?.Invoke(this, args); // This is what triggers the event
+            }
             public void OnDisplayMessage(string message) => Messages.Add(message);
             public List<IPiece> GetAvailablePieces() => AvailablePieces;
-            public void OnAskPieceToPlay(AskPieceToPlayEventArgs args) => LastAskArgs = args;
 
             public (int row, int col) RequestCoordinates(IPlayer player)
             {

@@ -15,7 +15,7 @@ namespace TestModel
         {
             HumanPlayer player = new(pseudo);
             Assert.NotNull(player);
-            Assert.NotNull(player.Name); // Or player.Name if needed
+            Assert.NotNull(player.Name);
             Assert.Equal(pseudo, player.Name);
         }
 
@@ -51,9 +51,7 @@ namespace TestModel
             {
                 throw new NotImplementedException();
             }
-
         }
-
 
         [Fact]
         public void PlayTurn_ShouldPlacePiece_WhenMoveIsValid()
@@ -69,18 +67,17 @@ namespace TestModel
             Assert.Empty(gameManager.Messages);
         }
 
-
         [Fact]
         public void PlayTurn_ShouldDisplayMessage_WhenMoveIsInvalid()
         {
             var player = new HumanPlayer("Test");
             var board = new Board(4, 4);
             var piece = new Piece(true, true, true, true);
-            var gameManager = new TestGameManager { CoordinatesToReturn = (5, 5) }; // Hors plateau
+            var gameManager = new TestGameManager { CoordinatesToReturn = (5, 5) }; // Invalid coordinates
 
             player.PlayTurn(board, piece, gameManager);
 
-            Assert.Null(board.GetPiece(1, 1)); // (1,1) n'a pas été joué
+            Assert.Null(board.GetPiece(1, 1)); // No piece placed at (1,1)
             Assert.Single(gameManager.Messages);
             Assert.Contains("Invalid move", gameManager.Messages[0]);
         }
@@ -122,7 +119,6 @@ namespace TestModel
         {
             Player? player1 = null;
             Player? player2 = null;
-            // Appel statique car pas d'instance
             Assert.True(new HumanPlayer("X").Equals(player1, player2));
         }
 
@@ -132,7 +128,6 @@ namespace TestModel
             var player1 = new HumanPlayer("Alice");
             var player2 = new HumanPlayer("Alice");
 
-            // Supposons que la méthode est d'instance ou statique selon votre implémentation
             int hash1 = player1.GetHashCode(player1);
             int hash2 = player2.GetHashCode(player2);
 
@@ -161,6 +156,5 @@ namespace TestModel
 
             Assert.Equal(expected, actual);
         }
-
     }
 }

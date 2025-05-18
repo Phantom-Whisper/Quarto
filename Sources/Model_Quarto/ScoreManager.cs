@@ -29,8 +29,8 @@ namespace Model
 
             string name = winner.Name;
 
-            if (Scores.ContainsKey(name))
-                Scores[name]++;
+            if (Scores.TryGetValue(name, out int value))
+                Scores[name] = ++value;
             else
                 Scores[name] = 1;
         }
