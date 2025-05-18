@@ -1,15 +1,15 @@
 ﻿using Manager;
 using Manager.CustomEventArgs;
-using System.Security.Cryptography;
 
 namespace Model
 {
     /// <summary>
     /// Main class that manage the game by setting up events
     /// </summary>
-    public class GameManager(IRulesManager rules, IBoard board, IBag bag, IPlayer[] _players) : IGameManager
+    public class GameManager(IRulesManager rules, IScoreManager scoreManager, IBoard board, IBag bag, IPlayer[] _players) : IGameManager
     {
         private int turnNumber  = 0;
+        private bool HasWinner = false;
 
         public event EventHandler<MessageEventArgs>? MessageRequested;
         public void OnDisplayMessage(string message) => MessageRequested?.Invoke(this, new MessageEventArgs(message));
@@ -92,13 +92,17 @@ namespace Model
         {
             OnGameStarted(new GameStartedEventArgs(board, bag, CurrentPlayer));
             FirstTurn();
-            while (!rulesManager.IsGameOver(bag, board))
+            while (!rulesManager.IsGameOver(bag, board) && !HasWinner) // fin du jeu -> si un joueur à gagner ou si baglist est vide et board plein
             {
                 Display();
                 Turn();
             }
-            // fin du jeu -> si un joueur à gagner ou si baglist est vide et board plein
 
+            if (HasWinner && CurrentPlayer is HumanPlayer humanPlayer)
+            {
+                scoreManager.AddVictory(humanPlayer);
+                scoreManager.SaveScores();
+            }
         }
 
         /// <summary>
@@ -142,15 +146,34 @@ namespace Model
             if (currentPlayerIndex == 0)
                 turnNumber++;
 
-            if (turnNumber >= 4)
-                OnQuarto(new QuartoEventArgs(rulesManager, board, CurrentPlayer));
-
             if (pieceToPlay is null)
                 throw new InvalidOperationException("Piece not selected before usage.");
 
             CurrentPlayer.PlayTurn(board, pieceToPlay, this);
 
             bag.Remove(pieceToPlay);
+
+            var quartoPieces = rulesManager.GetQuarto(board);
+            if (quartoPieces != null && quartoPieces.Distinct().Count() == 4)
+            {
+                if (CurrentPlayer is AIPlayer)
+                {
+                    OnQuarto(new QuartoEventArgs(rulesManager, board, CurrentPlayer, quartoPieces));
+                }
+                else if (CurrentPlayer is HumanPlayer)
+                {
+                    OnQuarto(new QuartoEventArgs(rulesManager, board, CurrentPlayer, quartoPieces));
+                }
+                else
+                {
+                    throw new InvalidOperationException("Unknown player type.");
+                }
+
+                HasWinner = true;
+                OnGameEnd(new GameEndEventArgs(CurrentPlayer));
+                
+                return;
+            }
 
             RequestNewPiece();
             SwitchCurrentPlayer();
@@ -164,6 +187,18 @@ namespace Model
             currentPlayerIndex = (currentPlayerIndex + 1) % _players.Length;
         }
 
+        /// <summary>
+        /// Requests coordinates input from the specified player by raising an event,
+        /// and waits synchronously for the player's response.
+        /// </summary>
+        /// <param name="player">The player from whom to request coordinates.</param>
+        /// <returns>
+        /// A tuple containing the row and column coordinates selected by the player.
+        /// </returns>
+        /// <remarks>
+        /// This method blocks synchronously until the player provides valid coordinates.
+        /// Will consider using an asynchronous version to avoid blocking the calling thread.
+        /// </remarks>
         public (int row, int col) RequestCoordinates(IPlayer player)
         {
             var tcs = new TaskCompletionSource<(int row, int col)>();
@@ -173,10 +208,12 @@ namespace Model
                 tcs.SetResult(coords);
             }));
 
-            return tcs.Task.Result; // Bloque jusqu’à réception de la réponse
+            return tcs.Task.Result;
         }
 
-
+        /// <summary>
+        /// Displays the current game state by triggering appropriate events.
+        /// </summary>
         private void Display()
         {
             OnDisplayMessage($"Tour: {turnNumber}");

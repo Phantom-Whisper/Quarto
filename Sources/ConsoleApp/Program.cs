@@ -3,6 +3,7 @@ using System.Text;
 using Manager;
 using Manager.CustomEventArgs;
 using Model;
+using Stub;
 
 namespace ConsoleApp
 {
@@ -19,14 +20,16 @@ namespace ConsoleApp
               \__\_\\__,_|\__,_|_|   \__\___/ 
             ");
             Console.WriteLine("1. Launch a game");
+            Console.WriteLine("2. Consults score table");
+            Console.WriteLine("3. Consults score table (Stub)");
 
             Console.Write("Enter your choice: ");
 
             string? input = Console.ReadLine();
 
-            while (!int.TryParse(input, out choice) || (choice != 1 && choice != 2))
+            while (!int.TryParse(input, out choice) || (choice < 1 && choice > 9))
             {
-                Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                Console.WriteLine("Invalid choice. Please enter 1 or 9.");
                 input = Console.ReadLine();
             }
 
@@ -35,48 +38,76 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            IRulesManager rulesManager = new Rules();
-            IPlayer[] players = new IPlayer[2];
-            IBoard board = new Board();
+            var scoreManager = new ScoreManager();
+            var stubScores = new StubPlayerScores();
 
-            /// <summary>
-            /// <c>Bag</c> contaning the piece that the players can play
-            /// </summary>
-            IBag bag = new Bag();
-
-
-
-            int choice = Menu();
-
-            switch(choice)
+            int choice;
+            do
             {
-                case 1:
-                    Console.Write("Mode solo ? (y/n) ");
-                    bool solo = Console.ReadLine()?.Trim().ToLower() == "y";
-                    rulesManager = ChooseDifficulty();
-                    CreatePlayers(solo, players);
+                choice = Menu();
 
-                    var gameManager = new GameManager(rulesManager, board, bag, players);
-                    
-                    gameManager.GameStarted += GameStarted;
-                    gameManager.MessageRequested += DisplayMessage;
-                    gameManager.Quarto += Quarto;
-                    gameManager.BoardChanged += BoardChange;
-                    gameManager.AskPieceToPlay += AskPieceToPlay;
-                    gameManager.AskCoordinate += AskCoordinate;
-                    gameManager.BagChanged += BagChange;
-                    gameManager.GameEnd += GameEnd;
+                switch (choice)
+                {
+                    case 1:
+                        IPlayer[] players = new IPlayer[2];
+                        IBoard board = new Board();
+                        IBag bag = new Bag();
 
+                        Console.Write("Mode solo ? (y/n) ");
+                        bool solo = Console.ReadLine()?.Trim().ToLower() == "y";
+                        IRulesManager rulesManager = ChooseDifficulty();
+                        CreatePlayers(solo, players);
 
-                    gameManager.Run();
-                    break;
-                default:
-                    break;
+                        var gameManager = new GameManager(rulesManager, scoreManager, board, bag, players);
 
-            }
+                        gameManager.GameStarted += GameStarted;
+                        gameManager.MessageRequested += DisplayMessage;
+                        gameManager.Quarto += Quarto;
+                        gameManager.BoardChanged += BoardChange;
+                        gameManager.AskPieceToPlay += AskPieceToPlay;
+                        gameManager.AskCoordinate += AskCoordinate;
+                        gameManager.BagChanged += BagChange;
+                        gameManager.GameEnd += GameEnd;
+
+                        gameManager.Run();
+                        break;
+
+                    case 2:
+                        scoreManager.LoadScores();
+                        Console.WriteLine("\n=== Victory Scores ===");
+                        foreach (var entry in scoreManager.GetAllScores())
+                        {
+                            Console.WriteLine($"{entry.Key}: {entry.Value} victoire(s)");
+                        }
+                        Console.WriteLine("\nPress any key to return to menu.");
+                        Console.ReadKey();
+                        break;
+
+                    case 3:
+                        Console.WriteLine("\n=== Stubbed Victory Scores ===");
+                        foreach (var entry in stubScores.GetAllScores())
+                        {
+                            Console.WriteLine($"{entry.Key.Name}: {entry.Value} win(s)");
+                        }
+                        Console.WriteLine("\nPress any key to return to menu.");
+                        Console.ReadKey();
+                        break;
+
+                    case 9:
+                        Console.WriteLine("Exiting the game. Goodbye!");
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid option. Please select a valid menu item.");
+                        break;
+                }
+
+                Console.Clear();
+
+            } while (choice != 9);
         }
 
-        private static IRulesManager ChooseDifficulty()
+        private static RulesBeginner ChooseDifficulty()
         {
             Console.WriteLine("Choisissez la difficulté :");
             Console.WriteLine("1. Débutant");
@@ -140,29 +171,44 @@ namespace ConsoleApp
 
             List<(int row, int col)> selectedPositions = new();
 
-            for (int i = 1; i <= 4; i++)
+            int selectedCount = 0;
+
+            while (selectedCount < 4)
             {
-                Console.WriteLine($"Select piece {i}: enter row:");
+                Console.WriteLine($"Select piece {selectedCount + 1}: enter row:");
                 if (!int.TryParse(Console.ReadLine(), out int row))
                 {
-                    Console.WriteLine("Invalid input. Aborting Quarto attempt.");
-                    return;
+                    Console.WriteLine("Invalid input. Please enter a valid integer for row.");
+                    continue;
                 }
 
                 Console.WriteLine("Enter column:");
                 if (!int.TryParse(Console.ReadLine(), out int col))
                 {
-                    Console.WriteLine("Invalid input. Aborting Quarto attempt.");
-                    return;
+                    Console.WriteLine("Invalid input. Please enter a valid integer for column.");
+                    continue;
                 }
 
-                if (!e.Board.IsOnBoard(row, col) || e.Board.IsEmpty(row, col))
+                if (!e.Board.IsOnBoard(row, col))
                 {
-                    Console.WriteLine("Invalid selection. Aborting Quarto attempt.");
-                    return;
+                    Console.WriteLine("Invalid position: outside of board. Try again.");
+                    continue;
+                }
+
+                if (e.Board.IsEmpty(row, col))
+                {
+                    Console.WriteLine("Invalid selection: no piece at the given position. Try again.");
+                    continue;
+                }
+
+                if (selectedPositions.Contains((row, col)))
+                {
+                    Console.WriteLine("This position has already been selected. Choose a different one.");
+                    continue;
                 }
 
                 selectedPositions.Add((row, col));
+                selectedCount++;
             }
 
             var selectedPieces = selectedPositions
@@ -271,28 +317,39 @@ namespace ConsoleApp
         {
             Console.WriteLine($"{e.Player.Name}, it's your turn to play.");
 
-            int row = -1, col = -1;
+            int row, col;
 
             while (true)
             {
                 Console.Write("Enter row (0 to 3): ");
                 string? rowInput = Console.ReadLine();
-                if (int.TryParse(rowInput, out row) && e.Board.IsOnBoard(row, 0))
+                if (!int.TryParse(rowInput, out row) || row < 0 || row > 3)
                 {
-                    break;
+                    Console.WriteLine("Invalid row. Please enter a number between 0 and 3.");
+                    continue;
                 }
-                Console.WriteLine("Invalid row. Please enter a number between 0 and 3.");
-            }
 
-            while (true)
-            {
                 Console.Write("Enter column (0 to 3): ");
                 string? colInput = Console.ReadLine();
-                if (int.TryParse(colInput, out col) && e.Board.IsOnBoard(0, col))
+                if (!int.TryParse(colInput, out col) || col < 0 || col > 3)
                 {
-                    break;
+                    Console.WriteLine("Invalid column. Please enter a number between 0 and 3.");
+                    continue;
                 }
-                Console.WriteLine("Invalid column. Please enter a number between 0 and 3.");
+
+                if (!e.Board.IsOnBoard(row, col))
+                {
+                    Console.WriteLine("Coordinates out of board. Please try again.");
+                    continue;
+                }
+
+                if (!e.Board.IsEmpty(row, col))
+                {
+                    Console.WriteLine("This cell is already occupied. Please choose another one.");
+                    continue;
+                }
+
+                break;
             }
 
             e.CoordinateCallback((row, col));
