@@ -177,6 +177,14 @@ namespace Model
             return list;
         }
 
+        /// <summary>
+        /// Finds the first combination of 4 pieces on the board that forms a Quarto.
+        /// </summary>
+        /// <param name="board">The game board to search for Quarto combinations.</param>
+        /// <returns>
+        /// A list containing 4 pieces that form a Quarto if such a combination is found;
+        /// an empty list otherwise.
+        /// </returns>
         public List<IPiece>? GetQuarto(IBoard board)
         {
             var piecesOnBoard = board.GetAllPieces();

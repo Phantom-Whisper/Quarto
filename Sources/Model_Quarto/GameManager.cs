@@ -6,7 +6,7 @@ namespace Model
     /// <summary>
     /// Main class that manage the game by setting up events
     /// </summary>
-    public class GameManager(IRulesManager rules, IBoard board, IBag bag, IPlayer[] _players) : IGameManager
+    public class GameManager(IRulesManager rules, IScoreManager scoreManager, IBoard board, IBag bag, IPlayer[] _players) : IGameManager
     {
         private int turnNumber  = 0;
         private bool HasWinner = false;
@@ -97,6 +97,12 @@ namespace Model
                 Display();
                 Turn();
             }
+
+            if (HasWinner && CurrentPlayer is HumanPlayer humanPlayer)
+            {
+                scoreManager.AddVictory(humanPlayer);
+                scoreManager.SaveScores();
+            }
         }
 
         /// <summary>
@@ -165,6 +171,7 @@ namespace Model
 
                 HasWinner = true;
                 OnGameEnd(new GameEndEventArgs(CurrentPlayer));
+                
                 return;
             }
 
@@ -180,6 +187,18 @@ namespace Model
             currentPlayerIndex = (currentPlayerIndex + 1) % _players.Length;
         }
 
+        /// <summary>
+        /// Requests coordinates input from the specified player by raising an event,
+        /// and waits synchronously for the player's response.
+        /// </summary>
+        /// <param name="player">The player from whom to request coordinates.</param>
+        /// <returns>
+        /// A tuple containing the row and column coordinates selected by the player.
+        /// </returns>
+        /// <remarks>
+        /// This method blocks synchronously until the player provides valid coordinates.
+        /// Will consider using an asynchronous version to avoid blocking the calling thread.
+        /// </remarks>
         public (int row, int col) RequestCoordinates(IPlayer player)
         {
             var tcs = new TaskCompletionSource<(int row, int col)>();
@@ -189,10 +208,12 @@ namespace Model
                 tcs.SetResult(coords);
             }));
 
-            return tcs.Task.Result; // Bloque jusqu’à réception de la réponse
+            return tcs.Task.Result;
         }
 
-
+        /// <summary>
+        /// Displays the current game state by triggering appropriate events.
+        /// </summary>
         private void Display()
         {
             OnDisplayMessage($"Tour: {turnNumber}");

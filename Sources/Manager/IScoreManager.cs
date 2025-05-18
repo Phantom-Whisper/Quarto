@@ -3,8 +3,8 @@
     public interface IScoreManager
     {
         void AddVictory(IPlayer winner);
-        void SaveScores(string filepath);
-        void LoadScores(string filepath);
+        void SaveScores();
+        void LoadScores();
         int GetScore(IPlayer player);
     }
 }

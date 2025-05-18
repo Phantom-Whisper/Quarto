@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Model_Quarto\Model.csproj" />
+    <ProjectReference Include="..\Stub\Stub.csproj" />
   </ItemGroup>
 
 </Project>

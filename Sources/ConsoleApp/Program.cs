@@ -3,6 +3,7 @@ using System.Text;
 using Manager;
 using Manager.CustomEventArgs;
 using Model;
+using Stub;
 
 namespace ConsoleApp
 {
@@ -19,14 +20,16 @@ namespace ConsoleApp
               \__\_\\__,_|\__,_|_|   \__\___/ 
             ");
             Console.WriteLine("1. Launch a game");
+            Console.WriteLine("2. Consults score table");
+            Console.WriteLine("3. Consults score table (Stub)");
 
             Console.Write("Enter your choice: ");
 
             string? input = Console.ReadLine();
 
-            while (!int.TryParse(input, out choice) || (choice != 1 && choice != 2))
+            while (!int.TryParse(input, out choice) || (choice < 1 && choice > 9))
             {
-                Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                Console.WriteLine("Invalid choice. Please enter 1 or 9.");
                 input = Console.ReadLine();
             }
 
@@ -35,46 +38,73 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            
+            var scoreManager = new ScoreManager();
+            var stubScores = new StubPlayerScores();
 
-
-
-            int choice = Menu();
-
-            switch(choice)
+            int choice;
+            do
             {
-                case 1:
-                    IPlayer[] players = new IPlayer[2];
-                    IBoard board = new Board();
+                choice = Menu();
 
-                    /// <summary>
-                    /// <c>Bag</c> contaning the piece that the players can play
-                    /// </summary>
-                    IBag bag = new Bag();
+                switch (choice)
+                {
+                    case 1:
+                        IPlayer[] players = new IPlayer[2];
+                        IBoard board = new Board();
+                        IBag bag = new Bag();
 
-                    Console.Write("Mode solo ? (y/n) ");
-                    bool solo = Console.ReadLine()?.Trim().ToLower() == "y";
-                    IRulesManager rulesManager = ChooseDifficulty();
-                    CreatePlayers(solo, players);
+                        Console.Write("Mode solo ? (y/n) ");
+                        bool solo = Console.ReadLine()?.Trim().ToLower() == "y";
+                        IRulesManager rulesManager = ChooseDifficulty();
+                        CreatePlayers(solo, players);
 
-                    var gameManager = new GameManager(rulesManager, board, bag, players);
-                    
-                    gameManager.GameStarted += GameStarted;
-                    gameManager.MessageRequested += DisplayMessage;
-                    gameManager.Quarto += Quarto;
-                    gameManager.BoardChanged += BoardChange;
-                    gameManager.AskPieceToPlay += AskPieceToPlay;
-                    gameManager.AskCoordinate += AskCoordinate;
-                    gameManager.BagChanged += BagChange;
-                    gameManager.GameEnd += GameEnd;
+                        var gameManager = new GameManager(rulesManager, scoreManager, board, bag, players);
 
+                        gameManager.GameStarted += GameStarted;
+                        gameManager.MessageRequested += DisplayMessage;
+                        gameManager.Quarto += Quarto;
+                        gameManager.BoardChanged += BoardChange;
+                        gameManager.AskPieceToPlay += AskPieceToPlay;
+                        gameManager.AskCoordinate += AskCoordinate;
+                        gameManager.BagChanged += BagChange;
+                        gameManager.GameEnd += GameEnd;
 
-                    gameManager.Run();
-                    break;
-                default:
-                    break;
+                        gameManager.Run();
+                        break;
 
-            }
+                    case 2:
+                        scoreManager.LoadScores();
+                        Console.WriteLine("\n=== Victory Scores ===");
+                        foreach (var entry in scoreManager.GetAllScores())
+                        {
+                            Console.WriteLine($"{entry.Key}: {entry.Value} victoire(s)");
+                        }
+                        Console.WriteLine("\nPress any key to return to menu.");
+                        Console.ReadKey();
+                        break;
+
+                    case 3:
+                        Console.WriteLine("\n=== Stubbed Victory Scores ===");
+                        foreach (var entry in stubScores.GetAllScores())
+                        {
+                            Console.WriteLine($"{entry.Key.Name}: {entry.Value} win(s)");
+                        }
+                        Console.WriteLine("\nPress any key to return to menu.");
+                        Console.ReadKey();
+                        break;
+
+                    case 9:
+                        Console.WriteLine("Exiting the game. Goodbye!");
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid option. Please select a valid menu item.");
+                        break;
+                }
+
+                Console.Clear();
+
+            } while (choice != 9);
         }
 
         private static RulesBeginner ChooseDifficulty()
