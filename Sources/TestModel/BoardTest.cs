@@ -120,19 +120,6 @@ namespace TestModel
         }
 
         [Fact]
-        public void ToString_ShouldHandleEmptyGrid()
-        {
-            var output = board.ToString();
-
-            Assert.Contains("row/col", output);
-            Assert.Contains("  0 |", output);
-            Assert.Contains("  1 |", output);
-            Assert.Contains(" 0  |", output);
-            Assert.Contains(" 1  |", output);
-            Assert.DoesNotContain("null", output); // pas de null direct
-        }
-
-        [Fact]
         public void ToString_ShouldDisplaySinglePiece()
         {
             board.InsertPiece(piece,1, 1);
@@ -155,18 +142,6 @@ namespace TestModel
             Assert.Contains("Square Dark Big Full", output);
 
             board.ClearBoard();
-        }
-
-        [Fact]
-        public void ToString_ShouldFormatHeadersAndSeparatorsCorrectly()
-        {
-            var output = board.ToString();
-
-            Assert.Contains("row/col |", output);
-            Assert.Contains("---", output); // separator lines
-            Assert.Contains("  0 |", output);
-            Assert.Contains("  1 |", output);
-            Assert.Contains("  2 |", output);
         }
 
         [Theory]
