@@ -4,52 +4,25 @@ namespace TestModel
 {
     public class PlayerTest
     {
-        /*readonly HumanPlayer player = new("JoueurTest");
-
         [Theory]
         [InlineData("Shadow Fox")]
         [InlineData("LunaSkye")]
         [InlineData("Pixel_Knight")]
         [InlineData("Z3r0Blade")]
-        public void TestCtorPlayer(string pseudo)
+        public void TestCtorPlayer_ValidNames(string pseudo)
         {
             HumanPlayer player = new(pseudo);
             Assert.NotNull(player);
-            Assert.NotNull(player.Pseudo);
-            Assert.Equal(pseudo, player.Pseudo);
-            Assert.Equal(0, player.NbWin);
-        }
-
-        [Theory]
-        [InlineData("")]
-        [InlineData(" ")]
-        [InlineData("  ")]
-        public void TestCtorPlayerArgumentException(string pseudo)
-        {
-            Assert.Throws<ArgumentNullException>(() => { HumanPlayer player = new(pseudo); });
-        }
-
-
-        [Fact]
-        public void TestPseudo()
-        {
-            Assert.IsType<string>(player.Pseudo);
-            Assert.Equal("JoueurTest", player.Pseudo);
+            Assert.NotNull(player.Name); // Or player.Name if needed
+            Assert.Equal(pseudo, player.Name);
         }
 
         [Fact]
-        public void TestNbWin()
+        public void TestPseudoProperty()
         {
-            Assert.IsType<int>(player.NbWin);
-            Assert.Equal(0, player.NbWin);
+            var player = new HumanPlayer("JoueurTest");
+            Assert.IsType<string>(player.Name);
+            Assert.Equal("JoueurTest", player.Name);
         }
-
-        [Fact]
-        public void TestAddWin()
-        {
-            player.AddWin();
-            Assert.Equal(1, player.NbWin);
-        }
-        */
     }
-}
+ }

@@ -4,14 +4,12 @@ namespace TestModel
 {
     public class PlayerIATest
     {
-        /*readonly IAPlayer playerIA = new();
-
         [Fact]
-        public void TestCtorPlayerIA()
+        public void TestConstructor()
         {
-            Assert.NotNull(playerIA);
-            Assert.Equal("IA", playerIA.Pseudo);
-            Assert.Equal(0, playerIA.NbWin);
-        }*/
+            string expectedName = "Dumb AI";
+            var aiPlayer = new DumbAIPlayer();
+            Assert.Equal(expectedName, aiPlayer.Name);
+        }
     }
 }
