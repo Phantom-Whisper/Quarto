@@ -33,14 +33,13 @@ namespace TestModel
             public List<string> Messages { get; } = new();
 
             public event EventHandler<AskPieceToPlayEventArgs>? AskPieceToPlay;
-
+            public void OnAskPieceToPlay(AskPieceToPlayEventArgs args)
+            {
+                AskPieceToPlay?.Invoke(this, args);
+            }
             public (int, int) RequestCoordinates(IPlayer player) => CoordinatesToReturn;
             public void OnDisplayMessage(string message) => Messages.Add(message);
 
-            public void OnAskPieceToPlay(AskPieceToPlayEventArgs args)
-            {
-                throw new NotImplementedException();
-            }
 
             public List<IPiece> GetAvailablePieces()
             {

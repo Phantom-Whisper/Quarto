@@ -28,9 +28,8 @@ namespace Model
             if (winner is null) return;
 
             string name = winner.Name;
-
-            if (Scores.TryGetValue(name, out int value))
-                Scores[name] = ++value;
+            if (Scores.TryGetValue(name, out _))
+                Scores[name]++;
             else
                 Scores[name] = 1;
         }
