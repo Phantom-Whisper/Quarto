@@ -4,7 +4,6 @@ namespace TestModel
 {
     public class BoardTest
     {
-        /*
         readonly Board board = new(4, 4);
         readonly Piece piece = new(true, true, true, true);
         readonly Piece piece2 = new(true, false, true, true);
@@ -227,6 +226,6 @@ namespace TestModel
                     Assert.Null(board.GetPiece(i, j));
                 }
             }
-        }*/
+        }
     }
 }
