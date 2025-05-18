@@ -179,11 +179,18 @@ namespace Model
 
         public List<IPiece>? GetQuarto(IBoard board)
         {
-            var piecesOnBoard = board.GetAllPieces(); 
-                        
-            foreach (var combo in board.CombinationsOf4(piecesOnBoard).Where(x => IsQuarto(board, x)))
-                return combo;
-            return [];
+            var piecesOnBoard = board.GetAllPieces();
+            List<IPiece>? firstValidCombo = null;
+
+            foreach (var combo in board.CombinationsOf4(piecesOnBoard))
+            {
+                if (IsQuarto(board, combo))
+                {
+                    firstValidCombo ??= combo;
+                }
+            }
+
+            return firstValidCombo ?? [];
         }
 
 

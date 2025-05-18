@@ -171,7 +171,6 @@ namespace ConsoleApp
                     continue;
                 }
 
-                // Optionnel : éviter les doublons
                 if (selectedPositions.Contains((row, col)))
                 {
                     Console.WriteLine("This position has already been selected. Choose a different one.");

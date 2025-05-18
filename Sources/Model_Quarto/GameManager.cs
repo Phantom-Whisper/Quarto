@@ -97,8 +97,6 @@ namespace Model
                 Display();
                 Turn();
             }
-
-
         }
 
         /// <summary>
@@ -150,7 +148,7 @@ namespace Model
             bag.Remove(pieceToPlay);
 
             var quartoPieces = rulesManager.GetQuarto(board);
-            if (quartoPieces != null)
+            if (quartoPieces != null && quartoPieces.Count == 4)
             {
                 if (CurrentPlayer is AIPlayer)
                 {
