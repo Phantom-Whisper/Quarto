@@ -116,5 +116,15 @@ namespace TestModel
             Assert.False(result);
         }
 
+        [Fact]
+        public void Equals_ObjectIsNull_ReturnsFalse()
+        {
+            var piece = new Piece(true, false, true, false);
+            bool result = piece.Equals((object?)null);
+
+            Assert.False(result);
+        }
+
+
     }
 }

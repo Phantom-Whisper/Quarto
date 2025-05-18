@@ -17,7 +17,7 @@ namespace TestModel
         {
             var bag = new Bag();
             var piece = new Piece(false, false, false, false);
-            bag.Remove(piece); // Ensure it's not already present
+            bag.Remove(piece); 
             bag.AddPiece(piece);
             Assert.Throws<InvalidOperationException>(() => bag.AddPiece(piece));
         }
@@ -57,7 +57,7 @@ namespace TestModel
         {
             Bag bag = new Bag();
             Piece piece = new Piece(isSquare, isLight, isBig, isFull);
-            bag.Remove(piece); // to avoid InvalidOperationException
+            bag.Remove(piece); 
             bag.AddPiece(piece);
 
             var foundPiece = bag.Baglist.FirstOrDefault(p =>
@@ -101,5 +101,40 @@ namespace TestModel
             Assert.Equal(piece, taken);
             Assert.DoesNotContain(piece, bag.Baglist);
         }
+
+        [Fact]
+        public void IsEmpty_ShouldReturnTrue_WhenBagIsEmpty()
+        {
+            var bag = new Bag();
+            foreach (var piece in bag.Baglist.ToList())
+                bag.Remove(piece);
+
+            Assert.True(bag.IsEmpty());
+        }
+
+        [Fact]
+        public void IsEmpty_ShouldReturnFalse_WhenBagIsNotEmpty()
+        {
+            var bag = new Bag();
+            Assert.False(bag.IsEmpty());
+        }
+        [Fact]
+        public void ToString_ShouldListAllPiecesWithCorrectFormat()
+        {
+            var bag = new Bag();
+            var output = bag.ToString();
+
+            // Vérifie qu'il y a bien 16 lignes (une par pièce)
+            var lines = output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            Assert.Equal(16, lines.Length);
+
+            // Vérifie le format de la première ligne
+            Assert.StartsWith("1. ", lines[0]);
+            Assert.Contains("Square", lines[0]); // ou "Round" selon la première pièce
+
+            // Vérifie le format de la dernière ligne
+            Assert.StartsWith("16. ", lines[15]);
+        }
+
     }
 }
