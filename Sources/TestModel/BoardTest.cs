@@ -202,5 +202,272 @@ namespace TestModel
                 }
             }
         }
+
+        [Fact]
+        public void TestClearBoardWithNoPieces()
+        {
+            board.ClearBoard();
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    Assert.Null(board.GetPiece(i, j));
+                }
+            }
+        }
+
+        [Fact]
+        public void IsBoardFull_ShouldReturnFalse_WhenBoardIsEmpty()
+        {
+            var board = new Board(4, 4);
+            Assert.False(board.IsBoardFull());
+        }
+
+        [Fact]
+        public void IsBoardFull_ShouldReturnTrue_WhenBoardIsFull()
+        {
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+
+            for (int i = 0; i < board.SizeX; i++)
+                for (int j = 0; j < board.SizeY; j++)
+                    board.InsertPiece(piece, i, j);
+
+            Assert.True(board.IsBoardFull());
+        }
+
+        [Fact]
+        public void IsBoardFull_ShouldReturnFalse_WhenBoardIsPartiallyFilled()
+        {
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+
+            // Remplir toutes les cases sauf une
+            for (int i = 0; i < board.SizeX; i++)
+                for (int j = 0; j < board.SizeY; j++)
+                    if (!(i == 3 && j == 3))
+                        board.InsertPiece(piece, i, j);
+
+            Assert.False(board.IsBoardFull());
+        }
+
+        [Fact]
+        public void IsBoardFull_ShouldReturnFalse_AfterClearBoard()
+        {
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+
+            for (int i = 0; i < board.SizeX; i++)
+                for (int j = 0; j < board.SizeY; j++)
+                    board.InsertPiece(piece, i, j);
+
+            board.ClearBoard();
+
+            Assert.False(board.IsBoardFull());
+        }
+
+        [Fact]
+        public void ClearBoard_ShouldSetAllCellsToNull()
+        {
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+
+            // Remplir toutes les cases
+            for (int i = 0; i < board.SizeX; i++)
+                for (int j = 0; j < board.SizeY; j++)
+                    board.InsertPiece(piece, i, j);
+
+            board.ClearBoard();
+
+            for (int i = 0; i < board.SizeX; i++)
+                for (int j = 0; j < board.SizeY; j++)
+                    Assert.Null(board.GetPiece(i, j));
+        }
+
+        [Fact]
+        public void IsBoardFull_ShouldReturnTrue_WhenAllCellsFilled()
+        {
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+
+            for (int i = 0; i < board.SizeX; i++)
+                for (int j = 0; j < board.SizeY; j++)
+                    board.InsertPiece(piece, i, j);
+
+            Assert.True(board.IsBoardFull());
+        }
+
+        [Fact]
+        public void IsBoardFull_ShouldReturnFalse_WhenAtLeastOneCellIsEmpty()
+        {
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+
+            // Remplir toutes les cases sauf une
+            for (int i = 0; i < board.SizeX; i++)
+                for (int j = 0; j < board.SizeY; j++)
+                    if (!(i == 0 && j == 0))
+                        board.InsertPiece(piece, i, j);
+
+            Assert.False(board.IsBoardFull());
+        }
+
+        [Fact]
+        public void PositionXPiece_ShouldThrow_WhenPieceNotOnBoard()
+        {
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+
+            var ex = Assert.Throws<InvalidOperationException>(() => board.PositionXPiece(piece));
+            Assert.Equal("Piece not in the board !", ex.Message);
+        }
+
+        [Fact]
+        public void PositionYPiece_ShouldThrow_WhenPieceNotOnBoard()
+        {
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+
+            var ex = Assert.Throws<InvalidOperationException>(() => board.PositionYPiece(piece));
+            Assert.Equal("Piece not in the board !", ex.Message);
+        }
+
+        [Fact]
+        public void PositionPiece_ShouldThrow_WhenPieceNotOnBoard()
+        {
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+
+            var ex = Assert.Throws<InvalidOperationException>(() => board.PositionPiece(piece));
+            Assert.Equal("Piece not in the board !", ex.Message);
+        }
+        [Fact]
+        public void GetAllPieces_ShouldReturnEmptyList_WhenBoardIsEmpty()
+        {
+            var board = new Board(4, 4);
+
+            var pieces = board.GetAllPieces();
+
+            Assert.NotNull(pieces);
+            Assert.Empty(pieces);
+        }
+
+        [Fact]
+        public void GetAllPieces_ShouldReturnOnePiece_WhenOnePieceOnBoard()
+        {
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+
+            board.InsertPiece(piece, 1, 2);
+
+            var pieces = board.GetAllPieces();
+
+            Assert.Single(pieces);
+            Assert.Contains(piece, pieces);
+        }
+
+        [Fact]
+        public void GetAllPieces_ShouldReturnAllPieces_WhenBoardIsPartiallyFilled()
+        {
+            var board = new Board(4, 4);
+            var piece1 = new Piece(true, true, true, true);
+            var piece2 = new Piece(false, false, false, false);
+
+            board.InsertPiece(piece1, 0, 0);
+            board.InsertPiece(piece2, 3, 3);
+
+            var pieces = board.GetAllPieces();
+
+            Assert.Equal(2, pieces.Count);
+            Assert.Contains(piece1, pieces);
+            Assert.Contains(piece2, pieces);
+        }
+
+        [Fact]
+        public void GetAllPieces_ShouldReturnAllPieces_WhenBoardIsFull()
+        {
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+
+            for (int i = 0; i < board.SizeX; i++)
+                for (int j = 0; j < board.SizeY; j++)
+                    board.InsertPiece(piece, i, j);
+
+            var pieces = board.GetAllPieces();
+
+            Assert.Equal(board.SizeX * board.SizeY, pieces.Count);
+        }
+
+        [Fact]
+        public void CombinationsOf4_ShouldReturnNoCombination_WhenListIsNull()
+        {
+            var board = new Board(4, 4);
+            List<Manager.IPiece> pieces = null;
+
+            var result = board.CombinationsOf4(pieces);
+
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void CombinationsOf4_ShouldReturnNoCombination_WhenListHasLessThan4Pieces()
+        {
+            var board = new Board(4, 4);
+            var pieces = new List<Manager.IPiece>
+            {
+                new Piece(true, true, true, true),
+                new Piece(false, true, true, true),
+                new Piece(true, false, true, true)
+            };
+
+            var result = board.CombinationsOf4(pieces);
+
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void CombinationsOf4_ShouldReturnOneCombination_WhenListHasExactly4Pieces()
+        {
+            var board = new Board(4, 4);
+            var pieces = new List<Manager.IPiece>
+            {
+                new Piece(true, true, true, true),
+                new Piece(false, true, true, true),
+                new Piece(true, false, true, true),
+                new Piece(true, true, false, true)
+            };
+
+            var result = board.CombinationsOf4(pieces).ToList();
+
+            Assert.Single(result);
+            Assert.Equal(4, result[0].Count);
+            Assert.All(pieces, p => Assert.Contains(p, result[0]));
+        }
+
+        [Fact]
+        public void CombinationsOf4_ShouldReturnAllCombinations_WhenListHasMoreThan4Pieces()
+        {
+            var board = new Board(4, 4);
+            var pieces = new List<Manager.IPiece>
+            {
+                new Piece(true, true, true, true),
+                new Piece(false, true, true, true),
+                new Piece(true, false, true, true),
+                new Piece(true, true, false, true),
+                new Piece(false, false, false, false)
+            };
+
+            var result = board.CombinationsOf4(pieces).ToList();
+
+            // Il y a C(5,4) = 5 combinaisons possibles
+            Assert.Equal(5, result.Count);
+            foreach (var combination in result)
+            {
+                Assert.Equal(4, combination.Count);
+                Assert.All(combination, p => Assert.Contains(p, pieces));
+            }
+        }
+
+
     }
 }
