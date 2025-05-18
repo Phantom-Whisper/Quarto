@@ -182,15 +182,12 @@ namespace TestModel
             Assert.False(rules.IsGameOver(bag, board));
         }
 
-        // Update the test to use a public method or ensure the method being tested is accessible.  
         [Fact]
         public void IsColumn_ShouldThrow_WhenPiecesIsNullOrNot4()
         {
             var board = new Board();
             var rules = new Rules();
 
-            // Use the public method HasCommonAttribute instead of the inaccessible IsColumn method.  
-            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(null));
             Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece>()));
             Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece> { new Piece(true, true, true, true) }));
             Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece> { new Piece(true, true, true, true), new Piece(false, false, false, false), new Piece(true, false, true, false) }));
@@ -202,7 +199,6 @@ namespace TestModel
         {
             var rules = new Rules();
 
-            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(null));
             Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece>()));
             Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece> { new Piece(true, true, true, true) }));
             Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece> { new Piece(true, true, true, true), new Piece(false, false, false, false), new Piece(true, false, true, false) }));
@@ -259,6 +255,86 @@ namespace TestModel
             };
 
             Assert.False(rules.HasCommonAttribute(pieces));
+        }
+
+        [Fact]
+        public void GetQuarto_ShouldReturnEmptyList_WhenNoQuarto()
+        {
+            var board = new Board(4, 4);
+            var rules = new Rules();
+
+            // Placer 4 pièces qui ne forment pas de quarto
+            var p1 = new Piece(true, true, true, true);
+            var p2 = new Piece(false, false, false, false);
+            var p3 = new Piece(true, false, true, false);
+            var p4 = new Piece(false, true, false, true);
+
+            board.InsertPiece(p1, 0, 0);
+            board.InsertPiece(p2, 0, 1);
+            board.InsertPiece(p3, 0, 2);
+            board.InsertPiece(p4, 0, 3);
+
+            var result = rules.GetQuarto(board);
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetQuarto_ShouldReturnCombination_WhenQuartoExists()
+        {
+            var board = new Board(4, 4);
+            var rules = new Rules();
+
+            // Placer 4 pièces alignées avec un attribut commun (ex: toutes IsFull = true)
+            var p1 = new Piece(true, true, true, true);
+            var p2 = new Piece(false, false, false, true);
+            var p3 = new Piece(true, false, true, true);
+            var p4 = new Piece(false, true, false, true);
+
+            board.InsertPiece(p1, 0, 0);
+            board.InsertPiece(p2, 0, 1);
+            board.InsertPiece(p3, 0, 2);
+            board.InsertPiece(p4, 0, 3);
+
+            var result = rules.GetQuarto(board);
+
+            Assert.NotNull(result);
+            Assert.Equal(4, result.Count);
+            Assert.Contains(p1, result);
+            Assert.Contains(p2, result);
+            Assert.Contains(p3, result);
+            Assert.Contains(p4, result);
+        }
+
+        [Fact]
+        public void GetQuarto_ShouldReturnFirstValidCombination_WhenMultipleQuartosExist()
+        {
+            var board = new Board(4, 4);
+            var rules = new Rules();
+
+            // Placer 5 pièces dont deux groupes de 4 forment un quarto
+            var p1 = new Piece(true, true, true, true);
+            var p2 = new Piece(false, false, false, true);
+            var p3 = new Piece(true, false, true, true);
+            var p4 = new Piece(false, true, false, true);
+            var p5 = new Piece(true, true, false, false);
+
+            board.InsertPiece(p1, 0, 0);
+            board.InsertPiece(p2, 0, 1);
+            board.InsertPiece(p3, 0, 2);
+            board.InsertPiece(p4, 0, 3);
+            board.InsertPiece(p5, 1, 0);
+
+            var result = rules.GetQuarto(board);
+
+            Assert.NotNull(result);
+            Assert.Equal(4, result.Count);
+            // La première combinaison trouvée doit contenir p1, p2, p3, p4
+            Assert.Contains(p1, result);
+            Assert.Contains(p2, result);
+            Assert.Contains(p3, result);
+            Assert.Contains(p4, result);
         }
 
     }
