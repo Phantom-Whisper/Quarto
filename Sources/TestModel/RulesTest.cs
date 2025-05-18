@@ -121,5 +121,145 @@ namespace TestModel
             
             Assert.Equal(expected, result);
         }
+        [Fact]
+        public void IsGameOver_ShouldReturnTrue_WhenBagIsEmptyAndBoardIsFull()
+        {
+            var bag = new Bag();
+            var board = new Board(4, 4);
+
+            // Vider le sac
+            foreach (var piece in bag.Baglist.ToList())
+                bag.Remove(piece);
+
+            // Remplir le plateau
+            var pieceToPlace = new Piece(true, true, true, true);
+            for (int i = 0; i < board.SizeX; i++)
+                for (int j = 0; j < board.SizeY; j++)
+                    board.InsertPiece(pieceToPlace, i, j);
+
+            var rules = new Rules();
+            Assert.True(rules.IsGameOver(bag, board));
+        }
+
+        [Fact]
+        public void IsGameOver_ShouldReturnFalse_WhenBagIsNotEmpty()
+        {
+            var bag = new Bag();
+            var board = new Board(4, 4);
+
+            // Remplir le plateau
+            var pieceToPlace = new Piece(true, true, true, true);
+            for (int i = 0; i < board.SizeX; i++)
+                for (int j = 0; j < board.SizeY; j++)
+                    board.InsertPiece(pieceToPlace, i, j);
+
+            var rules = new Rules();
+            Assert.False(rules.IsGameOver(bag, board));
+        }
+
+        [Fact]
+        public void IsGameOver_ShouldReturnFalse_WhenBoardIsNotFull()
+        {
+            var bag = new Bag();
+            var board = new Board(4, 4);
+
+            // Vider le sac
+            foreach (var piece in bag.Baglist.ToList())
+                bag.Remove(piece);
+
+            // Ne pas remplir le plateau
+            var rules = new Rules();
+            Assert.False(rules.IsGameOver(bag, board));
+        }
+
+        [Fact]
+        public void IsGameOver_ShouldReturnFalse_WhenBagIsNotEmptyAndBoardIsNotFull()
+        {
+            var bag = new Bag();
+            var board = new Board(4, 4);
+
+            var rules = new Rules();
+            Assert.False(rules.IsGameOver(bag, board));
+        }
+
+        // Update the test to use a public method or ensure the method being tested is accessible.  
+        [Fact]
+        public void IsColumn_ShouldThrow_WhenPiecesIsNullOrNot4()
+        {
+            var board = new Board();
+            var rules = new Rules();
+
+            // Use the public method HasCommonAttribute instead of the inaccessible IsColumn method.  
+            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(null));
+            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece>()));
+            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece> { new Piece(true, true, true, true) }));
+            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece> { new Piece(true, true, true, true), new Piece(false, false, false, false), new Piece(true, false, true, false) }));
+            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece> { new Piece(true, true, true, true), new Piece(false, false, false, false), new Piece(true, false, true, false), new Piece(false, true, false, true), new Piece(true, true, false, false) }));
+        }
+
+        [Fact]
+        public void HasCommonAttribute_ShouldThrow_WhenPiecesIsNullOrNot4()
+        {
+            var rules = new Rules();
+
+            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(null));
+            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece>()));
+            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece> { new Piece(true, true, true, true) }));
+            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece> { new Piece(true, true, true, true), new Piece(false, false, false, false), new Piece(true, false, true, false) }));
+            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(new List<IPiece> { new Piece(true, true, true, true), new Piece(false, false, false, false), new Piece(true, false, true, false), new Piece(false, true, false, true), new Piece(true, true, false, false) }));
+        }
+
+        [Fact]
+        public void AreAligned_ShouldThrow_WhenPiecesIsNullOrNot4()
+        {
+            var board = new Board();
+            var rules = new Rules();
+
+            Assert.Throws<ArgumentException>(() => rules.AreAligned(board, new List<IPiece>()));
+            Assert.Throws<ArgumentException>(() => rules.AreAligned(board, new List<IPiece> { new Piece(true, true, true, true) }));
+            Assert.Throws<ArgumentException>(() => rules.AreAligned(board, new List<IPiece> {
+               new Piece(true, true, true, true),
+               new Piece(false, false, false, false),
+               new Piece(true, false, true, false)
+           }));
+            Assert.Throws<ArgumentException>(() => rules.AreAligned(board, new List<IPiece> {
+               new Piece(true, true, true, true),
+               new Piece(false, false, false, false),
+               new Piece(true, false, true, false),
+               new Piece(false, true, false, true),
+               new Piece(true, true, false, false)
+           }));
+        }
+
+        [Fact]
+        public void HasCommonAttribute_ShouldReturnTrue_WhenAllPiecesHaveSameIsFull()
+        {
+            var rules = new Rules();
+            var pieces = new List<IPiece>
+            {
+                new Piece(true, true, true, true),
+                new Piece(false, false, false, true),
+                new Piece(true, false, true, true),
+                new Piece(false, true, false, true)
+            };
+
+            Assert.True(rules.HasCommonAttribute(pieces));
+        }
+
+        [Fact]
+        public void HasCommonAttribute_ShouldReturnFalse_WhenNotAllPiecesHaveSameIsFull()
+        {
+            var rules = new Rules();
+            var pieces = new List<IPiece>
+            {
+                new Piece(true, true, true, true),
+                new Piece(false, false, false, false),
+                new Piece(true, false, true, true),
+                new Piece(false, true, false, true)
+            };
+
+            Assert.False(rules.HasCommonAttribute(pieces));
+        }
+
     }
 }

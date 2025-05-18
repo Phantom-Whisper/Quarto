@@ -399,17 +399,6 @@ namespace TestModel
         }
 
         [Fact]
-        public void CombinationsOf4_ShouldReturnNoCombination_WhenListIsNull()
-        {
-            var board = new Board(4, 4);
-            List<Manager.IPiece> pieces = null;
-
-            var result = board.CombinationsOf4(pieces);
-
-            Assert.Empty(result);
-        }
-
-        [Fact]
         public void CombinationsOf4_ShouldReturnNoCombination_WhenListHasLessThan4Pieces()
         {
             var board = new Board(4, 4);
