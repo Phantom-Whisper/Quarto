@@ -141,29 +141,45 @@ namespace ConsoleApp
 
             List<(int row, int col)> selectedPositions = new();
 
-            for (int i = 1; i <= 4; i++)
+            int selectedCount = 0;
+
+            while (selectedCount < 4)
             {
-                Console.WriteLine($"Select piece {i}: enter row:");
+                Console.WriteLine($"Select piece {selectedCount + 1}: enter row:");
                 if (!int.TryParse(Console.ReadLine(), out int row))
                 {
-                    Console.WriteLine("Invalid input. Aborting Quarto attempt.");
-                    return;
+                    Console.WriteLine("Invalid input. Please enter a valid integer for row.");
+                    continue;
                 }
 
                 Console.WriteLine("Enter column:");
                 if (!int.TryParse(Console.ReadLine(), out int col))
                 {
-                    Console.WriteLine("Invalid input. Aborting Quarto attempt.");
-                    return;
+                    Console.WriteLine("Invalid input. Please enter a valid integer for column.");
+                    continue;
                 }
 
-                if (!e.Board.IsOnBoard(row, col) || e.Board.IsEmpty(row, col))
+                if (!e.Board.IsOnBoard(row, col))
                 {
-                    Console.WriteLine("Invalid selection. Aborting Quarto attempt.");
-                    return;
+                    Console.WriteLine("Invalid position: outside of board. Try again.");
+                    continue;
+                }
+
+                if (e.Board.IsEmpty(row, col))
+                {
+                    Console.WriteLine("Invalid selection: no piece at the given position. Try again.");
+                    continue;
+                }
+
+                // Optionnel : éviter les doublons
+                if (selectedPositions.Contains((row, col)))
+                {
+                    Console.WriteLine("This position has already been selected. Choose a different one.");
+                    continue;
                 }
 
                 selectedPositions.Add((row, col));
+                selectedCount++;
             }
 
             var selectedPieces = selectedPositions
