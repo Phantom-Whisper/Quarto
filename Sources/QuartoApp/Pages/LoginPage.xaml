@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:card="clr-namespace:QuartoApp.Views"
              x:Class="QuartoApp.Pages.LoginPage"
+             xmlns:component="clr-namespace:QuartoApp.Views"
              Title="LoginPage"
              BackgroundImageSource="simple.png"
              Shell.NavBarIsVisible="False">
@@ -41,13 +42,26 @@
                     <Entry Style="{StaticResource Login}"/>
                 </HorizontalStackLayout>
                 
-                <HorizontalStackLayout Grid.Row="2">
-                    
+                <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center">
+                    <component:CustomButton2/>
+                    <component:CustomButton2/>
+                    <component:CustomButton2/>
                 </HorizontalStackLayout>
                 
 
             </Grid>
 
+            
+
         </Grid>
+
+         <HorizontalStackLayout Grid.ColumnSpan="2" 
+                        HorizontalOptions="End"
+                        VerticalOptions="End"
+                        Margin="50,50,40,50">
+            <component:CustomButton WidthRequest="300"/>
+            <component:CustomButton WidthRequest="300"/>
+            <component:CustomButton WidthRequest="300"/>
+        </HorizontalStackLayout>
     </Grid>
 </ContentPage>

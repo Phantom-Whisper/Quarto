@@ -24,10 +24,65 @@
                Aspect="Fill"/>
         <ScrollView
                 Grid.Column="1"
-                Grid.Row="1"
-                Margin="40, 20, 0, 20">
-            <Label
-                    Text="• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles &#x0a;• On écrit les règles"/>
+                Grid.Row="1" Margin="10">
+            <VerticalStackLayout>
+                <Label Text="📜 Composition"
+                       FontSize="Large"/>
+                <Grid ColumnDefinitions="*,*" Margin="0" Padding="0">
+                    <Label Text="• 1 plateau (16 cases)&#x0a;• 16 pièces uniques avec 4 caractéristiques :&#x0a; 
+                           &#x09;• Couleur : claire ou foncée &#x0a; 
+                           &#x09;• Forme : ronde ou carrée &#x0a; 
+                           &#x09;• Hauteur : haute ou basse &#x0a; 
+                           &#x09;• Etat : pleine ou creuse 
+                           &#x0a;⚠ En début de partie, les 16 pièces sont déposées autour du plateau 
+                           &#x0a;• Une partie dure entre 10 et 20 minutes  
+                           &#x0a;• Stratégie : Anticipez les coups adverses et choisissez les pièces judicieusement !&#x0a;"
+                           FontSize="Body"/>
+                    <Image Grid.Column="1" Source="pieces.png" WidthRequest="150"/>
+                </Grid>
+                <Label Text="🎯 But du jeu"
+                       FontSize="Large"/>
+                <Image Source="combinaisons.png"/>
+                <Label Text="• Il faut aligner verticalement, horizontalement ou diagonalement (et en forme de carré pour la version avertie) sur le plateau 4 pions ayant une caractéristique commune. &#x0a;"
+                       FontSize="Body"/>
+                <Label Text="⌛ Déroulement d’une partie"
+                       FontSize="Large"/>
+                <Label Text="• Un joueur choisit une pièce et la donne à son adversaire.
+                             &#x0a;• L’adversaire place la pièce sur une case libre du plateau.
+                             &#x0a;• Il choisit ensuite une nouvelle pièce pour son adversaire.
+                             &#x0a;• Le jeu continue ainsi jusqu’à ce qu’un joueur réalise un Quarto ou que le plateau soit rempli.&#x0a;"
+                       FontSize="Body"/>
+                <Label Text="🏆 Victoire"
+                       FontSize="Large"/>
+                <Label Text="• **Victoire classique :** Le premier annonce “Quarto !”. Annonçant ainsi qu’il a réussi à aligner 4 pièces et à montrer l’alignement en sélectionnant les pièces. 
+                       &#x0a;&#x09;• Un “Quarto !” est possible lorsque : 
+                       &#x0a;&#x09;• Il crée une ligne de 4 pièces claires ou foncées, 4 pièces rondes ou carrées, 4 pièces hautes ou basses, 4 pièces pleines ou creuses.
+                       &#x0a;• **Victoire volée :** Si le joueur n’a pas vu et donc annoncé sa victoire, et qu’il donne une pièce à l’adversaire. Ce dernier peut annoncer “Quarto !” et gagner la partie.
+                       &#x0a;• Si aucun des joueurs n’annonce de “Quarto !”, l’alignement perd sa valeur et la partie continue. &#x0a;"
+                       FontSize="Body"/>
+                <Label Text="🔚 Fin d’une partie"
+                       FontSize="Large"/>
+                <Image Source="end.png"/>
+                <Label Text="• **Victoire :** un joueur annonce et montre un “QUARTO !”.
+                       &#x0a;• **Égalité :** toutes les pièces ont été posées sans former un alignement valide.
+                       &#x0a;• **Défaite :** toutes les pièces ont été posées sans former un alignement valide en jouant contre une IA.&#x0a;"
+                       FontSize="Body"/>
+
+                <Label Text="🔀 Variantes"
+                       FontSize="Large"/>
+                <Label Text="🚼 Pour joueurs débutants"
+                       FontSize="Title"/>
+                <Label Text="Pour les joueurs souhaitant s’initier progressivement à la mécanique du jeu, il y a une version plus simpleavec seulement 2 caractéristiques comme critères d’alignement : 
+                       &#x0a; •  Couleur : claire ou foncée
+                       &#x0a; •  Forme : ronde ou carrée &#x0a;"
+                       FontSize="Body"/>
+
+                <Label Text="🗿 Pour joueurs avertis"
+                        FontSize="Title"/>
+                <Label Text="Pour les joueurs un peu plus expérimentés au jeu, on a pensé à vous ! Cette version permet un alignement mais aussi carré de 4 pièces avec au moins une caractéristiques commune. 
+                       &#x0a;&#x0a;Il y a alors 9 possibilités de plus de faire “QUARTO !”."
+                       FontSize="Body"/>
+            </VerticalStackLayout>
         </ScrollView>
         <component:CustomButton Grid.Row="1" Grid.Column="2" VerticalOptions="End">
         </component:CustomButton>
