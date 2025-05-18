@@ -148,7 +148,7 @@ namespace Model
             bag.Remove(pieceToPlay);
 
             var quartoPieces = rulesManager.GetQuarto(board);
-            if (quartoPieces != null && quartoPieces.Count == 4)
+            if (quartoPieces != null && quartoPieces.Distinct().Count() == 4)
             {
                 if (CurrentPlayer is AIPlayer)
                 {

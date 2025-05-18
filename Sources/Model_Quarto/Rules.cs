@@ -182,12 +182,9 @@ namespace Model
             var piecesOnBoard = board.GetAllPieces();
             List<IPiece>? firstValidCombo = null;
 
-            foreach (var combo in board.CombinationsOf4(piecesOnBoard))
+            foreach (var combo in board.CombinationsOf4(piecesOnBoard).Where(x => IsQuarto(board, x)))
             {
-                if (IsQuarto(board, combo))
-                {
-                    firstValidCombo ??= combo;
-                }
+                firstValidCombo ??= combo;
             }
 
             return firstValidCombo ?? [];
