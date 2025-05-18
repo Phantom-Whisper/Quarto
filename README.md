@@ -1,13 +1,13 @@
 # Quarto
 [![Build Status](https://codefirst.iut.uca.fr/api/badges/gabriel.coudel-koumba/Quarto/status.svg)](https://codefirst.iut.uca.fr/gabriel.coudel-koumba/Quarto)
-[![Lines of Code](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=ncloc&token=8c87ea2742ac43a5e4b6bfc26b891c17a856f3f3)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
-[![Coverage](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=coverage&token=8c87ea2742ac43a5e4b6bfc26b891c17a856f3f3)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
-[![Maintainability Rating](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=sqale_rating&token=8c87ea2742ac43a5e4b6bfc26b891c17a856f3f3)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
-[![Security Rating](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=security_rating&token=8c87ea2742ac43a5e4b6bfc26b891c17a856f3f3)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
-[![Reliability Rating](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=reliability_rating&token=8c87ea2742ac43a5e4b6bfc26b891c17a856f3f3)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
-[![Quality Gate Status](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=alert_status&token=8c87ea2742ac43a5e4b6bfc26b891c17a856f3f3)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
-[![Bugs](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=bugs&token=8c87ea2742ac43a5e4b6bfc26b891c17a856f3f3)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
-[![Code Smells](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=code_smells&token=8c87ea2742ac43a5e4b6bfc26b891c17a856f3f3)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
+[![Lines of Code](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=ncloc&token=1d4fd1b55425be34e015b0a55ead52ac889fbb7a)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
+[![Coverage](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=coverage&token=1d4fd1b55425be34e015b0a55ead52ac889fbb7a)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
+[![Maintainability Rating](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=sqale_rating&token=1d4fd1b55425be34e015b0a55ead52ac889fbb7a)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
+[![Security Rating](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=security_rating&token=1d4fd1b55425be34e015b0a55ead52ac889fbb7a)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
+[![Reliability Rating](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=reliability_rating&token=1d4fd1b55425be34e015b0a55ead52ac889fbb7a)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
+[![Quality Gate Status](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=alert_status&token=1d4fd1b55425be34e015b0a55ead52ac889fbb7a)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
+[![Bugs](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=bugs&token=1d4fd1b55425be34e015b0a55ead52ac889fbb7a)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
+[![Code Smells](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=code_smells&token=1d4fd1b55425be34e015b0a55ead52ac889fbb7a)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
 ## Présentation
 **Quarto est un projet universitaire réalisé lors d'une Situation d'Apprentissage et d'Évaluation (SAÉ) sur une période de 4 mois.** Le but étant de développer une application de bureau Windows permettant une prise en main plus aisée du jeu de plateau du même nom.
 
