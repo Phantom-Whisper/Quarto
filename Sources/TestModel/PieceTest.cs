@@ -105,5 +105,16 @@ namespace TestModel
 
             Assert.Equal(hash, piece.GetHashCode());
         }
+
+        [Fact]
+        public void TestEquals_WithNull_False()
+        {
+            var piece = new Piece(true, true, true, true);
+
+            bool result = piece.Equals(null);
+
+            Assert.False(result);
+        }
+
     }
 }
