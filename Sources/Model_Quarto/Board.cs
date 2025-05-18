@@ -262,5 +262,54 @@ namespace Model
             }
             throw new InvalidOperationException("Piece not in the board !");
         }
+
+        /// <summary>
+        /// Gets all pieces currently on the board.
+        /// </summary>
+        /// <param name="board">The game board to extract pieces from.</param>
+        /// <returns>A list of all pieces currently placed on the board.</returns>
+        public List<IPiece> GetAllPieces()
+        {
+            var pieces = new List<IPiece>();
+            for (int row = 0; row < SizeX; row++)
+            {
+                for (int col = 0; col < SizeY; col++)
+                {
+                    var piece = GetPiece(row, col);
+                    if (piece != null)
+                    {
+                        pieces.Add(piece);
+                    }
+                }
+            }
+            return pieces;
+        }
+
+        /// <summary>
+        /// Generates all unique combinations of 4 pieces from a given list.
+        /// </summary>
+        /// <param name="pieces">The list of pieces to generate combinations from.</param>
+        /// <returns>An enumerable of lists, each containing exactly 4 pieces.</returns>
+        public IEnumerable<List<IPiece>> CombinationsOf4(List<IPiece> pieces)
+        {
+            if (pieces == null || pieces.Count < 4)
+                yield break;
+
+            int n = pieces.Count;
+
+            for (int i = 0; i < n - 3; i++)
+            {
+                for (int j = i + 1; j < n - 2; j++)
+                {
+                    for (int k = j + 1; k < n - 1; k++)
+                    {
+                        for (int l = k + 1; l < n; l++)
+                        {
+                            yield return new List<IPiece> { pieces[i], pieces[j], pieces[k], pieces[l] };
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -177,6 +177,21 @@ namespace Model
             return list;
         }
 
+        public List<IPiece>? GetQuarto(IBoard board)
+        {
+            // Parcours toutes les combinaisons possibles de 4 pièces sur le board
+            // et vérifie si elles forment un Quarto avec IsQuarto()
+            var piecesOnBoard = board.GetAllPieces(); // méthode à implémenter qui retourne toutes les pièces sur le plateau
+
+            // Itérer sur toutes les combinaisons de 4 pièces (optimiser selon la taille du plateau)
+            foreach (var combo in board.CombinationsOf4(piecesOnBoard))
+            {
+                if (IsQuarto(board, combo))
+                    return combo;
+            }
+            return null;
+        }
+
 
         /// <summary>
         /// method to play a piece with a verification if the move is valid by looking if the position is on the board 

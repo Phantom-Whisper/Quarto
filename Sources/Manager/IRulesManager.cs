@@ -13,5 +13,7 @@ namespace Manager
         bool IsGameOver(IBag bag, IBoard board);
 
         bool IsQuarto(IBoard board, List<IPiece> pieces);
+
+        public List<IPiece>? GetQuarto(IBoard board);
     }
 }

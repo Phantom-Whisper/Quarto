@@ -11,6 +11,8 @@
         bool IsOnBoard(int row, int col);
         int PositionXPiece(IPiece piece);
         int PositionYPiece(IPiece piece);
+        public List<IPiece> GetAllPieces();
+        public IEnumerable<List<IPiece>> CombinationsOf4(List<IPiece> pieces);
         (int row, int col) PositionPiece(IPiece piece);
         void InsertPiece(IPiece piece, int row, int col);
     }

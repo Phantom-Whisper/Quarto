@@ -57,7 +57,7 @@ namespace Model
         /// <param name="index">The index of the <c>Piece</c> to retrieve and remove.</param>
         /// <returns>The <c>Piece</c> removed from the bag.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the index is out of range.</exception>
-        public IPiece? TakePiece(IPiece piece)
+        public IPiece? TakePiece(IPiece? piece)
         {
             ArgumentNullException.ThrowIfNull(piece);
             return pieces.Remove(piece) ? piece : null;

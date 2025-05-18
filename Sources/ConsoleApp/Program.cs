@@ -35,14 +35,7 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            IRulesManager rulesManager = new Rules();
-            IPlayer[] players = new IPlayer[2];
-            IBoard board = new Board();
-
-            /// <summary>
-            /// <c>Bag</c> contaning the piece that the players can play
-            /// </summary>
-            IBag bag = new Bag();
+            
 
 
 
@@ -51,9 +44,17 @@ namespace ConsoleApp
             switch(choice)
             {
                 case 1:
+                    IPlayer[] players = new IPlayer[2];
+                    IBoard board = new Board();
+
+                    /// <summary>
+                    /// <c>Bag</c> contaning the piece that the players can play
+                    /// </summary>
+                    IBag bag = new Bag();
+
                     Console.Write("Mode solo ? (y/n) ");
                     bool solo = Console.ReadLine()?.Trim().ToLower() == "y";
-                    rulesManager = ChooseDifficulty();
+                    IRulesManager rulesManager = ChooseDifficulty();
                     CreatePlayers(solo, players);
 
                     var gameManager = new GameManager(rulesManager, board, bag, players);
@@ -76,7 +77,7 @@ namespace ConsoleApp
             }
         }
 
-        private static IRulesManager ChooseDifficulty()
+        private static RulesBeginner ChooseDifficulty()
         {
             Console.WriteLine("Choisissez la difficulté :");
             Console.WriteLine("1. Débutant");
@@ -271,28 +272,39 @@ namespace ConsoleApp
         {
             Console.WriteLine($"{e.Player.Name}, it's your turn to play.");
 
-            int row = -1, col = -1;
+            int row, col;
 
             while (true)
             {
                 Console.Write("Enter row (0 to 3): ");
                 string? rowInput = Console.ReadLine();
-                if (int.TryParse(rowInput, out row) && e.Board.IsOnBoard(row, 0))
+                if (!int.TryParse(rowInput, out row) || row < 0 || row > 3)
                 {
-                    break;
+                    Console.WriteLine("Invalid row. Please enter a number between 0 and 3.");
+                    continue;
                 }
-                Console.WriteLine("Invalid row. Please enter a number between 0 and 3.");
-            }
 
-            while (true)
-            {
                 Console.Write("Enter column (0 to 3): ");
                 string? colInput = Console.ReadLine();
-                if (int.TryParse(colInput, out col) && e.Board.IsOnBoard(0, col))
+                if (!int.TryParse(colInput, out col) || col < 0 || col > 3)
                 {
-                    break;
+                    Console.WriteLine("Invalid column. Please enter a number between 0 and 3.");
+                    continue;
                 }
-                Console.WriteLine("Invalid column. Please enter a number between 0 and 3.");
+
+                if (!e.Board.IsOnBoard(row, col))
+                {
+                    Console.WriteLine("Coordinates out of board. Please try again.");
+                    continue;
+                }
+
+                if (!e.Board.IsEmpty(row, col))
+                {
+                    Console.WriteLine("This cell is already occupied. Please choose another one.");
+                    continue;
+                }
+
+                break;
             }
 
             e.CoordinateCallback((row, col));
