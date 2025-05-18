@@ -84,5 +84,83 @@ namespace TestModel
             Assert.Single(gameManager.Messages);
             Assert.Contains("Invalid move", gameManager.Messages[0]);
         }
+
+        [Fact]
+        public void Equals_ShouldReturnTrue_WhenSameReference()
+        {
+            var player = new HumanPlayer("Alice");
+            Assert.True(player.Equals(player, player));
+        }
+
+        [Fact]
+        public void Equals_ShouldReturnTrue_WhenNamesAreEqual()
+        {
+            var player1 = new HumanPlayer("Alice");
+            var player2 = new HumanPlayer("Alice");
+            Assert.True(player1.Equals(player1, player2));
+        }
+
+        [Fact]
+        public void Equals_ShouldReturnFalse_WhenNamesAreDifferent()
+        {
+            var player1 = new HumanPlayer("Alice");
+            var player2 = new HumanPlayer("Bob");
+            Assert.False(player1.Equals(player1, player2));
+        }
+
+        [Fact]
+        public void Equals_ShouldReturnFalse_WhenOneIsNull()
+        {
+            var player1 = new HumanPlayer("Alice");
+            Player? player2 = null;
+            Assert.False(player1.Equals(player1, player2));
+            Assert.False(player1.Equals(player2, player1));
+        }
+
+        [Fact]
+        public void Equals_ShouldReturnTrue_WhenBothAreNull()
+        {
+            Player? player1 = null;
+            Player? player2 = null;
+            // Appel statique car pas d'instance
+            Assert.True(new HumanPlayer("X").Equals(player1, player2));
+        }
+
+        [Fact]
+        public void GetHashCode_ShouldBeSame_ForPlayersWithSameName()
+        {
+            var player1 = new HumanPlayer("Alice");
+            var player2 = new HumanPlayer("Alice");
+
+            // Supposons que la méthode est d'instance ou statique selon votre implémentation
+            int hash1 = player1.GetHashCode(player1);
+            int hash2 = player2.GetHashCode(player2);
+
+            Assert.Equal(hash1, hash2);
+        }
+
+        [Fact]
+        public void GetHashCode_ShouldBeDifferent_ForPlayersWithDifferentNames()
+        {
+            var player1 = new HumanPlayer("Alice");
+            var player2 = new HumanPlayer("Bob");
+
+            int hash1 = player1.GetHashCode(player1);
+            int hash2 = player2.GetHashCode(player2);
+
+            Assert.NotEqual(hash1, hash2);
+        }
+
+        [Fact]
+        public void GetHashCode_ShouldMatchNameHashCode()
+        {
+            var player = new HumanPlayer("Charlie");
+            int expected = player.Name.GetHashCode();
+
+            int actual = player.GetHashCode(player);
+
+            Assert.Equal(expected, actual);
+        }
+
     }
- }
+}
