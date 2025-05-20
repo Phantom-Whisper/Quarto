@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>QuartoApp</ApplicationTitle>
+		<ApplicationTitle>Quarto</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.quartoapp</ApplicationId>
@@ -47,7 +47,7 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" Resize="false"/>
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#919191" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
