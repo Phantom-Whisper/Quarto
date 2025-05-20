@@ -61,6 +61,24 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Egalite.
+        /// </summary>
+        internal static string Egalite {
+            get {
+                return ResourceManager.GetString("Egalite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Jouer.
+        /// </summary>
+        internal static string Jouer {
+            get {
+                return ResourceManager.GetString("Jouer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Paramètres.
         /// </summary>
         internal static string Parametres {
@@ -84,6 +102,42 @@ namespace QuartoApp.Resources.Localization {
         internal static string Quitter {
             get {
                 return ResourceManager.GetString("Quitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Règles.
+        /// </summary>
+        internal static string Regles {
+            get {
+                return ResourceManager.GetString("Regles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Retour.
+        /// </summary>
+        internal static string Retour {
+            get {
+                return ResourceManager.GetString("Retour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Victoire.
+        /// </summary>
+        internal static string Victoire {
+            get {
+                return ResourceManager.GetString("Victoire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Volume de la musique.
+        /// </summary>
+        internal static string Volume_de_la_musique {
+            get {
+                return ResourceManager.GetString("Volume de la musique", resourceCulture);
             }
         }
     }
