@@ -1,7 +1,10 @@
-﻿namespace QuartoApp
+﻿using Model;
+
+namespace QuartoApp
 {
     public partial class App : Application
     {
+        public GameManager GameManager { get; set; }
         public App()
         {
             InitializeComponent();
