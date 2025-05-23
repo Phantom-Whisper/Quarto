@@ -68,6 +68,7 @@
                         </ImageButton.Source>
                     </ImageButton>
                     <Slider 
+                        Maximum="100"
                         Grid.Column="2"
                         />
 
