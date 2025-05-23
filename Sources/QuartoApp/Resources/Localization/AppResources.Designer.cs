@@ -61,6 +61,24 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Développeur/Chef de projet.
+        /// </summary>
+        internal static string AngeRole {
+            get {
+                return ResourceManager.GetString("AngeRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Crédits.
+        /// </summary>
+        internal static string Credits {
+            get {
+                return ResourceManager.GetString("Credits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Egalite.
         /// </summary>
         internal static string Egalite {
@@ -70,7 +88,34 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Jouer.
+        ///   Recherche une chaîne localisée semblable à Développeur/Chef de projet/Concepteur backend.
+        /// </summary>
+        internal static string GabrielRole {
+            get {
+                return ResourceManager.GetString("GabrielRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Général.
+        /// </summary>
+        internal static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Développeuse/Cheffe de projet/Graphiste.
+        /// </summary>
+        internal static string InesRole {
+            get {
+                return ResourceManager.GetString("InesRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Jouer ►.
         /// </summary>
         internal static string Jouer {
             get {
@@ -93,6 +138,15 @@ namespace QuartoApp.Resources.Localization {
         internal static string PickerText {
             get {
                 return ResourceManager.GetString("PickerText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Quarto !.
+        /// </summary>
+        internal static string Quarto {
+            get {
+                return ResourceManager.GetString("Quarto", resourceCulture);
             }
         }
         
@@ -120,6 +174,24 @@ namespace QuartoApp.Resources.Localization {
         internal static string Retour {
             get {
                 return ResourceManager.GetString("Retour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Sauvegarder.
+        /// </summary>
+        internal static string Sauvegarder {
+            get {
+                return ResourceManager.GetString("Sauvegarder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Score.
+        /// </summary>
+        internal static string Score {
+            get {
+                return ResourceManager.GetString("Score", resourceCulture);
             }
         }
         
