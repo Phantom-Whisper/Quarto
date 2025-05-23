@@ -27,6 +27,7 @@
             <Grid
                 ColumnDefinitions="*, *"
                 RowDefinitions="auto, auto"
+                Padding="0,0,10,0"
                 RowSpacing="20">
                 <Grid
                     Grid.Column="0"

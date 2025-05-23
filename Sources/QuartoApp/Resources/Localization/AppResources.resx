@@ -120,11 +120,23 @@
   <data name="AngeRole" xml:space="preserve">
     <value>Développeur/Chef de projet</value>
   </data>
+  <data name="Charger" xml:space="preserve">
+    <value>Charger</value>
+  </data>
   <data name="Credits" xml:space="preserve">
     <value>Crédits</value>
   </data>
+  <data name="Difficile" xml:space="preserve">
+    <value>Difficile</value>
+  </data>
   <data name="Egalite" xml:space="preserve">
     <value>Egalite</value>
+  </data>
+  <data name="EntrerPseudo" xml:space="preserve">
+    <value>Entrer un pseudo</value>
+  </data>
+  <data name="Facile" xml:space="preserve">
+    <value>Facile</value>
   </data>
   <data name="GabrielRole" xml:space="preserve">
     <value>Développeur/Chef de projet/Concepteur backend</value>
@@ -137,6 +149,15 @@
   </data>
   <data name="Jouer" xml:space="preserve">
     <value>Jouer ►</value>
+  </data>
+  <data name="LoginJoueur1" xml:space="preserve">
+    <value>Joueur 1</value>
+  </data>
+  <data name="LoginJoueur2" xml:space="preserve">
+    <value>Joueur 2</value>
+  </data>
+  <data name="Moyen" xml:space="preserve">
+    <value>Moyen</value>
   </data>
   <data name="Parametres" xml:space="preserve">
     <value>Paramètres</value>
@@ -152,6 +173,9 @@
   </data>
   <data name="Regles" xml:space="preserve">
     <value>Règles</value>
+  </data>
+  <data name="Rejouer" xml:space="preserve">
+    <value>Rejouer</value>
   </data>
   <data name="Retour" xml:space="preserve">
     <value>Retour</value>
