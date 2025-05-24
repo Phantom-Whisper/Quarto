@@ -290,7 +290,7 @@ namespace Model
         /// </summary>
         /// <param name="pieces">The list of pieces to generate combinations from.</param>
         /// <returns>An enumerable of lists, each containing exactly 4 pieces.</returns>
-        public IEnumerable<List<IPiece>> CombinationsOf4(List<IPiece> pieces)
+        public IEnumerable<List<IPiece>> CombinationsOf4(List<IPiece>? pieces)
         {
             if (pieces == null || pieces.Count < 4)
                 yield break;
