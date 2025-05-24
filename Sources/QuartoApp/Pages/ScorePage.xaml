@@ -46,17 +46,13 @@
                Aspect="Fill"/>
             <ScrollView Grid.Column="1"
                     Grid.RowSpan="2">
-                <VerticalStackLayout>
-                    <card:ScoreView Margin="0,50,0,0"></card:ScoreView>
-                    <card:ScoreView></card:ScoreView>
-                    <card:ScoreView></card:ScoreView>
-                    <card:ScoreView></card:ScoreView>
-                    <card:ScoreView></card:ScoreView>
-                    <card:ScoreView></card:ScoreView>
-                    <card:ScoreView></card:ScoreView>
-                    <card:ScoreView></card:ScoreView>
-                    <card:ScoreView Margin="0,0,0,70"></card:ScoreView>
-                </VerticalStackLayout>
+                <CollectionView x:Name="ScoresCollection" ItemsSource="{Binding Scores}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <views:ScoreView Name="{Binding Name}" Value="{Binding Score}"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </ScrollView>
         </Grid>
 

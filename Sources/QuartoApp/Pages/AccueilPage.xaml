@@ -42,10 +42,15 @@
             HeightRequest="70" 
             HorizontalOptions="Start"/>
         <component:CustomButton2 
+            x:Name="QuitButton"
             Text="{ext:LocalizedString Key=Quitter}"
             Grid.Row="2" 
             WidthRequest="200" 
             HeightRequest="70" 
-            HorizontalOptions="End"/>
+            HorizontalOptions="End">
+            <component:CustomButton2.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Exit_Tapped"/>
+            </component:CustomButton2.GestureRecognizers>
+        </component:CustomButton2>
     </Grid>
 </ContentPage>

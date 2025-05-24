@@ -40,11 +40,12 @@
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 		<NeutralLanguage>fr-FR</NeutralLanguage>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" Resize="false"/>
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" Resize="false" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#919191" BaseSize="128,128" />
@@ -62,6 +63,13 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Manager\Manager.csproj" />
+	  <ProjectReference Include="..\Model_Quarto\Model.csproj" />
+	  <ProjectReference Include="..\Serialize\Serialize.csproj" />
+	  <ProjectReference Include="..\Stub\Stub.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -12,12 +12,12 @@
                  HeightRequest="50"
                  VerticalOptions="Center"/>
         <Label Grid.Column="1"
-               Text="Pseudo"
+               Text="{Binding Name, Source={RelativeSource AncestorType={x:Type ContentView}}}"
                HorizontalOptions="Start"
                VerticalOptions="Center"
                Margin="30,0,0,0"/>
         <Label Grid.Column="1"
-               Text="Score"
+               Text="{Binding Value, Source={RelativeSource AncestorType={x:Type ContentView}}}"
                HorizontalOptions="End"
                VerticalOptions="Center"
                Margin="0,0,30,0"/>
