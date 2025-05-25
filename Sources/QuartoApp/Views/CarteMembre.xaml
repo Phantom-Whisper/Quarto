@@ -18,7 +18,7 @@
                     HorizontalOptions="Center"
                     Margin="10">
                     <Image 
-                        Source="dotnet_bot.png"
+                        Source="quartologo.png"
                         HorizontalOptions="Center"
                         Aspect="AspectFit"/>
                 </Border>
@@ -29,15 +29,14 @@
                 RowSpacing="10"
                 Grid.Column="1">
                 <Label
-                    Text="Personne 1"
+                    Text="{Binding Name}"
                     FontSize="Medium"
                     VerticalOptions="Center"
-                    HorizontalOptions="Center"
+                    LineBreakMode="WordWrap"
                     Grid.Row="0" />
                 <Label
-                     Text="Personne 1" 
+                     Text="{Binding Role}" 
                      VerticalOptions="Center"
-                     HorizontalOptions="Center"
                      Grid.Row="1" />
             </Grid>
         </Grid>

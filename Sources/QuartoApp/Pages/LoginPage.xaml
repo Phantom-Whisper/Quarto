@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:card="clr-namespace:QuartoApp.Views"
-             x:Class="QuartoApp.Pages.LoginPage"
              xmlns:component="clr-namespace:QuartoApp.Views"
+             xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
+             x:Class="QuartoApp.Pages.LoginPage"
              Title="LoginPage"
              BackgroundImageSource="simple.png"
              Shell.NavBarIsVisible="False">
@@ -30,22 +31,25 @@
                 <HorizontalStackLayout  HorizontalOptions="Center"
                                         Margin="0,50,0,0">
                     <Label Style="{StaticResource LoginLabel}"
-                           Text="Joueur 1 :"/>
-                    <Entry Style="{StaticResource Login}"/>
+                           Text="{ext:LocalizedString Key=LoginJoueur1}"/>
+                    <Entry Style="{StaticResource Login}"  Placeholder="{ext:LocalizedString Key=EntrerPseudo}"/>
                     
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout 
                                      Grid.Row="1" HorizontalOptions="Center">
                     <Label Style="{StaticResource LoginLabel}"
-                           Text="Joueur 2 :"/>
-                    <Entry Style="{StaticResource Login}"/>
+                           Text="{ext:LocalizedString Key=LoginJoueur2}"/>
+                    <Entry Style="{StaticResource Login}" Placeholder="{ext:LocalizedString Key=EntrerPseudo}"/>
                 </HorizontalStackLayout>
                 
                 <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center">
-                    <component:CustomButton2/>
-                    <component:CustomButton2/>
-                    <component:CustomButton2/>
+                    <component:CustomButton2
+                        Text="{ext:LocalizedString Key=Facile}"/>
+                    <component:CustomButton2
+                        Text="{ext:LocalizedString Key=Moyen}"/>
+                    <component:CustomButton2
+                        Text="{ext:LocalizedString Key=Difficile}"/>
                 </HorizontalStackLayout>
                 
 
@@ -59,9 +63,15 @@
                         HorizontalOptions="End"
                         VerticalOptions="End"
                         Margin="50,50,40,50">
-            <component:CustomButton WidthRequest="300"/>
-            <component:CustomButton WidthRequest="300"/>
-            <component:CustomButton WidthRequest="300"/>
+            <component:CustomButton 
+                Text="{ext:LocalizedString Key=Retour}"
+                WidthRequest="300"/>
+            <component:CustomButton 
+                Text="{ext:LocalizedString Key=Charger}"
+                WidthRequest="300"/>
+            <component:CustomButton 
+                Text="{ext:LocalizedString Key=Jouer}"
+                WidthRequest="300"/>
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>
