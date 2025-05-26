@@ -13,9 +13,11 @@ public partial class ScorePage : ContentPage
         InitializeComponent();
 
         var stubScores = new StubPlayerScores();
+        var scoreManager = new ScoreManager();
 
-        Scores = [.. stubScores.GetAllScores()
-                .Select(kvp => new PlayerScore(kvp.Key.Name, kvp.Value))];
+        scoreManager.LoadScores();
+
+        Scores = [.. scoreManager.GetAllScores().Select(static kvp => new PlayerScore(kvp.Key, kvp.Value))];
 
         BindingContext = this;
     }
