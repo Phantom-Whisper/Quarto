@@ -13,15 +13,7 @@
             <x:Double x:Key="VerticalSpacing">4</x:Double>
             <x:Double x:Key="HorizontalSpacing">4</x:Double>
             <DataTemplate x:Key="cellTemplate">
-                <Grid BackgroundColor="DarkCyan">
-                    <Label 
-                        Text="lalal"
-                        TextColor="Black"
-                        FontSize="Medium"
-                        HorizontalOptions="Fill"
-                        VerticalOptions="Fill"
-                        HorizontalTextAlignment="Center"
-                        VerticalTextAlignment="Center"/>
+                <Grid BackgroundColor="Transparent">
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -52,9 +44,10 @@
                 Grid.RowSpan="4"
                 Grid.ColumnSpan="4"
                 BindableLayout.ItemTemplate="{StaticResource cellTemplate}" 
+                BindableLayout.ItemsSource="{Binding Matrix.FlatMatrix2d}"
                 NbColumns="4"
                 NbRows="4"
-                BackgroundColor="DarkSalmon"
+                BackgroundColor="Transparent"
                 HorizontalOptions="Center" 
                 VerticalOptions="Center"/>
 
