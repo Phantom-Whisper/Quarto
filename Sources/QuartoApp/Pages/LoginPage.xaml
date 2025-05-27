@@ -35,47 +35,39 @@
                     <Label Style="{StaticResource LoginLabel}"
                            Text="Joueur 1 :"/>
                     <Entry Style="{StaticResource Login}"
-                           Text="{Binding Entry_name1}"/>
+                           Text="{Binding Entry_name1}"
+                           Placeholder="{ext:LocalizedString Key=LoginJoueur1}"/>
 
-                           Text="{ext:LocalizedString Key=LoginJoueur1}"/>
-                    <Entry Style="{StaticResource Login}"  Placeholder="{ext:LocalizedString Key=EntrerPseudo}"/>
-                    
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Grid.Row="1" 
                                        HorizontalOptions="Center">
                     <Label Style="{StaticResource LoginLabel}"
                            Text="{ext:LocalizedString Key=LoginJoueur2}"/>
-                    <Entry Style="{StaticResource Login}" Placeholder="{ext:LocalizedString Key=EntrerPseudo}"/>
-                           Text="Joueur 2 :"/>
                     <Entry x:Name="NamePlayer2"
                            Style="{StaticResource Login}"
+                           Placeholder="{ext:LocalizedString Key=EntrerPseudo}"
                            Text="{Binding Entry_name2}"/>
                 </HorizontalStackLayout>
 
                 <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center">
 
-                    <component:CustomButton2 x:Name="Easy">
+                    <component:CustomButton2 x:Name="Easy"
+                                             Text="{ext:LocalizedString Key=Facile}">
                         <component:CustomButton2.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnDiffButtonPressed"/>
                         </component:CustomButton2.GestureRecognizers>
                     </component:CustomButton2>
 
-                    <component:CustomButton2 x:Name="Normal">
+                    <component:CustomButton2 x:Name="Normal"
+                                             Text="{ext:LocalizedString Key=Moyen}">
                         <component:CustomButton2.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnDiffButtonPressed"/>
                         </component:CustomButton2.GestureRecognizers>
                     </component:CustomButton2>
-                    <component:CustomButton2
-                        Text="{ext:LocalizedString Key=Facile}"/>
-                    <component:CustomButton2
-                        Text="{ext:LocalizedString Key=Moyen}"/>
-                    <component:CustomButton2
-                        Text="{ext:LocalizedString Key=Difficile}"/>
-                </HorizontalStackLayout>
-                
 
-                    <component:CustomButton2 x:Name="Advanced">
+                    <component:CustomButton2 x:Name="Advanced"
+                                             Text="{ext:LocalizedString Key=Difficile}">
                         <component:CustomButton2.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnDiffButtonPressed"/>
                         </component:CustomButton2.GestureRecognizers>
@@ -91,22 +83,18 @@
                         HorizontalOptions="End"
                         VerticalOptions="End"
                         Margin="50,50,40,50">
-            <component:CustomButton 
-                Text="{ext:LocalizedString Key=Retour}"
-                WidthRequest="300"/>
-            <component:CustomButton 
-                Text="{ext:LocalizedString Key=Charger}"
-                WidthRequest="300"/>
-            <component:CustomButton 
-                Text="{ext:LocalizedString Key=Jouer}"
-                WidthRequest="300"/>
-            <component:CustomButton WidthRequest="300"/>
-            <component:CustomButton WidthRequest="300"/>
-            <component:CustomButton WidthRequest="300">
+             
+            <component:CustomButton WidthRequest="300"
+                                    Text="{ext:LocalizedString Key=Retour}"/>
+            <component:CustomButton WidthRequest="300"
+                                    Text="{ext:LocalizedString Key=Charger}"/>
+            <component:CustomButton WidthRequest="300"
+                                    Text="{ext:LocalizedString Key=Jouer}">
                 <component:CustomButton.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTappedStart"/>
                 </component:CustomButton.GestureRecognizers>
             </component:CustomButton>
+             
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>
