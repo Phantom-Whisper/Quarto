@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
+using Microsoft.UI.Windowing;
 
 namespace QuartoApp
 {
@@ -16,9 +18,24 @@ namespace QuartoApp
                     fonts.AddFont("FontAwesomeSolid.otf", "AwesomeSolid");
                     fonts.AddFont("NovaSquare-Regular.ttf", "NovaSquare");
                 });
+            builder.ConfigureLifecycleEvents(events =>
+            {
+#if WINDOWS
+                events.AddWindows(windows =>
+                {
+                    windows.OnWindowCreated(window =>
+                    {
+                        var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                        var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hwnd);
+                        var appWindow = AppWindow.GetFromWindowId(windowId);
 
+                        appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+                    });
+                });
+#endif
+            });
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

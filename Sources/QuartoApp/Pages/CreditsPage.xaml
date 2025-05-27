@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:card="clr-namespace:QuartoApp.Views"
+             xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              x:Class="QuartoApp.Pages.CreditsPage"
              Shell.NavBarIsVisible="False"
              BackgroundImageSource="simple.png"
@@ -21,10 +22,12 @@
            Aspect="Fill"/>
         <ScrollView
             Grid.Row="1"
-            Grid.Column="1">
+            Grid.Column="1"
+            Margin="0,0,0,15">
             <Grid
                 ColumnDefinitions="*, *"
                 RowDefinitions="auto, auto"
+                Padding="0,0,10,0"
                 RowSpacing="20">
                 <Grid
                     Grid.Column="0"
@@ -32,15 +35,21 @@
                     RowDefinitions="auto, auto, auto, auto">
 
                     <card:CarteMembre
-                        Grid.Row="1">
-                        
+                        Name="Inès DELINAC"
+                        Role="{ext:LocalizedString Key=InesRole}"
+                        Grid.Row="1">                        
                     </card:CarteMembre>
+                    
                     <card:CarteMembre
+                        Name="Gabriel COUDEL-KOUMBA"
+                        Role="{ext:LocalizedString Key=GabrielRole}"
                         Grid.Row="2">
                         
                     </card:CarteMembre>
 
                     <card:CarteMembre
+                        Name="Ange GRIMAUD"
+                        Role="{ext:LocalizedString Key=AngeRole}"
                         Grid.Row="3">
                         
                     </card:CarteMembre>
@@ -51,19 +60,21 @@
                     MaximumWidthRequest="500"
                     MaximumHeightRequest="500"/>
                 <Label 
-                        HorizontalOptions="Center"
-                        Grid.Row="1"
-                        Grid.ColumnSpan="2"
-                        Margin="50,0"
-                        Text="Nous tenons à remercier notre encadrement pédagogique et technique.&#10;En particulier nos enseignants, pour leurs conseils avisés, leur patience et leur soutien indéfectible tout au long du développement.&#10;Vos orientations nous ont permis de surmonter de nombreux défis et d’améliorer constamment notre approche.&#10;Ce projet est le fruit d’un effort collectif, dont l’engagement, la créativité et la persévérance ont permis de donner vie à cette solution informatique. &#10; L'Équipe du Projet."
-                        FontSize="18"
-                        HorizontalTextAlignment="Center" 
-                        LineBreakMode="CharacterWrap"/>
+                    HorizontalOptions="Center"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Margin="50,0"
+                    Text="Nous tenons à remercier notre encadrement pédagogique et technique.&#10;En particulier nos enseignants, pour leurs conseils avisés, leur patience et leur soutien indéfectible tout au long du développement.&#10;Vos orientations nous ont permis de surmonter de nombreux défis et d’améliorer constamment notre approche.&#10;Ce projet est le fruit d’un effort collectif, dont l’engagement, la créativité et la persévérance ont permis de donner vie à cette solution informatique. &#10; L'Équipe du Projet."
+                    FontSize="18"
+                    HorizontalTextAlignment="Center" 
+                    LineBreakMode="CharacterWrap"/>
             </Grid>
         </ScrollView>
-        <card:CustomButton Grid.Row="1"
-                           Grid.Column="2"
-                           VerticalOptions="End"/>
+        <card:CustomButton
+            Text="{ext:LocalizedString Key=Retour}"
+            Grid.Row="1"
+            Grid.Column="2"
+            VerticalOptions="End"/>
         <Label
             Grid.Row="2"
             Grid.ColumnSpan="3"

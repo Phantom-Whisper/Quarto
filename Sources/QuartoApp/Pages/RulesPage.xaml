@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:component="clr-namespace:QuartoApp.Views"
+             xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              x:Class="QuartoApp.Pages.RulesPage"
              Title="RulesPage"
              Shell.NavBarIsVisible="False"
@@ -84,7 +85,11 @@
                        FontSize="Body"/>
             </VerticalStackLayout>
         </ScrollView>
-        <component:CustomButton Grid.Row="1" Grid.Column="2" VerticalOptions="End">
+        <component:CustomButton 
+            Text="{ext:LocalizedString Key=Retour}"
+            Grid.Row="1" 
+            Grid.Column="2" 
+            VerticalOptions="End">
         </component:CustomButton>
     </Grid>
 </ContentPage>

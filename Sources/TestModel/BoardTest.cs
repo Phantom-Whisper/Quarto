@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Manager;
+using Model;
 
 namespace TestModel
 {
@@ -457,6 +458,12 @@ namespace TestModel
             }
         }
 
-
+        [Fact]
+        public void CombinationsOf4_ReturnsEmpty_WhenPiecesIsNull()
+        {
+            var board = new Board();
+            var result = board.CombinationsOf4(null);
+            Assert.Empty(result);
+        }
     }
 }

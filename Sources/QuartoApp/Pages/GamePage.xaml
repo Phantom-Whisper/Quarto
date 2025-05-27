@@ -3,12 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuartoApp.Pages.GamePage"
              xmlns:component="clr-namespace:QuartoApp.Views"
+             xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              BackgroundImageSource="simple.png"
              Title="GamePage"
              Shell.NavBarIsVisible="False">
     <Grid RowDefinitions="*,8*,*">
 
-        <component:CustomButton2  WidthRequest="200" HeightRequest="70" HorizontalOptions="End"/>
+        <component:CustomButton2  
+            Text="{ext:LocalizedString Key=Sauvegarder}"
+            WidthRequest="200" 
+            HeightRequest="70" 
+            HorizontalOptions="End"/>
         <Label Text="Text" HorizontalOptions="Center" VerticalOptions="Center"/>
         <Grid ColumnDefinitions="*,*,*,*,*,*" 
               RowDefinitions="*,*,*,*,*,*"
@@ -23,6 +28,12 @@
 
         </Grid>
 
-        <component:CustomButton2 Grid.Row="2" WidthRequest="200" HeightRequest="70" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <component:CustomButton2 
+            Text="{ext:LocalizedString Key=Quarto}"
+            Grid.Row="2" 
+            WidthRequest="200" 
+            HeightRequest="70" 
+            HorizontalOptions="Center" 
+            VerticalOptions="Center"/>
     </Grid>
 </ContentPage>
