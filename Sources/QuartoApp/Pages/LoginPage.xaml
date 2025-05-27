@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:Model;assembly=Model"
              xmlns:card="clr-namespace:QuartoApp.Views"
              xmlns:component="clr-namespace:QuartoApp.Views"
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
@@ -26,24 +27,45 @@
                    Aspect="Fill"/>
 
             <Grid Grid.Row="1"
-                  RowDefinitions="Auto,Auto, Auto">
+                  RowDefinitions="Auto,Auto, Auto"
+                  BindingContext="">
 
                 <HorizontalStackLayout  HorizontalOptions="Center"
                                         Margin="0,50,0,0">
                     <Label Style="{StaticResource LoginLabel}"
+                           Text="Joueur 1 :"/>
+                    <Entry Style="{StaticResource Login}"
+                           Text="{Binding Entry_name1}"/>
+
                            Text="{ext:LocalizedString Key=LoginJoueur1}"/>
                     <Entry Style="{StaticResource Login}"  Placeholder="{ext:LocalizedString Key=EntrerPseudo}"/>
                     
                 </HorizontalStackLayout>
 
-                <HorizontalStackLayout 
-                                     Grid.Row="1" HorizontalOptions="Center">
+                <HorizontalStackLayout Grid.Row="1" 
+                                       HorizontalOptions="Center">
                     <Label Style="{StaticResource LoginLabel}"
                            Text="{ext:LocalizedString Key=LoginJoueur2}"/>
                     <Entry Style="{StaticResource Login}" Placeholder="{ext:LocalizedString Key=EntrerPseudo}"/>
+                           Text="Joueur 2 :"/>
+                    <Entry x:Name="NamePlayer2"
+                           Style="{StaticResource Login}"
+                           Text="{Binding Entry_name2}"/>
                 </HorizontalStackLayout>
-                
+
                 <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center">
+
+                    <component:CustomButton2 x:Name="Easy">
+                        <component:CustomButton2.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDiffButtonPressed"/>
+                        </component:CustomButton2.GestureRecognizers>
+                    </component:CustomButton2>
+
+                    <component:CustomButton2 x:Name="Normal">
+                        <component:CustomButton2.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDiffButtonPressed"/>
+                        </component:CustomButton2.GestureRecognizers>
+                    </component:CustomButton2>
                     <component:CustomButton2
                         Text="{ext:LocalizedString Key=Facile}"/>
                     <component:CustomButton2
@@ -53,9 +75,15 @@
                 </HorizontalStackLayout>
                 
 
-            </Grid>
+                    <component:CustomButton2 x:Name="Advanced">
+                        <component:CustomButton2.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDiffButtonPressed"/>
+                        </component:CustomButton2.GestureRecognizers>
+                    </component:CustomButton2>
 
-            
+                </HorizontalStackLayout>
+
+            </Grid>
 
         </Grid>
 
@@ -72,6 +100,13 @@
             <component:CustomButton 
                 Text="{ext:LocalizedString Key=Jouer}"
                 WidthRequest="300"/>
+            <component:CustomButton WidthRequest="300"/>
+            <component:CustomButton WidthRequest="300"/>
+            <component:CustomButton WidthRequest="300">
+                <component:CustomButton.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTappedStart"/>
+                </component:CustomButton.GestureRecognizers>
+            </component:CustomButton>
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>

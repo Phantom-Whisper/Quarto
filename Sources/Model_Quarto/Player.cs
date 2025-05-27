@@ -1,16 +1,35 @@
 ﻿using Manager;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Model
 {
     /// <summary>
     /// Abstract Class player used by <c>HumanPlayer</c> and <c>AIPlayer</c>
     /// </summary>
-    public abstract class Player : IPlayer, IEqualityComparer<Player>
+    public abstract class Player : IPlayer, IEqualityComparer<Player>, INotifyPropertyChanged
     {
         /// <summary>
         /// name of the player
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name 
+        {
+            get => name;
+            protected set
+            {
+                if(Name == value) return;
+                name = value;
+                OnPropertyChanged();
+            }
+        
+        }
+        private string name;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        void OnPropertyChanged([CallerMemberName]string? propertyName = null)
+         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
 
         /// <summary>
         /// Constructor of player
