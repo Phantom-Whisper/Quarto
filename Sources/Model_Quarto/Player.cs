@@ -9,21 +9,22 @@ namespace Model
     /// </summary>
     public abstract class Player : IPlayer, IEqualityComparer<Player>, INotifyPropertyChanged
     {
+        private string? name;
+
         /// <summary>
         /// name of the player
         /// </summary>
         public string Name 
         {
-            get => name;
+            get => name ?? throw new InvalidOperationException("Name is not intialized");
             protected set
             {
-                if(Name == value) return;
-                name = value;
+                if (name == value) return;
+                name = value ?? throw new ArgumentNullException(nameof(value));
                 OnPropertyChanged();
             }
         
         }
-        private string name;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -37,7 +38,7 @@ namespace Model
         /// <param name="name">pseudo chosen</param>
         protected Player(string name)
         {
-            Name = name;
+            Name = name ?? throw new ArgumentNullException(nameof(name)); ;
         }
 
         /// <summary>
@@ -67,6 +68,6 @@ namespace Model
         /// This method gives us the hashcode of a <c>Player</c>.
         /// </summary>
         /// <returns></returns>
-        public int GetHashCode(Player player) => Name.GetHashCode();
+        public int GetHashCode(Player player) => player.Name?.GetHashCode() ?? 0;
     }
 }
