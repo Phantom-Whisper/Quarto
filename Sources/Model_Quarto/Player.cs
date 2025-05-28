@@ -38,7 +38,7 @@ namespace Model
         /// <param name="name">pseudo chosen</param>
         protected Player(string name)
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name)); ;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
         /// <summary>
