@@ -27,8 +27,7 @@
                    Aspect="Fill"/>
 
             <Grid Grid.Row="1"
-                  RowDefinitions="Auto,Auto, Auto"
-                  BindingContext="">
+                  RowDefinitions="Auto,Auto, Auto">
 
                 <HorizontalStackLayout  HorizontalOptions="Center"
                                         Margin="0,50,0,0">
@@ -83,9 +82,14 @@
                         HorizontalOptions="End"
                         VerticalOptions="End"
                         Margin="50,50,40,50">
-             
+
             <component:CustomButton WidthRequest="300"
-                                    Text="{ext:LocalizedString Key=Retour}"/>
+                                    Text="{ext:LocalizedString Key=Retour}">
+                <component:CustomButton.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Return_Tapped"/>
+                </component:CustomButton.GestureRecognizers>
+            </component:CustomButton>
+             
             <component:CustomButton WidthRequest="300"
                                     Text="{ext:LocalizedString Key=Charger}"/>
             <component:CustomButton WidthRequest="300"

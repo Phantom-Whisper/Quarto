@@ -21,4 +21,25 @@ public partial class ScorePage : ContentPage
 
         BindingContext = this;
     }
+
+    public async void General_Tapped(Object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
+
+    public async void Rules_Tapped(Object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new RulesPage());
+    }
+
+    public async void Credit_Tapped(Object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new CreditsPage());
+    }
+
+    public async void Quit_Tapped(Object sender, TappedEventArgs e)
+    {
+        Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
+        await Navigation.PopAsync();
+    }
 }

@@ -35,5 +35,23 @@
             HeightRequest="70" 
             HorizontalOptions="Center" 
             VerticalOptions="Center"/>
+
+        <ImageButton BackgroundColor="Transparent"
+             Grid.Row="2"
+             HorizontalOptions="End"
+             Margin="0,0,30,0"
+             BorderColor="{StaticResource Gold}"
+             BorderWidth="2"
+             CornerRadius="90"
+             WidthRequest="50"
+             HeightRequest="50"
+             Clicked="Settings_Clicked">
+            <ImageButton.Source>
+                <FontImageSource FontFamily="AwesomeSolid"
+                                 Glyph=""
+                                 Size="25"
+                                 Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Silver}}"/>
+            </ImageButton.Source>
+        </ImageButton>
     </Grid>
 </ContentPage>

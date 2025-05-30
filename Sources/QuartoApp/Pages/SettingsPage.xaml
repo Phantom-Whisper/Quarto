@@ -24,22 +24,42 @@
               Grid.ColumnSpan="2">
             <VerticalStackLayout Margin="0,0,30,0">
                 <component:CustomButton
-                    Text="{ext:LocalizedString Key=General}"/>
+                    Text="{ext:LocalizedString Key=General}">
+                    <component:CustomButton.GestureRecognizers>
+                        <TapGestureRecognizer/>
+                    </component:CustomButton.GestureRecognizers>
+                </component:CustomButton>
 
                 <component:CustomButton 
-                    Text="{ext:LocalizedString Key=Regles}"/>
+                    Text="{ext:LocalizedString Key=Regles}">
+                    <component:CustomButton.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Rules_Tapped"/>
+                    </component:CustomButton.GestureRecognizers>
+                </component:CustomButton>
 
                 <component:CustomButton
-                    Text="{ext:LocalizedString Key=Score}"/>
+                    Text="{ext:LocalizedString Key=Score}">
+                    <component:CustomButton.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Score_Tapped"/>
+                    </component:CustomButton.GestureRecognizers>
+                </component:CustomButton>
 
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Row="1" Margin="0,0,30,0">
                 <component:CustomButton
-                    Text="{ext:LocalizedString Key=Credits}"/>
+                    Text="{ext:LocalizedString Key=Credits}">
+                    <component:CustomButton.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Credit_Tapped"/>
+                    </component:CustomButton.GestureRecognizers>
+                </component:CustomButton>
 
                 <component:CustomButton
-                    Text="{ext:LocalizedString Key=Quitter}"/>
+                    Text="{ext:LocalizedString Key=Quitter}">
+                    <component:CustomButton.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Quit_Tapped"/>
+                    </component:CustomButton.GestureRecognizers>
+                </component:CustomButton>
 
             </VerticalStackLayout>
             <Image 

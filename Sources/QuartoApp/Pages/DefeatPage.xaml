@@ -24,20 +24,32 @@
             Text="{ext:LocalizedString Key=Rejouer}"
             Grid.Row="4"
             Grid.Column="0"
-            WidthRequest="200"/>
+            WidthRequest="200">
+            <component:CustomButton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Replay_Tapped"/>
+            </component:CustomButton.GestureRecognizers>
+        </component:CustomButton>
 
         <component:CustomButton 
             Text="{ext:LocalizedString Key=Credits}"
             Grid.Row="3"
             Grid.Column="2"
             WidthRequest="200" 
-            VerticalOptions="End"/>
+            VerticalOptions="End">
+            <component:CustomButton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Credit_Tapped"/>
+            </component:CustomButton.GestureRecognizers>
+        </component:CustomButton>
 
 
         <component:CustomButton 
             Text="{ext:LocalizedString Key=Quitter}"
             Grid.Row="4"
             Grid.Column="2"
-            WidthRequest="200"/>
+            WidthRequest="200">
+            <component:CustomButton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Exit_Tapped"/>
+            </component:CustomButton.GestureRecognizers>
+        </component:CustomButton>
     </Grid>
 </ContentPage>
