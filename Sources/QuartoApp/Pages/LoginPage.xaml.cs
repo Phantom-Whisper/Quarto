@@ -24,6 +24,11 @@ public partial class LoginPage : ContentPage
         BindingContext = this;
     }
 
+    public async void Return_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
+
     private void OnDiffButtonPressed(object sender, TappedEventArgs e)
     {
         // put background in transparent

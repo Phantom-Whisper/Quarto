@@ -18,4 +18,19 @@ public partial class AccueilPage : ContentPage
             App.Current?.Quit();
         }
     }
+
+    public async void Rules_Tapped(Object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new RulesPage());
+    }
+
+    public async void Settings_Clicked(Object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new SettingsPage());
+    }
+
+    public async void Play_Tapped(Object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new LoginPage());
+    }
 }

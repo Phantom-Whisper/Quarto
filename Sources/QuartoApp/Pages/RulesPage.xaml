@@ -90,6 +90,9 @@
             Grid.Row="1" 
             Grid.Column="2" 
             VerticalOptions="End">
+            <component:CustomButton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Return_Tapped"/>
+            </component:CustomButton.GestureRecognizers>
         </component:CustomButton>
     </Grid>
 </ContentPage>

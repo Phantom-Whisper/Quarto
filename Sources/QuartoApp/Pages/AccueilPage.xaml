@@ -16,7 +16,8 @@
                      BorderWidth="2"
                      CornerRadius="90"
                      WidthRequest="50"
-                     HeightRequest="50">
+                     HeightRequest="50"
+                     Clicked="Settings_Clicked">
             <ImageButton.Source>
                 <FontImageSource FontFamily="AwesomeSolid"
                  Glyph=""
@@ -32,7 +33,11 @@
 
             <component:CustomButton 
                 Text="{ext:LocalizedString Key=Jouer}"
-                WidthRequest="300" />
+                WidthRequest="300" >
+                <component:CustomButton.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Play_Tapped"/>
+                </component:CustomButton.GestureRecognizers>
+            </component:CustomButton>
 
         </VerticalStackLayout>
         <component:CustomButton2 
@@ -40,7 +45,12 @@
             Grid.Row="2" 
             WidthRequest="200" 
             HeightRequest="70" 
-            HorizontalOptions="Start"/>
+            HorizontalOptions="Start">
+            <component:CustomButton2.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Rules_Tapped"/>
+            </component:CustomButton2.GestureRecognizers>
+        </component:CustomButton2>
+        
         <component:CustomButton2 
             x:Name="QuitButton"
             Text="{ext:LocalizedString Key=Quitter}"

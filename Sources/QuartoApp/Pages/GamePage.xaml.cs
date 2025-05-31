@@ -6,4 +6,9 @@ public partial class GamePage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    public async void Settings_Clicked(Object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new SettingsPage());
+    }
 }

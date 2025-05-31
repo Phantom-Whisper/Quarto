@@ -74,7 +74,11 @@
             Text="{ext:LocalizedString Key=Retour}"
             Grid.Row="1"
             Grid.Column="2"
-            VerticalOptions="End"/>
+            VerticalOptions="End">
+            <card:CustomButton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Return_Tapped"/>
+            </card:CustomButton.GestureRecognizers>
+        </card:CustomButton>
         <Label
             Grid.Row="2"
             Grid.ColumnSpan="3"
