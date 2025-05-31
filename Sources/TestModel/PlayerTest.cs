@@ -173,7 +173,7 @@ namespace TestModel
         public void Name_Getter_ThrowsIfNameNotInitialized()
         {
             // Crée instance avec constructeur (nom="temp")
-            var player = (Player)Activator.CreateInstance(typeof(HumanPlayer), new object[] { "temp" })!;
+            var player = (Player)Activator.CreateInstance(typeof(HumanPlayer), ["temp"])!;
 
             // Réinitialise le champ privé 'name' à null via réflexion
             var field = typeof(Player).GetField("name", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!;
