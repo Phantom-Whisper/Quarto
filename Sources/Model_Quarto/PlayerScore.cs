@@ -1,10 +1,15 @@
 ﻿namespace Model
 {
     /// <summary>
-    /// Represents a player’s score with their name and points.
+    /// Represents a player's score with their name and points.
     /// </summary>
     public class PlayerScore
     {
+        /// <summary>
+        /// Default Ctor used for the Serialization
+        /// </summary>
+        public PlayerScore() { }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerScore"/> class with a player name and score.
         /// </summary>
@@ -17,12 +22,12 @@
         }
 
         /// <summary>
-        /// Gets or sets the player’s name.
+        /// Gets or sets the player's name.
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the player’s score.
+        /// Gets or sets the player's score.
         /// </summary>
         public int Score { get; set; }
     }

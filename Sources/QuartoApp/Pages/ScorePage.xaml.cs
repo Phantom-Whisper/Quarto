@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using Model;
+using Serialize;
 using Stub;
 
 namespace QuartoApp.Pages;
@@ -12,12 +13,9 @@ public partial class ScorePage : ContentPage
     {
         InitializeComponent();
 
-        var stubScores = new StubPlayerScores();
-        var scoreManager = new ScoreManager();
-
+        var scoreManager = new ScoreManager();        
         scoreManager.LoadScores();
-
-        Scores = [.. scoreManager.GetAllScores().Select(static kvp => new PlayerScore(kvp.Key, kvp.Value))];
+        Scores = scoreManager.GetAllScores();
 
         BindingContext = this;
     }
