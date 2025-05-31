@@ -54,7 +54,8 @@
                     <component:CustomButton2 x:Name="Easy"
                                              Text="{ext:LocalizedString Key=Facile}">
                         <component:CustomButton2.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnDiffButtonPressed"/>
+                            <TapGestureRecognizer Tapped="OnDiffButtonPressed"
+                                                  />
                         </component:CustomButton2.GestureRecognizers>
                     </component:CustomButton2>
 

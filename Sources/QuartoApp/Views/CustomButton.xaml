@@ -4,17 +4,13 @@
              x:Class="QuartoApp.Views.CustomButton">
 
     <Grid Margin="10" >
-        <Button 
-            BackgroundColor="Transparent"  
-            BorderColor="Transparent" 
-            ZIndex="2"/>
         <Label 
             Text="{Binding Text}" 
             TextColor="{StaticResource Gold}" 
             FontFamily="NovaSquare" 
             VerticalOptions="Center" 
             HorizontalOptions="Center"  
-            ZIndex="3"/>
+            ZIndex="2"/>
         <Image 
             Source="buttonv2.png"
             Aspect="AspectFit"/>
