@@ -4,8 +4,9 @@
              x:Class="QuartoApp.Pages.GamePage"
              xmlns:component="clr-namespace:QuartoApp.Views"
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
-             BackgroundImageSource="simple.png"
              Title="GamePage"
+             xmlns:local="clr-namespace:QuartoApp"
+             BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
     <Grid RowDefinitions="*,8*,*">
 

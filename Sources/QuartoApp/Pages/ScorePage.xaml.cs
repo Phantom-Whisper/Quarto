@@ -7,6 +7,12 @@ namespace QuartoApp.Pages;
 
 public partial class ScorePage : ContentPage
 {
+    public App? CurrentApp
+        => App.Current as App;
+
+    public ImageSource? BackgroundImage
+        => CurrentApp?.GlobalBackgroundImage as ImageSource;
+
     public ObservableCollection<PlayerScore> Scores { get; set; }
 
     public ScorePage()

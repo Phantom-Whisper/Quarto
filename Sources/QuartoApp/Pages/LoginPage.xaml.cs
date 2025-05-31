@@ -10,6 +10,9 @@ public partial class LoginPage : ContentPage
     public App? CurrentApp 
         => App.Current as App;
 
+    public ImageSource? BackgroundImage
+        => CurrentApp?.GlobalBackgroundImage as ImageSource;
+
     public GameManager? GameManager 
         => CurrentApp?.GameManager as GameManager;
 

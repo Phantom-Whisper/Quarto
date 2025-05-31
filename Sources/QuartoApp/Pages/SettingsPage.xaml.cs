@@ -1,14 +1,70 @@
 using QuartoApp.Resources.Localization;
+using QuartoApp.Views;
+using System.ComponentModel;
 
 namespace QuartoApp.Pages;
 
-public partial class SettingsPage : ContentPage
+public partial class SettingsPage : ContentPage, INotifyPropertyChanged
 {
+    public App? CurrentApp
+        => App.Current as App;
+
+    public ImageSource? BackgroundImage
+    {  
+        get => CurrentApp?.GlobalBackgroundImage as ImageSource;
+        set
+        {
+                if (CurrentApp != null && value != null)
+                    CurrentApp.GlobalBackgroundImage = value;
+        }
+    }
+
     public SettingsPage()
 	{
 		InitializeComponent();
         InitializeCulturePicker();
-	}
+
+        BindingContext = this;
+
+        if (CurrentApp != null)
+            CurrentApp.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(CurrentApp.GlobalBackgroundImage))
+                    OnPropertyChanged(nameof(BackgroundImage));
+            };
+    }
+
+    public new event PropertyChangedEventHandler? PropertyChanged;
+    protected new void OnPropertyChanged(string propertyName)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+    private void OnThemeButtonPressed(object sender, TappedEventArgs e)
+    {
+        // put background in transparent
+        Simple.BackgroundColor = Colors.Transparent;
+        Modern.BackgroundColor = Colors.Transparent;
+        Colored.BackgroundColor = Colors.Transparent;
+
+        var button = sender as CustomButton2;
+        if (button != null)
+        {
+            button.BackgroundColor = Colors.Gray;
+        }
+
+        // attribute the difficukty to BackgroundImage
+        if (button == Simple)
+        {
+            BackgroundImage = "simple.png";
+        }
+        else if (button == Modern)
+        {
+            BackgroundImage = "modern.png";
+        }
+        else if (button == Colored)
+        {
+            BackgroundImage = "colored.png";
+        }
+    }
 
     private void InitializeCulturePicker()
     {
