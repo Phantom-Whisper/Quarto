@@ -30,7 +30,7 @@ namespace TestModel
         private class TestGameManager : IGameManager
         {
             public (int, int) CoordinatesToReturn { get; set; }
-            public List<string> Messages { get; } = new();
+            public List<string> Messages { get; } = [];
 
             public event EventHandler<AskPieceToPlayEventArgs>? AskPieceToPlay;
             public void OnAskPieceToPlay(AskPieceToPlayEventArgs args)
@@ -154,6 +154,22 @@ namespace TestModel
             int actual = player.GetHashCode(player);
 
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void PlayerConstructor_ShouldThrow_OnNullName()
+        {
+            Assert.Throws<ArgumentNullException>(() => new HumanPlayer(null));
+        }
+
+        [Fact]
+        public void GetHashCode_ShouldReturnHashCodeOfName()
+        {
+            var player = new HumanPlayer("TestPlayer");
+
+            int expected = player.Name.GetHashCode();
+
+            Assert.Equal(expected, player.GetHashCode(player));
         }
     }
 }

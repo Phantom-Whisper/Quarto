@@ -68,6 +68,9 @@ namespace Model
         /// This method gives us the hashcode of a <c>Player</c>.
         /// </summary>
         /// <returns></returns>
-        public int GetHashCode(Player player) => player.Name?.GetHashCode() ?? 0;
+        public int GetHashCode(Player player)
+        {
+            return player == null ? throw new ArgumentNullException(nameof(player)) : player.Name.GetHashCode();
+        }
     }
 }
