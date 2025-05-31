@@ -105,7 +105,7 @@
                         </ImageButton.Source>
                     </ImageButton>
 
-                    <Picker x:Name="picker"
+                    <Picker x:Name="CulturePicker"
                             Grid.Column="2"
                             Grid.Row="1"
                             Title="{ext:LocalizedString Key=PickerText}"

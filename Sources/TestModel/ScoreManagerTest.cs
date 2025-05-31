@@ -17,9 +17,8 @@ namespace TestModel
 
             manager.AddVictory(player);
 
-            var scores = manager.GetAllScores(); // Use the public method to access scores  
-            Assert.True(scores.ContainsKey("Alice"));
-            Assert.Equal(1, scores["Alice"]);
+            var scores = manager.GetAllScores();
+            Assert.Contains(scores, ps => ps.Name == "Alice" && ps.Score == 1);
         }
 
         [Fact]
@@ -31,8 +30,10 @@ namespace TestModel
             manager.AddVictory(player);
             manager.AddVictory(player);
 
-            var scores = manager.GetAllScores(); 
-            Assert.Equal(2, scores["Bob"]);
+            var scores = manager.GetAllScores();
+            var bobScore = scores.FirstOrDefault(ps => ps.Name == "Bob");
+            Assert.NotNull(bobScore);
+            Assert.Equal(2, bobScore.Score);
         }
 
         [Fact]
@@ -40,9 +41,9 @@ namespace TestModel
         {
             var manager = new ScoreManager();
 
-            manager.AddVictory(null!); 
+            manager.AddVictory(null!);
 
-            var scores = manager.GetAllScores(); 
+            var scores = manager.GetAllScores();
             Assert.Empty(scores);
         }
 
@@ -50,7 +51,8 @@ namespace TestModel
         public void GetScore_ShouldReturnZero_WhenPlayerIsNull()
         {
             var manager = new ScoreManager();
-            int score = manager.GetScore(null!); 
+
+            int score = manager.GetScore(null!);
             Assert.Equal(0, score);
         }
 
@@ -58,7 +60,8 @@ namespace TestModel
         public void GetScore_ShouldReturnZero_WhenPlayerNotInScores()
         {
             var manager = new ScoreManager();
-            var player = new HumanPlayer("NonExistant");
+            var player = new HumanPlayer("NonExistent");
+
             int score = manager.GetScore(player);
             Assert.Equal(0, score);
         }
@@ -68,13 +71,13 @@ namespace TestModel
         {
             var manager = new ScoreManager();
             var player = new HumanPlayer("Alice");
+
             manager.AddVictory(player);
             manager.AddVictory(player);
 
             int score = manager.GetScore(player);
             Assert.Equal(2, score);
         }
-
 
         [Fact]
         public void GetAllScores_ShouldReturnAllCurrentScores()
@@ -90,23 +93,37 @@ namespace TestModel
             var scores = manager.GetAllScores();
 
             Assert.Equal(2, scores.Count);
-            Assert.Equal(1, scores["Alice"]);
-            Assert.Equal(2, scores["Bob"]);
+            Assert.Contains(scores, ps => ps.Name == "Alice" && ps.Score == 1);
+            Assert.Contains(scores, ps => ps.Name == "Bob" && ps.Score == 2);
         }
 
         [Fact]
-        public void GetAllScores_ReturnedDictionaryIsACopy()
+        public void GetAllScores_CollectionIsObservable()
         {
             var manager = new ScoreManager();
-            var player = new HumanPlayer("Alice");
-            manager.AddVictory(player);
+            Assert.IsType<System.Collections.ObjectModel.ObservableCollection<PlayerScore>>(manager.GetAllScores());
+        }
+
+        [Fact]
+        public void SaveScores_ShouldSortScoresDescending()
+        {
+            var manager = new ScoreManager();
+            var player1 = new HumanPlayer("Alice");
+            var player2 = new HumanPlayer("Bob");
+
+            manager.AddVictory(player1);
+            manager.AddVictory(player2);
+            manager.AddVictory(player2);
+
+            manager.SaveScores();
 
             var scores = manager.GetAllScores();
-            scores["Alice"] = 42; // Modification du dictionnaire retourné
 
-            // Le score interne ne doit pas être modifié
-            var actualScore = manager.GetScore(player);
-            Assert.Equal(1, actualScore);
+            Assert.Equal(2, scores.Count);
+            Assert.Equal("Bob", scores[0].Name);
+            Assert.Equal(2, scores[0].Score);
+            Assert.Equal("Alice", scores[1].Name);
+            Assert.Equal(1, scores[1].Score);
         }
     }
 }

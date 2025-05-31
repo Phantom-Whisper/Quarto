@@ -13,10 +13,10 @@ public partial class LoginPage : ContentPage
     public GameManager? GameManager 
         => CurrentApp?.GameManager as GameManager;
 
-	public string Entry_name1 { get; set; }
-    public string Entry_name2 { get; set; }
+	public string? Entry_name1 { get; set; }
+    public string? Entry_name2 { get; set; }
     private IPlayer[] players = new IPlayer[2];
-    private string selectedDifficulty;
+    private string? selectedDifficulty;
 
     public LoginPage()
 	{
@@ -63,13 +63,14 @@ public partial class LoginPage : ContentPage
         IBoard board = new Board();
         IBag bag = new Bag();
         IScoreManager scoreManager = new ScoreManager();
+
         if (string.IsNullOrWhiteSpace(Entry_name2))
         {
             if (string.IsNullOrWhiteSpace(Entry_name1))
             {
                 Entry_name1 = "Player1";
             }
-            players[0] = new HumanPlayer(Entry_name1);
+            players[0] = new HumanPlayer(Entry_name1!);
             players[1] = new DumbAIPlayer();
         }
         else
@@ -86,28 +87,32 @@ public partial class LoginPage : ContentPage
                     Entry_name2 = $"Player{i + 1}";
                 }
             }
-            players[0] = new HumanPlayer(Entry_name1);
-            players[1] = new HumanPlayer(Entry_name2);
+            players[0] = new HumanPlayer(Entry_name1!);
+            players[1] = new HumanPlayer(Entry_name2!);
         }
+
         if (selectedDifficulty == "Easy")
         {
-            if(CurrentApp != null)
+            if (CurrentApp != null)
             {
                 CurrentApp.GameManager = new GameManager(new RulesBeginner(), scoreManager, board, bag, players);
             }
-        }else if (selectedDifficulty == "Normal")
+        }
+        else if (selectedDifficulty == "Normal")
         {
             if (CurrentApp != null)
             {
                 CurrentApp.GameManager = new GameManager(new Rules(), scoreManager, board, bag, players);
             }
-        }else if (selectedDifficulty == "Advanced")
+        }
+        else if (selectedDifficulty == "Advanced")
         {
             if (CurrentApp != null)
             {
                 CurrentApp.GameManager = new GameManager(new RulesAdvanced(), scoreManager, board, bag, players);
             }
-        }else
+        }
+        else
         {
             _ = DisplayAlert("Erreur", "Veuillez Entrer la difficulté.", "OK");
             return;
@@ -115,5 +120,4 @@ public partial class LoginPage : ContentPage
 
         await Navigation.PushAsync(new GamePage());
     }
-
 }
