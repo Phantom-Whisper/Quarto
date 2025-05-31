@@ -1,6 +1,4 @@
 ﻿using Manager;
-using Manager.CustomEventArgs;
-using System.Security.Cryptography;
 
 namespace Model
 {

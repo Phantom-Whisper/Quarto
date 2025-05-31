@@ -159,7 +159,7 @@ namespace TestModel
         [Fact]
         public void PlayerConstructor_ShouldThrow_OnNullName()
         {
-            Assert.Throws<ArgumentNullException>(() => new HumanPlayer(null));
+            Assert.Throws<ArgumentNullException>(() => new HumanPlayer(null!));
         }
 
         [Fact]

@@ -1,6 +1,7 @@
 ﻿using Manager.CustomEventArgs;
 using Manager;
 using Model;
+using Moq;
 
 namespace TestModel
 {
@@ -68,5 +69,40 @@ namespace TestModel
             Assert.Equal(ai, gameManager.LastAskArgs.Player);
             Assert.Equal(gameManager.AvailablePieces[0], gameManager.LastAskArgs.PieceToPlay);
         }
+
+        [Fact]
+        public void PlayTurn_ShouldPlacePieceOnBoard()
+        {
+            // Arrange
+            var board = new Board(4, 4);
+            var piece = new Piece(true, true, true, true);
+            var gameManagerMock = new Mock<IGameManager>();
+
+            gameManagerMock.Setup(gm => gm.GetAvailablePieces())
+                           .Returns(new List<IPiece> { new Piece(true, true, true, true) });
+
+            var aiPlayer = new DumbAIPlayer();
+
+            // Act
+            aiPlayer.PlayTurn(board, piece, gameManagerMock.Object);
+
+            // Assert
+            bool piecePlaced = false;
+            for (int r = 0; r < board.SizeX; r++)
+            {
+                for (int c = 0; c < board.SizeY; c++)
+                {
+                    if (board.GetPiece(r, c) == piece)
+                    {
+                        piecePlaced = true;
+                        break;
+                    }
+                }
+                if (piecePlaced) break;
+            }
+            Assert.True(piecePlaced, "The piece should be placed somewhere on the board.");
+        }
+
+
     }
 }
