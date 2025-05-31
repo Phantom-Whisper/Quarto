@@ -17,7 +17,7 @@ namespace Model
         public string Name 
         {
             get => name ?? throw new InvalidOperationException("Name is not intialized");
-            protected set
+            set
             {
                 if (name == value) return;
                 name = value ?? throw new ArgumentNullException(nameof(value));
