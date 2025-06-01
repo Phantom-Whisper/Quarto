@@ -123,6 +123,9 @@
   <data name="Charger" xml:space="preserve">
     <value>Charger</value>
   </data>
+  <data name="Colored" xml:space="preserve">
+    <value>Coloré</value>
+  </data>
   <data name="Credits" xml:space="preserve">
     <value>Crédits</value>
   </data>
@@ -156,6 +159,9 @@
   <data name="LoginJoueur2" xml:space="preserve">
     <value>Joueur 2</value>
   </data>
+  <data name="Modern" xml:space="preserve">
+    <value>Moderne</value>
+  </data>
   <data name="Moyen" xml:space="preserve">
     <value>Moyen</value>
   </data>
@@ -185,6 +191,9 @@
   </data>
   <data name="Score" xml:space="preserve">
     <value>Score</value>
+  </data>
+  <data name="Simple" xml:space="preserve">
+    <value>Simple</value>
   </data>
   <data name="Victoire" xml:space="preserve">
     <value>Victoire</value>

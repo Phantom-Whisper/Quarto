@@ -1,14 +1,32 @@
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace QuartoApp.Pages;
 
-public partial class AccueilPage : ContentPage
+public partial class AccueilPage : ContentPage, INotifyPropertyChanged
 {
+    public App? CurrentApp
+        => App.Current as App;
+
+    public ImageSource? BackgroundImage 
+        => CurrentApp?.GlobalBackgroundImage as ImageSource;
+
     public AccueilPage()
     {
         InitializeComponent();
         BindingContext = this;
+
+        if (CurrentApp != null)
+            CurrentApp.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(CurrentApp.GlobalBackgroundImage))
+                    OnPropertyChanged(nameof(BackgroundImage));
+            };
     }
+
+    public new event PropertyChangedEventHandler? PropertyChanged;
+    protected new void OnPropertyChanged(string propertyName)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
     public async void Exit_Tapped(object sender, EventArgs e)
     {

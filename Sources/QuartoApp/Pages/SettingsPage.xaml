@@ -6,7 +6,8 @@
              x:Class="QuartoApp.Pages.SettingsPage"
              xmlns:component="clr-namespace:QuartoApp.Views"
              Title="SettingsPage"
-             BackgroundImageSource="simple.png"
+             xmlns:local="clr-namespace:QuartoApp"
+             BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
     
 
@@ -22,6 +23,7 @@
               RowDefinitions="2*,*"
               Grid.Row="1"
               Grid.ColumnSpan="2">
+            <!-- Rights Button of navigation -->
             <VerticalStackLayout Margin="0,0,30,0">
                 <component:CustomButton
                     Text="{ext:LocalizedString Key=General}">
@@ -62,11 +64,15 @@
                 </component:CustomButton>
 
             </VerticalStackLayout>
+            
+            <!-- Background of the window -->
             <Image 
                 Source="back.png" 
                 Grid.Column="1"
                 Grid.RowSpan="2" ZIndex="0"
                 Aspect="Fill"/>
+            
+            <!-- Main window -->
             <ScrollView 
                 Grid.Column="1"
                 Grid.RowSpan="2">
@@ -133,6 +139,33 @@
                          Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Gold}}"/>
                         </ImageButton.Source>
                     </ImageButton>
+
+                    <HorizontalStackLayout 
+                        Grid.Column="2"
+                        Grid.Row="2">
+
+                        <component:CustomButton2 x:Name="Simple"
+                         Text="{ext:LocalizedString Key=Simple}">
+                            <component:CustomButton2.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnThemeButtonPressed"/>
+                            </component:CustomButton2.GestureRecognizers>
+                        </component:CustomButton2>
+
+                        <component:CustomButton2 x:Name="Modern"
+                         Text="{ext:LocalizedString Key=Modern}">
+                            <component:CustomButton2.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnThemeButtonPressed"/>
+                            </component:CustomButton2.GestureRecognizers>
+                        </component:CustomButton2>
+
+                        <component:CustomButton2 x:Name="Colored"
+                         Text="{ext:LocalizedString Key=Colored}">
+                            <component:CustomButton2.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnThemeButtonPressed"/>
+                            </component:CustomButton2.GestureRecognizers>
+                        </component:CustomButton2>
+
+                    </HorizontalStackLayout>
                 </Grid>
             </ScrollView>
         </Grid>
