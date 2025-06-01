@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuartoApp.Views.CustomButton2">
+             xmlns:local="clr-namespace:QuartoApp.Views"
+             x:Class="QuartoApp.Views.CustomButton2"
+             x:Name="Root">
     
     <Grid 
         Margin="10" >
-        <Button 
-            BackgroundColor="Transparent"  
-            BorderColor="Transparent" 
-            ZIndex="2"/>
         <Label 
-            Text="{Binding Text}" 
+            Text="{Binding Text, Source={x:Reference Root}}" 
             TextColor="{StaticResource Gold}" 
             FontFamily="NovaSquare" 
             VerticalOptions="Center" 
             HorizontalOptions="Center"  
-            ZIndex="3"/>
+            ZIndex="2"/>
         <Image 
             Source="buttonv1.png" 
             Aspect="AspectFit"/>

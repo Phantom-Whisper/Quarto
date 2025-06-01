@@ -1,16 +1,36 @@
 ﻿using Manager;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Model
 {
     /// <summary>
     /// Abstract Class player used by <c>HumanPlayer</c> and <c>AIPlayer</c>
     /// </summary>
-    public abstract class Player : IPlayer, IEqualityComparer<Player>
+    public abstract class Player : IPlayer, IEqualityComparer<Player>, INotifyPropertyChanged
     {
+        private string? name;
+
         /// <summary>
         /// name of the player
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name 
+        {
+            get => name ?? throw new InvalidOperationException("Name is not intialized");
+            protected set
+            {
+                if (name == value) return;
+                name = value ?? throw new ArgumentNullException(nameof(value));
+                OnPropertyChanged();
+            }
+        
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        void OnPropertyChanged([CallerMemberName]string? propertyName = null)
+         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
 
         /// <summary>
         /// Constructor of player
@@ -18,7 +38,7 @@ namespace Model
         /// <param name="name">pseudo chosen</param>
         protected Player(string name)
         {
-            Name = name;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
         /// <summary>
@@ -48,6 +68,6 @@ namespace Model
         /// This method gives us the hashcode of a <c>Player</c>.
         /// </summary>
         /// <returns></returns>
-        public int GetHashCode(Player player) => Name.GetHashCode();
+        public int GetHashCode(Player player) => player.Name?.GetHashCode() ?? 0;
     }
 }

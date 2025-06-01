@@ -18,7 +18,7 @@
                     HorizontalOptions="Center"
                     Margin="10">
                     <Image 
-                        Source="dotnet_bot.png"
+                        Source="quartologo.png"
                         HorizontalOptions="Center"
                         Aspect="AspectFit"/>
                 </Border>

@@ -77,7 +77,7 @@ namespace ConsoleApp
                         Console.WriteLine("\n=== Victory Scores ===");
                         foreach (var entry in scoreManager.GetAllScores())
                         {
-                            Console.WriteLine($"{entry.Key}: {entry.Value} victoire(s)");
+                            Console.WriteLine($"{entry.Name}: {entry.Score} victoire(s)");
                         }
                         Console.WriteLine("\nPress any key to return to menu.");
                         Console.ReadKey();

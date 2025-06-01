@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:component="clr-namespace:QuartoApp.Views"
+             xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              x:Class="QuartoApp.Pages.DefeatPage"
              Title="DefeatPage"
              BackgroundImageSource="simple.png"
@@ -18,19 +19,37 @@
                HorizontalOptions="Center"
                TextColor="Gold"
                Text="Text"/>
-        
-        <component:CustomButton Grid.Row="4"
-                Grid.Column="0"
-                WidthRequest="200"/>
 
-        <component:CustomButton Grid.Row="3"
-                Grid.Column="2"
-                WidthRequest="200" 
-                VerticalOptions="End"/>
-        
-        
-        <component:CustomButton Grid.Row="4"
-                Grid.Column="2"
-                WidthRequest="200"/>
+        <component:CustomButton 
+            Text="{ext:LocalizedString Key=Rejouer}"
+            Grid.Row="4"
+            Grid.Column="0"
+            WidthRequest="200">
+            <component:CustomButton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Replay_Tapped"/>
+            </component:CustomButton.GestureRecognizers>
+        </component:CustomButton>
+
+        <component:CustomButton 
+            Text="{ext:LocalizedString Key=Credits}"
+            Grid.Row="3"
+            Grid.Column="2"
+            WidthRequest="200" 
+            VerticalOptions="End">
+            <component:CustomButton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Credit_Tapped"/>
+            </component:CustomButton.GestureRecognizers>
+        </component:CustomButton>
+
+
+        <component:CustomButton 
+            Text="{ext:LocalizedString Key=Quitter}"
+            Grid.Row="4"
+            Grid.Column="2"
+            WidthRequest="200">
+            <component:CustomButton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Exit_Tapped"/>
+            </component:CustomButton.GestureRecognizers>
+        </component:CustomButton>
     </Grid>
 </ContentPage>
