@@ -9,11 +9,13 @@ using QuartoApp.MyLayouts;
 public partial class GamePage : ContentPage
 {
     public Board board { get; } = new Board(4, 4);
+
     public GamePage()
     {
         InitializeComponent();
         BindingContext = this;
     }
+
     public IEnumerable<IPiece> FlatMatrix2d
     {
         get
@@ -32,5 +34,10 @@ public partial class GamePage : ContentPage
             }
             return flatMatrix;
         }
+    }
+
+    public async void Settings_Clicked(Object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new SettingsPage());
     }
 }
