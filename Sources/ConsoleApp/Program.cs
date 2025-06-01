@@ -36,7 +36,7 @@ namespace ConsoleApp
             return choice;
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             var scoreManager = new ScoreManager();
             var stubScores = new StubPlayerScores();
@@ -169,7 +169,7 @@ namespace ConsoleApp
 
             if (response != "y") return;
 
-            List<(int row, int col)> selectedPositions = new();
+            List<(int row, int col)> selectedPositions = [];
 
             int selectedCount = 0;
 
@@ -245,7 +245,7 @@ namespace ConsoleApp
             }
             sb.AppendLine();
 
-            string horizontalSeparator = new string('-', (e.Board.SizeY + 1) * 7);
+            string horizontalSeparator = new('-', (e.Board.SizeY + 1) * 7);
             sb.AppendLine(horizontalSeparator);
 
             sb.AppendFormat("{0,2}  |", col);
