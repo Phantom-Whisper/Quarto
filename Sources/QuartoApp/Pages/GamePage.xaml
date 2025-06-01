@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuartoApp.Pages.GamePage"
+             xmlns:local="clr-namespace:QuartoApp"
              xmlns:component="clr-namespace:QuartoApp.Views"
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
+             xmlns:mylayouts="clr-namespace:QuartoApp.MyLayouts"
+             x:Class="QuartoApp.Pages.GamePage"
              Title="GamePage"
-             xmlns:local="clr-namespace:QuartoApp"
              BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:Double x:Key="VerticalSpacing">4</x:Double>
