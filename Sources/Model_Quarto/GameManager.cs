@@ -60,12 +60,12 @@ namespace Model
         /// <summary>
         /// The index of the current player in the list
         /// </summary>
-        private int currentPlayerIndex = 0;
+        private int currentPlayerIndex;
 
         /// <summary>
         /// Rules of the game according to the level chosen (easy, normal and advanced)
         /// </summary>
-        private IRulesManager rulesManager => rules;
+        private IRulesManager RulesManager => rules;
 
         /// <summary>
         /// List of the piece available
@@ -92,7 +92,7 @@ namespace Model
         {
             OnGameStarted(new GameStartedEventArgs(board, bag, CurrentPlayer));
             FirstTurn();
-            while (!rulesManager.IsGameOver(bag, board) && !HasWinner) // fin du jeu -> si un joueur à gagner ou si baglist est vide et board plein
+            while (!RulesManager.IsGameOver(bag, board) && !HasWinner) // fin du jeu -> si un joueur à gagner ou si baglist est vide et board plein
             {
                 Display();
                 Turn();
@@ -153,16 +153,12 @@ namespace Model
 
             bag.Remove(pieceToPlay);
 
-            var quartoPieces = rulesManager.GetQuarto(board);
+            var quartoPieces = RulesManager.GetQuarto(board);
             if (quartoPieces != null && quartoPieces.Distinct().Count() == 4)
             {
-                if (CurrentPlayer is AIPlayer)
+                if (CurrentPlayer is not null)
                 {
-                    OnQuarto(new QuartoEventArgs(rulesManager, board, CurrentPlayer, quartoPieces));
-                }
-                else if (CurrentPlayer is HumanPlayer)
-                {
-                    OnQuarto(new QuartoEventArgs(rulesManager, board, CurrentPlayer, quartoPieces));
+                    OnQuarto(new QuartoEventArgs(rules, board, CurrentPlayer, quartoPieces));
                 }
                 else
                 {
@@ -214,7 +210,7 @@ namespace Model
         /// <summary>
         /// Displays the current game state by triggering appropriate events.
         /// </summary>
-        private void Display()
+        internal void Display()
         {
             OnDisplayMessage($"Tour: {turnNumber}");
             OnDisplayMessage($"Joueur courant: {CurrentPlayer.Name}");

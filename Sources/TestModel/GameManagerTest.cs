@@ -1,15 +1,31 @@
-﻿using Xunit;
-using Model;
+﻿using Model;
 using Manager;
-using Manager.CustomEventArgs;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
+using Moq;
+using System.Collections.ObjectModel;
 
 namespace TestModel
 {
     public class GameManagerTest
     {
+        private static GameManager CreateGameManager(
+            IRulesManager? rulesManager = null,
+            IScoreManager? scoreManager = null,
+            IBoard? board = null,
+            IBag? bag = null,
+            IPlayer[]? players = null)
+        {
+            rulesManager ??= Mock.Of<IRulesManager>(r => r.IsGameOver(It.IsAny<IBag>(), It.IsAny<IBoard>()) == true);
+            scoreManager ??= Mock.Of<IScoreManager>();
+            board ??= Mock.Of<IBoard>();
+            var emptyBagList = new ReadOnlyObservableCollection<IPiece>([]);
+
+            bag ??= Mock.Of<IBag>(b => b.Baglist == emptyBagList);
+            players ??= [Mock.Of<IPlayer>(p => p.Name == "J1"), Mock.Of<IPlayer>(p => p.Name == "J2")];
+
+            return new GameManager(rulesManager, scoreManager, board, bag, players);
+        }
+
         private class DummyRules : IRulesManager
         {
             public bool IsGameOverReturn { get; set; }
@@ -76,10 +92,10 @@ namespace TestModel
             Assert.Equal(1, rules.IsGameOverCallCount); // Appelé une seule fois
         }
 
-        private class DummyPlayer : HumanPlayer
+        private class DummyPlayer(string name) : HumanPlayer(name)
         {
             public int PlayTurnCount { get; private set; }
-            public DummyPlayer(string name) : base(name) { }
+
             public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
             {
                 PlayTurnCount++;
@@ -223,5 +239,84 @@ namespace TestModel
             Assert.Equal(0, (int)field.GetValue(manager)!);
         }
 
+        [Fact]
+        public void RequestNewPiece_ShouldRaiseAskPieceToPlay()
+        {
+            var gm = CreateGameManager();
+            bool raised = false;
+
+            gm.AskPieceToPlay += (_, args) =>
+            {
+                raised = true;
+                args.PieceToPlay = Mock.Of<IPiece>();
+            };
+
+            var method = typeof(GameManager).GetMethod("RequestNewPiece", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            method.Invoke(gm, null);
+
+            Assert.True(raised);
+        }
+
+        [Fact]
+        public void RequestNewPiece_ShouldThrow_WhenPieceNotSelected()
+        {
+            var gm = CreateGameManager();
+
+            gm.AskPieceToPlay += (_, args) => { };
+
+            var method = typeof(GameManager).GetMethod("RequestNewPiece", BindingFlags.NonPublic | BindingFlags.Instance)!;
+
+            Assert.Throws<TargetInvocationException>(() => method.Invoke(gm, null));
+        }
+
+        [Fact]
+        public void Run_ShouldLoopUntilGameOver()
+        {
+            var rulesMock = new Mock<IRulesManager>();
+            var piecesList = new ObservableCollection<IPiece> { Mock.Of<IPiece>() };
+            var readonlyPieces = new ReadOnlyObservableCollection<IPiece>(piecesList);
+            var bagMock = new Mock<IBag>();
+            bagMock.SetupGet(b => b.Baglist).Returns(readonlyPieces);
+
+            int callCount = 0;
+            rulesMock.Setup(r => r.IsGameOver(It.IsAny<IBag>(), It.IsAny<IBoard>()))
+                .Returns(() => callCount++ > 1); 
+
+            var playerMock1 = new Mock<IPlayer>();
+            playerMock1.Setup(p => p.Name).Returns("Player1");
+            playerMock1.Setup(p => p.PlayTurn(It.IsAny<IBoard>(), It.IsAny<IPiece>(), It.IsAny<IGameManager>()));
+
+            var playerMock2 = new Mock<IPlayer>();
+            playerMock2.Setup(p => p.Name).Returns("Player2");
+            playerMock2.Setup(p => p.PlayTurn(It.IsAny<IBoard>(), It.IsAny<IPiece>(), It.IsAny<IGameManager>()));
+
+            var players = new IPlayer[] { playerMock1.Object, playerMock2.Object };
+
+            var boardMock = new Mock<IBoard>();
+
+            var gm = new GameManager(rulesMock.Object, Mock.Of<IScoreManager>(), boardMock.Object, bagMock.Object, players);
+
+            gm.AskPieceToPlay += (s, e) => e.PieceToPlay = e.Pieces.First();
+
+            gm.Run();
+
+            Assert.True(callCount >= 2);
+
+            playerMock1.Verify(p => p.PlayTurn(It.IsAny<IBoard>(), It.IsAny<IPiece>(), gm), Times.AtLeastOnce);
+            playerMock2.Verify(p => p.PlayTurn(It.IsAny<IBoard>(), It.IsAny<IPiece>(), gm), Times.AtLeastOnce);
+        }
+
+        
+
+        [Fact]
+        public void Turn_ShouldThrow_IfPieceToPlayIsNull()
+        {
+            var gm = CreateGameManager();
+            var pieceToPlayField = typeof(GameManager).GetField("pieceToPlay", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            pieceToPlayField.SetValue(gm, null);
+
+            var ex = Assert.Throws<InvalidOperationException>(() => gm.Turn());
+            Assert.Equal("Piece not selected before usage.", ex.Message);
+        }
     }
 }

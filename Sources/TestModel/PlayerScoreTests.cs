@@ -46,5 +46,17 @@ namespace TestModel
             // Assert
             Assert.Equal(newScore, playerScore.Score);
         }
+
+        [Fact]
+        public void DefaultConstructor_ShouldInitializeWithDefaultValues()
+        {
+            // Act
+            var score = new PlayerScore();
+
+            // Assert
+            Assert.NotNull(score);
+            Assert.Null(score.Name); 
+            Assert.Equal(0, score.Score);
+        }
     }
 }
