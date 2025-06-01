@@ -1,5 +1,7 @@
 ﻿using Microsoft.Maui.Layouts;
 
+namespace QuartoApp.MyLayouts;
+
 public class MatrixLayout : Layout
 {
     public static readonly BindableProperty NbColumnsProperty

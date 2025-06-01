@@ -1,5 +1,7 @@
 ﻿using Microsoft.Maui.Layouts;
 
+namespace QuartoApp.MyLayouts;
+
 public class MatrixLayoutManager : ILayoutManager
 {
     MatrixLayout? MatrixLayout { get; set; }
