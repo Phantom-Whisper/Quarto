@@ -8,6 +8,12 @@ using QuartoApp.MyLayouts;
 
 public partial class GamePage : ContentPage
 {
+    public App? CurrentApp
+        => App.Current as App;
+
+    public ImageSource? BackgroundImage
+        => CurrentApp?.GlobalBackgroundImage as ImageSource;
+
     public Board board { get; } = new Board(4, 4);
 
     public GamePage()

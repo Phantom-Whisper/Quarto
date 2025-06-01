@@ -285,18 +285,18 @@ namespace Model
             List<(int row, int col)> positions;
             try
             {
-                positions = pieces.Select(p => board.PositionPiece(p)).ToList();
+                positions = [.. pieces.Select(p => board.PositionPiece(p))];
             }
             catch (InvalidCastException)
             {
                 return false; // If we can't cast to Piece
             }
 
-            var min = positions.MinBy(pos => (pos.row, pos.col));
+            var (row, col) = positions.MinBy(pos => (pos.row, pos.col));
 
-            bool right = positions.Any(pos => pos.row == min.row + 1 && pos.col == min.col);
-            bool under = positions.Any(pos => pos.row == min.row && pos.col == min.col + 1);
-            bool diagonal = positions.Any(pos => pos.row == min.row + 1 && pos.col == min.col + 1);
+            bool right = positions.Any(pos => pos.row == row + 1 && pos.col == col);
+            bool under = positions.Any(pos => pos.row == row && pos.col == col + 1);
+            bool diagonal = positions.Any(pos => pos.row == row + 1 && pos.col == col + 1);
 
             return right && under && diagonal;
         }

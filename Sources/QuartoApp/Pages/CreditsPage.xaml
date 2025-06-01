@@ -5,7 +5,8 @@
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              x:Class="QuartoApp.Pages.CreditsPage"
              Shell.NavBarIsVisible="False"
-             BackgroundImageSource="simple.png"
+             xmlns:local="clr-namespace:QuartoApp"
+             BackgroundImageSource="{Binding BackgroundImage}"
              Title="CreditsPage">
     <Grid
         RowDefinitions=" *, 9*, * "

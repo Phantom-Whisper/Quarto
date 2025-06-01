@@ -7,7 +7,8 @@
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              x:Class="QuartoApp.Pages.LoginPage"
              Title="LoginPage"
-             BackgroundImageSource="simple.png"
+             xmlns:local="clr-namespace:QuartoApp"
+             BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
     <Grid
         ColumnDefinitions="*,*">
@@ -54,8 +55,7 @@
                     <component:CustomButton2 x:Name="Easy"
                                              Text="{ext:LocalizedString Key=Facile}">
                         <component:CustomButton2.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnDiffButtonPressed"
-                                                  />
+                            <TapGestureRecognizer Tapped="OnDiffButtonPressed"/>
                         </component:CustomButton2.GestureRecognizers>
                     </component:CustomButton2>
 

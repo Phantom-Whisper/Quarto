@@ -2,9 +2,16 @@ namespace QuartoApp.Pages;
 
 public partial class DefeatPage : ContentPage
 {
-	public DefeatPage()
+    public App? CurrentApp
+       => App.Current as App;
+
+    public ImageSource? BackgroundImage
+        => CurrentApp?.GlobalBackgroundImage as ImageSource;
+
+    public DefeatPage()
 	{
 		InitializeComponent();
+        BindingContext = this;
 	}
 
     public async void Replay_Tapped(object sender, TappedEventArgs e)

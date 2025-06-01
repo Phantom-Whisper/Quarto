@@ -5,9 +5,10 @@
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              x:Class="QuartoApp.Pages.RulesPage"
              Title="RulesPage"
-             Shell.NavBarIsVisible="False"
-             BackgroundImageSource="simple.png"
-             BackgroundColor="LightGray">
+             xmlns:local="clr-namespace:QuartoApp"
+             BackgroundImageSource="{Binding BackgroundImage}"
+             Shell.NavBarIsVisible="False">
+    
     <Grid RowDefinitions="Auto, *"
         ColumnDefinitions="*,3*,*"
           Margin="0,0,0,40">

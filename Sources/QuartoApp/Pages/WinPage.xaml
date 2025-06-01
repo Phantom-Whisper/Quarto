@@ -5,7 +5,8 @@
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              x:Class="QuartoApp.Pages.WinPage"
              Title="WinPage"
-             BackgroundImageSource="simple.png"
+             xmlns:local="clr-namespace:QuartoApp"
+             BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
     
     <Grid RowDefinitions="8*, *, *, *, *"

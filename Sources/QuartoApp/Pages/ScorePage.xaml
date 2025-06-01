@@ -6,8 +6,9 @@
              xmlns:card="clr-namespace:QuartoApp.Views"
              x:Class="QuartoApp.Pages.ScorePage"
              Title="ScorePage"
-             Shell.NavBarIsVisible="False"
-             BackgroundImageSource="simple.png">
+             xmlns:local="clr-namespace:QuartoApp"
+             BackgroundImageSource="{Binding BackgroundImage}"
+             Shell.NavBarIsVisible="False">
     
     <Grid Margin="20,20,20,50" 
       RowDefinitions="*,6*"

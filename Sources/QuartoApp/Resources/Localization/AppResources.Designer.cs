@@ -79,6 +79,15 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Coloré.
+        /// </summary>
+        internal static string Colored {
+            get {
+                return ResourceManager.GetString("Colored", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Crédits.
         /// </summary>
         internal static string Credits {
@@ -178,6 +187,15 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Moderne.
+        /// </summary>
+        internal static string Modern {
+            get {
+                return ResourceManager.GetString("Modern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Moyen.
         /// </summary>
         internal static string Moyen {
@@ -264,6 +282,15 @@ namespace QuartoApp.Resources.Localization {
         internal static string Score {
             get {
                 return ResourceManager.GetString("Score", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Simple.
+        /// </summary>
+        internal static string Simple {
+            get {
+                return ResourceManager.GetString("Simple", resourceCulture);
             }
         }
         

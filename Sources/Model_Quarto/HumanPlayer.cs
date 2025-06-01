@@ -1,13 +1,9 @@
 ﻿using Manager;
-using Manager.CustomEventArgs;
-using System.Security.Cryptography;
 
 namespace Model
 {
-    public class HumanPlayer  : Player
+    public class HumanPlayer(string name) : Player(name)
     {
-        public HumanPlayer(string name) : base(name) { }
-
         /// <summary>
         /// method which make a player play a turn by choosing a place for the piece and choose the piece for the opponent
         /// </summary>

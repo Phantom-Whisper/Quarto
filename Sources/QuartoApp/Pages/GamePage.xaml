@@ -4,9 +4,9 @@
              x:Class="QuartoApp.Pages.GamePage"
              xmlns:component="clr-namespace:QuartoApp.Views"
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
-             xmlns:mylayouts="clr-namespace:QuartoApp.MyLayouts"
-             BackgroundImageSource="simple.png"
              Title="GamePage"
+             xmlns:local="clr-namespace:QuartoApp"
+             BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
     <ContentPage.Resources>
         <ResourceDictionary>
