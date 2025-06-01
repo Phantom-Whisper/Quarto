@@ -5,6 +5,7 @@
              xmlns:component="clr-namespace:QuartoApp.Views"
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              xmlns:mylayouts="clr-namespace:QuartoApp.MyLayouts"
+             xmlns:converter="clr-namespace:QuartoApp.Resources.Converters"
              x:Class="QuartoApp.Pages.GamePage"
              Title="GamePage"
              BackgroundImageSource="{Binding BackgroundImage}"
@@ -14,9 +15,12 @@
         <ResourceDictionary>
             <x:Double x:Key="VerticalSpacing">4</x:Double>
             <x:Double x:Key="HorizontalSpacing">4</x:Double>
+            <converter:PieceConverter x:Key="PieceConverter" />
             <DataTemplate x:Key="cellTemplate">
                 <Grid BackgroundColor="Transparent">
-                    <Label Text="test" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <ImageButton Source="{Binding .,Converter={StaticResource PieceConverter}}"
+                                 HorizontalOptions="Center" VerticalOptions="Center"
+                           MaximumHeightRequest="100" MaximumWidthRequest="100"/>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
