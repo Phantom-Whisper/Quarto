@@ -16,7 +16,7 @@ namespace Model
         /// <summary>
         /// Constructor of the board, the size depend on the constant <c>MAXSIZE</c>
         /// </summary>
-        public Board() 
+        public Board()
         {
             grid = new IPiece[MAXSIZE, MAXSIZE];
         }
@@ -26,7 +26,7 @@ namespace Model
         /// </summary>
         /// <param name="row">Number of cells in the row-axis.</param>
         /// <param name="col">Number of cells in the col-axis.</param>
-        public Board(int row, int col) 
+        public Board(int row, int col)
         {
             if (row != MAXSIZE || col != MAXSIZE)
                 throw new ArgumentException($"The maximum alowed size of the board is : {MAXSIZE}*{MAXSIZE}.");
@@ -103,15 +103,15 @@ namespace Model
                 }
                 else
                 {
-                    sb.AppendFormat("{0,4} | ", i); 
+                    sb.AppendFormat("{0,4} | ", i);
                 }
             }
             sb.AppendLine();
 
-            string horizontalSeparator = new string('-', (SizeY + 1) * 7); 
+            string horizontalSeparator = new string('-', (SizeY + 1) * 7);
             sb.AppendLine(horizontalSeparator);
 
-            sb.AppendFormat("{0,2}  |", z); 
+            sb.AppendFormat("{0,2}  |", z);
 
             foreach (var piece in grid)
             {
@@ -124,7 +124,7 @@ namespace Model
                     sb.AppendFormat("{0,2}  |", z);
                 }
 
-                sb.AppendFormat("{0,5} |", piece?.ToString() ?? ""); 
+                sb.AppendFormat("{0,5} |", piece?.ToString() ?? "");
                 row++;
             }
 
@@ -139,8 +139,8 @@ namespace Model
         /// <returns> a boolean : true = the <c>Board</c> is empty and false = the <c>Board</c> is not empty </returns>
         public bool IsEmpty(int row, int col)
         {
-            if (IsOnBoard(row,col) && grid[row, col] == null)
-                    return true;
+            if (IsOnBoard(row, col) && grid[row, col] == null)
+                return true;
             return false;
         }
 

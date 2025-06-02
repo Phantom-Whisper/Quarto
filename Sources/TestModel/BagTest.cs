@@ -130,7 +130,7 @@ namespace TestModel
 
             // Vérifie le format de la première ligne
             Assert.StartsWith("1. ", lines[0]);
-            Assert.Contains("Square", lines[0]); // ou "Round" selon la première pièce
+            Assert.Contains("square", lines[0]); // ou "Round" selon la première pièce
 
             // Vérifie le format de la dernière ligne
             Assert.StartsWith("16. ", lines[15]);

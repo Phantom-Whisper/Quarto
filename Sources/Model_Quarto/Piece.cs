@@ -69,11 +69,10 @@ namespace Model
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(IsSquare ? "Square" : "Round");
-            sb.Append(IsLight ? " Light" : " Dark");
-            sb.Append(IsBig ? " Big" : " Small");
-            sb.Append(IsFull ? " Full" : " Hollow");
-
+            sb.Append(IsSquare ? "square_" : "round_");
+            sb.Append(IsFull ? "full_" : "hollow_");
+            sb.Append(IsBig ? "big_" : "small_");
+            sb.Append(IsLight ? "light" : "dark");
             return sb.ToString();
         }
 
