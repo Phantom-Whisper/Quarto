@@ -19,7 +19,6 @@
             <DataTemplate x:Key="cellTemplate">
                 <Grid BackgroundColor="Transparent">
                     <ImageButton Source="{Binding .,Converter={StaticResource PieceConverter}}"
-                                 HorizontalOptions="Center" VerticalOptions="Center"
                            MaximumHeightRequest="100" MaximumWidthRequest="100"/>
                 </Grid>
             </DataTemplate>

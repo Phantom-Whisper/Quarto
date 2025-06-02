@@ -126,7 +126,7 @@ namespace TestModel
             board.InsertPiece(piece,1, 1);
             var output = board.ToString();
 
-            Assert.Contains("Square Light Big Full", output);
+            Assert.Contains("square_full_big_light", output);
 
             board.ClearBoard();
         }
@@ -139,8 +139,8 @@ namespace TestModel
 
             var output = board.ToString();
 
-            Assert.Contains("Square Light Big Full", output);
-            Assert.Contains("Square Dark Big Full", output);
+            Assert.Contains("square_full_big_light", output);
+            Assert.Contains("square_full_big_dark", output);
 
             board.ClearBoard();
         }

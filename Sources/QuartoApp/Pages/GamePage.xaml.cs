@@ -17,7 +17,7 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
     public Board board { get; } = new Board(4, 4);
     public Bag bag { get; } = new Bag();
 
-    private ObservableCollection<IPiece?> _flatMatrix = new();
+    private readonly ObservableCollection<IPiece?> _flatMatrix = [];
 
     public GamePage()
     {
@@ -39,7 +39,7 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
             {
                 for (int numCol = 0; numCol < board.SizeY; numCol++)
                 {
-                    flatMatrix.Add(board.Grid[numRow, numCol].Piece);
+                    flatMatrix.Add(board.Grid[numRow, numCol]);
                 }
             }
             return flatMatrix;
