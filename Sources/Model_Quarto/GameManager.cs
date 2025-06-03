@@ -11,7 +11,6 @@ namespace Model
     {
         private int _turnNumber  = 0;
         private bool _hasWinner = false;
-        private readonly ISerialize _serializer = new GameSerializer();
         private GameLog? _gameLog;
 
         public event EventHandler<MessageEventArgs>? MessageRequested;
