@@ -1,15 +1,18 @@
 ﻿using Manager;
 using Manager.CustomEventArgs;
+using Serialize;
 
 namespace Model
 {
     /// <summary>
     /// Main class that manage the game by setting up events
     /// </summary>
-    public class GameManager(IRulesManager rules, IScoreManager scoreManager, IBoard board, IBag bag, IPlayer[] _players) : IGameManager
+    public class GameManager(IRulesManager rules, IScoreManager scoreManager, IBoard board, IBag bag, IPlayer[] players) : IGameManager
     {
-        private int turnNumber  = 0;
-        private bool HasWinner = false;
+        private int _turnNumber  = 0;
+        private bool _hasWinner = false;
+        private readonly ISerialize _serializer = new GameSerializer();
+        private GameLog? _gameLog;
 
         public event EventHandler<MessageEventArgs>? MessageRequested;
         public void OnDisplayMessage(string message) => MessageRequested?.Invoke(this, new MessageEventArgs(message));
@@ -76,7 +79,7 @@ namespace Model
         /// <summary>
         /// Player which is playing 
         /// </summary>
-        public IPlayer CurrentPlayer => _players[currentPlayerIndex];
+        public IPlayer CurrentPlayer => players[currentPlayerIndex];
 
         /// <summary>
         /// <c>Piece</c> chosen by the opponent to by played by the current player
@@ -90,15 +93,16 @@ namespace Model
         /// </summary>
         public void Run()
         {
+            _gameLog = new GameLog(DateTime.Now);
             OnGameStarted(new GameStartedEventArgs(board, bag, CurrentPlayer));
             FirstTurn();
-            while (!RulesManager.IsGameOver(bag, board) && !HasWinner) // fin du jeu -> si un joueur à gagner ou si baglist est vide et board plein
+            while (!RulesManager.IsGameOver(bag, board) && !_hasWinner) // fin du jeu -> si un joueur à gagner ou si baglist est vide et board plein
             {
                 Display();
                 Turn();
             }
 
-            if (HasWinner && CurrentPlayer is HumanPlayer humanPlayer)
+            if (_hasWinner && CurrentPlayer is HumanPlayer humanPlayer)
             {
                 scoreManager.AddVictory(humanPlayer);
                 scoreManager.SaveScores();
@@ -144,7 +148,7 @@ namespace Model
         public void Turn()
         {
             if (currentPlayerIndex == 0)
-                turnNumber++;
+                _turnNumber++;
 
             if (pieceToPlay is null)
                 throw new InvalidOperationException("Piece not selected before usage.");
@@ -152,6 +156,29 @@ namespace Model
             CurrentPlayer.PlayTurn(board, pieceToPlay, this);
 
             bag.Remove(pieceToPlay);
+
+            try
+            {
+                var (row, col) = board.PositionPiece(pieceToPlay); // get last placed piece position
+
+                var turnLog = new TurnLog(
+                    _turnNumber,
+                    CurrentPlayer.Name,
+                    (Piece)pieceToPlay,
+                    row,
+                    col
+                );
+
+                _gameLog!.AddTurn(turnLog);
+
+                // Save with unique filename per game
+                string fileName = $"GameLog_{_gameLog.GameStartTime:yyyy-MM-dd_HH-mm-ss}.xml";
+                GameSerializer.Save(_gameLog, fileName);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Logging failed: {ex.Message}");
+            }
 
             var quartoPieces = RulesManager.GetQuarto(board);
             if (quartoPieces != null && quartoPieces.Distinct().Count() == 4)
@@ -165,9 +192,11 @@ namespace Model
                     throw new InvalidOperationException("Unknown player type.");
                 }
 
-                HasWinner = true;
+                _hasWinner = true;
+                _gameLog!.Winner = CurrentPlayer.Name;
+                string fileName = $"GameLog_{_gameLog.GameStartTime:yyyy-MM-dd_HH-mm-ss}.xml";
+                GameSerializer.Save(_gameLog, fileName);
                 OnGameEnd(new GameEndEventArgs(CurrentPlayer));
-                
                 return;
             }
 
@@ -180,7 +209,7 @@ namespace Model
         /// </summary>
         public void SwitchCurrentPlayer()
         {
-            currentPlayerIndex = (currentPlayerIndex + 1) % _players.Length;
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
         }
 
         /// <summary>
@@ -212,7 +241,7 @@ namespace Model
         /// </summary>
         internal void Display()
         {
-            OnDisplayMessage($"Tour: {turnNumber}");
+            OnDisplayMessage($"Tour: {_turnNumber}");
             OnDisplayMessage($"Joueur courant: {CurrentPlayer.Name}");
             OnBoardChanged(new BoardChangedEventArgs(board));
             OnBagChanged(new BagChangedEventArgs(bag));

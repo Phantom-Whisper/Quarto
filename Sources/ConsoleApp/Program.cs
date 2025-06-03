@@ -164,65 +164,71 @@ namespace ConsoleApp
 
         private static void Quarto(object? sender, QuartoEventArgs e)
         {
-            Console.WriteLine($"{e.CurrentPlayer.Name}, do you want to declare a Quarto? (y/n)");
-            string? response = Console.ReadLine()?.Trim().ToLower();
-
-            if (response != "y") return;
-
-            List<(int row, int col)> selectedPositions = [];
-
-            int selectedCount = 0;
-
-            while (selectedCount < 4)
+            if (e.CurrentPlayer is HumanPlayer)
             {
-                Console.WriteLine($"Select piece {selectedCount + 1}: enter row:");
-                if (!int.TryParse(Console.ReadLine(), out int row))
+                Console.WriteLine($"{e.CurrentPlayer.Name}, do you want to declare a Quarto? (y/n)");
+                string? response = Console.ReadLine()?.Trim().ToLower();
+
+                if (response != "y") return;
+
+                List<(int row, int col)> selectedPositions = [];
+
+                int selectedCount = 0;
+
+                while (selectedCount < 4)
                 {
-                    Console.WriteLine("Invalid input. Please enter a valid integer for row.");
-                    continue;
+                    Console.WriteLine($"Select piece {selectedCount + 1}: enter row:");
+                    if (!int.TryParse(Console.ReadLine(), out int row))
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid integer for row.");
+                        continue;
+                    }
+
+                    Console.WriteLine("Enter column:");
+                    if (!int.TryParse(Console.ReadLine(), out int col))
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid integer for column.");
+                        continue;
+                    }
+
+                    if (!e.Board.IsOnBoard(row, col))
+                    {
+                        Console.WriteLine("Invalid position: outside of board. Try again.");
+                        continue;
+                    }
+
+                    if (e.Board.IsEmpty(row, col))
+                    {
+                        Console.WriteLine("Invalid selection: no piece at the given position. Try again.");
+                        continue;
+                    }
+
+                    if (selectedPositions.Contains((row, col)))
+                    {
+                        Console.WriteLine("This position has already been selected. Choose a different one.");
+                        continue;
+                    }
+
+                    selectedPositions.Add((row, col));
+                    selectedCount++;
                 }
 
-                Console.WriteLine("Enter column:");
-                if (!int.TryParse(Console.ReadLine(), out int col))
+                var selectedPieces = selectedPositions
+                    .Select(pos => e.Board.GetPiece(pos.row, pos.col))
+                    .ToList();
+                
+                if (e.RulesManager.IsQuarto(e.Board, selectedPieces))
                 {
-                    Console.WriteLine("Invalid input. Please enter a valid integer for column.");
-                    continue;
+                    Console.WriteLine($"{e.CurrentPlayer.Name} wins with a Quarto!");
                 }
-
-                if (!e.Board.IsOnBoard(row, col))
+                else
                 {
-                    Console.WriteLine("Invalid position: outside of board. Try again.");
-                    continue;
+                    Console.WriteLine("Incorrect Quarto declaration. The game continues.");
                 }
-
-                if (e.Board.IsEmpty(row, col))
-                {
-                    Console.WriteLine("Invalid selection: no piece at the given position. Try again.");
-                    continue;
-                }
-
-                if (selectedPositions.Contains((row, col)))
-                {
-                    Console.WriteLine("This position has already been selected. Choose a different one.");
-                    continue;
-                }
-
-                selectedPositions.Add((row, col));
-                selectedCount++;
             }
 
-            var selectedPieces = selectedPositions
-                .Select(pos => e.Board.GetPiece(pos.row, pos.col))
-                .ToList();
-
-            if (e.RulesManager.IsQuarto(e.Board, selectedPieces))
-            {
+            if (e.RulesManager.IsQuarto(e.Board, e.RulesManager.GetQuarto(e.Board)!))
                 Console.WriteLine($"{e.CurrentPlayer.Name} wins with a Quarto!");
-            }
-            else
-            {
-                Console.WriteLine("Incorrect Quarto declaration. The game continues.");
-            }
         }
 
         private static void DisplayMessage(object? sender, MessageEventArgs e) => Console.WriteLine(e.Message);

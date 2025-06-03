@@ -14,7 +14,7 @@ namespace Serialize
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
             "Quarto", "Data");
 
-        private const string xmlFile = "ScoreTracker.xml";
+        private const string xmlFile = "ScoreSaves.xml";
         private readonly string path = Path.Combine(filePath, xmlFile);
 
         /// <summary>
@@ -49,8 +49,8 @@ namespace Serialize
 
             try
             {
-                using FileStream stream = new FileStream(path, FileMode.Open);
-                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                using FileStream stream = new(path, FileMode.Open);
+                XmlSerializer serializer = new(typeof(T));
                 var result = serializer.Deserialize(stream);
                 if (result is null) return default;
                 return (T)result;
@@ -71,8 +71,8 @@ namespace Serialize
         {
             try
             {
-                using FileStream stream = new FileStream(path, FileMode.Create);
-                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                using FileStream stream = new(path, FileMode.Create);
+                XmlSerializer serializer = new(typeof(T));
                 serializer.Serialize(stream, data);
             }
             catch (Exception ex)

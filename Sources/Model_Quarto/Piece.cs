@@ -11,6 +11,7 @@ namespace Model
     ///     - the Size : big or small
     ///     - the State : full or hollow
     /// </summary>
+    [Serializable]
     public sealed class Piece : IPiece, IEquatable<Piece>
     {
         /// <summary>
@@ -27,6 +28,11 @@ namespace Model
             IsBig = isBig;
             IsFull = isFull;
         }
+
+        /// <summary>
+        /// Required for XML serialization
+        /// </summary>
+        public Piece() { }
 
         /// <summary>
         /// This property tells if the  is squared (true) or round (false).
@@ -68,7 +74,7 @@ namespace Model
         /// </returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.Append(IsSquare ? "square_" : "round_");
             sb.Append(IsFull ? "full_" : "hollow_");
             sb.Append(IsBig ? "big_" : "small_");

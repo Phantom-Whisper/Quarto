@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuartoApp.Views"
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
-             x:Class="QuartoApp.Pages.SettingsPage"
              xmlns:component="clr-namespace:QuartoApp.Views"
-             Title="SettingsPage"
              xmlns:local="clr-namespace:QuartoApp"
+             xmlns:folder="clr-namespace:QuartoApp.Pages"
+             x:Class="QuartoApp.Pages.SettingsPage"
+             x:DataType="folder:SettingsPage"
+             Title="SettingsPage"
              BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
     
@@ -112,6 +114,7 @@
                     </ImageButton>
 
                     <Picker x:Name="CulturePicker"
+                            x:DataType="ext:LocalizationApp"
                             Grid.Column="2"
                             Grid.Row="1"
                             Title="{ext:LocalizedString Key=PickerText}"

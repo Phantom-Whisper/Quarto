@@ -14,6 +14,9 @@ public partial class CarteMembre : ContentView
     public static readonly BindableProperty RoleProperty =
         BindableProperty.Create(nameof(Role), typeof(string), typeof(CustomButton), default(string));
 
+    public static readonly BindableProperty PictureProperty =
+        BindableProperty.Create(nameof(Picture), typeof(string), typeof(CarteMembre), default(string));
+
     public string Name
 	{
 		get => (string)GetValue(NameProperty);
@@ -25,4 +28,10 @@ public partial class CarteMembre : ContentView
         get => (string)GetValue(RoleProperty);
         set => SetValue(RoleProperty, value);
     }
+
+	public string Picture
+	{
+		get => (string)GetValue(PictureProperty);
+		set => SetValue(PictureProperty, value);
+	}
 }
