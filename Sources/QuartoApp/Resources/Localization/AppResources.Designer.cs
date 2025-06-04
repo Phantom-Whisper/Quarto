@@ -169,7 +169,7 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Joueur 1.
+        ///   Recherche une chaîne localisée semblable à Joueur 1 : .
         /// </summary>
         internal static string LoginJoueur1 {
             get {
@@ -178,7 +178,7 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Joueur 2.
+        ///   Recherche une chaîne localisée semblable à Joueur 2 :.
         /// </summary>
         internal static string LoginJoueur2 {
             get {
@@ -259,7 +259,7 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Retour.
+        ///   Recherche une chaîne localisée semblable à ◄ Retour.
         /// </summary>
         internal static string Retour {
             get {

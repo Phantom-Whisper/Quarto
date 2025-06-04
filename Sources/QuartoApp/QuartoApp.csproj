@@ -77,6 +77,9 @@
 	  <Compile Update="Pages\GamePage.xaml.cs">
 	    <DependentUpon>GamePage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\RulesPageEn.xaml.cs">
+	    <DependentUpon>RulesPageEn.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Resources\Localization\AppResources.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -99,6 +102,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\GamePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\RulesPageEn.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  

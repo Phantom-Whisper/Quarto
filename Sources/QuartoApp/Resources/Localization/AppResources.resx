@@ -154,10 +154,10 @@
     <value>Jouer ►</value>
   </data>
   <data name="LoginJoueur1" xml:space="preserve">
-    <value>Joueur 1</value>
+    <value>Joueur 1 : </value>
   </data>
   <data name="LoginJoueur2" xml:space="preserve">
-    <value>Joueur 2</value>
+    <value>Joueur 2 :</value>
   </data>
   <data name="Modern" xml:space="preserve">
     <value>Moderne</value>
@@ -184,7 +184,7 @@
     <value>Rejouer</value>
   </data>
   <data name="Retour" xml:space="preserve">
-    <value>Retour</value>
+    <value>◄ Retour</value>
   </data>
   <data name="Sauvegarder" xml:space="preserve">
     <value>Sauvegarder</value>
