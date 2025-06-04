@@ -126,8 +126,14 @@
   <data name="Colored" xml:space="preserve">
     <value>Coloré</value>
   </data>
+  <data name="CopyRights" xml:space="preserve">
+    <value>© 2025 Quarto Dev Team. Tous droits réservés.</value>
+  </data>
   <data name="Credits" xml:space="preserve">
     <value>Crédits</value>
+  </data>
+  <data name="CreditsText" xml:space="preserve">
+    <value>Nous tenons à remercier notre encadrement pédagogique et technique. En particulier nos enseignants, pour leurs conseils avisés, leur patience et leur soutien indéfectible tout au long du développement. Vos orientations nous ont permis de surmonter de nombreux défis et d’améliorer constamment notre approche. Ce projet est le fruit d’un effort collectif, dont l’engagement, la créativité et la persévérance ont permis de donner vie à cette solution informatique. L'Équipe du Projet.</value>
   </data>
   <data name="Difficile" xml:space="preserve">
     <value>Difficile</value>

@@ -108,7 +108,7 @@ namespace Model
             }
             sb.AppendLine();
 
-            string horizontalSeparator = new string('-', (SizeY + 1) * 7);
+            string horizontalSeparator = new('-', (SizeY + 1) * 7);
             sb.AppendLine(horizontalSeparator);
 
             sb.AppendFormat("{0,2}  |", z);

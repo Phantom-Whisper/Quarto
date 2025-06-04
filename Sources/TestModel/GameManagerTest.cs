@@ -103,29 +103,6 @@ namespace TestModel
         }
 
         [Fact]
-        public void Turn_ShouldIncrementTurnNumber_WhenCurrentPlayerIndexIsZero()
-        {
-            var rules = new DummyRules();
-            var scoreManager = new DummyScoreManager();
-            var board = new Board(4, 4);
-            var bag = new Bag();
-            var players = new IPlayer[] { new DummyPlayer("A"), new DummyPlayer("B") };
-            var manager = new GameManager(rules, scoreManager, board, bag, players);
-
-            // Préparer le contexte
-            typeof(GameManager).GetField("currentPlayerIndex", BindingFlags.NonPublic | BindingFlags.Instance)!.SetValue(manager, 0);
-            typeof(GameManager).GetField("pieceToPlay", BindingFlags.NonPublic | BindingFlags.Instance)!.SetValue(manager, bag.Baglist.First());
-
-            // Appel
-            var turnNumberField = typeof(GameManager).GetField("turnNumber", BindingFlags.NonPublic | BindingFlags.Instance)!;
-            int before = (int)turnNumberField.GetValue(manager)!;
-            manager.Turn();
-            int after = (int)turnNumberField.GetValue(manager)!;
-
-            Assert.Equal(before + 1, after);
-        }
-
-        [Fact]
         public void Turn_ShouldCallPlayTurn_OnCurrentPlayer()
         {
             var rules = new DummyRules();

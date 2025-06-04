@@ -4,9 +4,11 @@
              xmlns:component="clr-namespace:QuartoApp.Views"
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              xmlns:card="clr-namespace:QuartoApp.Views"
-             x:Class="QuartoApp.Pages.ScorePage"
-             Title="ScorePage"
              xmlns:local="clr-namespace:QuartoApp"
+             xmlns:folder="clr-namespace:QuartoApp.Pages"
+             x:Class="QuartoApp.Pages.ScorePage"
+             x:DataType="folder:ScorePage"
+             Title="ScorePage"
              BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
     
@@ -64,8 +66,8 @@
                     Grid.RowSpan="2">
                 <CollectionView x:Name="ScoresCollection" ItemsSource="{Binding Scores}">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <component:ScoreView Name="{Binding Name}" Value="{Binding Score}"/>
+                        <DataTemplate x:DataType="component:ScoreView">
+                            <component:ScoreView Name="{Binding Name}" Value="{Binding Value}"/>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

@@ -6,7 +6,9 @@
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              xmlns:mylayouts="clr-namespace:QuartoApp.MyLayouts"
              xmlns:converter="clr-namespace:QuartoApp.Resources.Converters"
+              xmlns:folder="clr-namespace:QuartoApp.Pages"
              x:Class="QuartoApp.Pages.GamePage"
+             x:DataType="folder:GamePage"
              Title="GamePage"
              BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
@@ -16,7 +18,7 @@
             <x:Double x:Key="VerticalSpacing">4</x:Double>
             <x:Double x:Key="HorizontalSpacing">4</x:Double>
             <converter:PieceConverter x:Key="PieceConverter" />
-            <DataTemplate x:Key="cellTemplate">
+            <DataTemplate x:Key="cellTemplate" x:DataType="converter:PieceConverter">
                 <Grid BackgroundColor="Transparent">
                     <ImageButton Source="{Binding .,Converter={StaticResource PieceConverter}}"
                            MaximumHeightRequest="100" MaximumWidthRequest="100"/>
