@@ -192,9 +192,6 @@
   <data name="Retour" xml:space="preserve">
     <value>◄ Return</value>
   </data>
-  <data name="Sauvegarder" xml:space="preserve">
-    <value>Save</value>
-  </data>
   <data name="Score" xml:space="preserve">
     <value>Score</value>
   </data>

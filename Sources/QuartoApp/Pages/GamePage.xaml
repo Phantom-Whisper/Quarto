@@ -6,7 +6,8 @@
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
              xmlns:mylayouts="clr-namespace:QuartoApp.MyLayouts"
              xmlns:converter="clr-namespace:QuartoApp.Resources.Converters"
-              xmlns:folder="clr-namespace:QuartoApp.Pages"
+             xmlns:folder="clr-namespace:QuartoApp.Pages"
+             xmlns:model="clr-namespace:Model;assembly=Model"
              x:Class="QuartoApp.Pages.GamePage"
              x:DataType="folder:GamePage"
              Title="GamePage"
@@ -18,7 +19,7 @@
             <x:Double x:Key="VerticalSpacing">4</x:Double>
             <x:Double x:Key="HorizontalSpacing">4</x:Double>
             <converter:PieceConverter x:Key="PieceConverter" />
-            <DataTemplate x:Key="cellTemplate" x:DataType="converter:PieceConverter">
+            <DataTemplate x:Key="cellTemplate" x:DataType="model:Piece">
                 <Grid BackgroundColor="Transparent">
                     <ImageButton Source="{Binding .,Converter={StaticResource PieceConverter}}"
                            MaximumHeightRequest="100" MaximumWidthRequest="100"/>
@@ -30,29 +31,34 @@
     <Grid RowDefinitions="*,8*,*">
 
         <component:CustomButton2  
-            Text="{ext:LocalizedString Key=Sauvegarder}"
+            Text="{ext:LocalizedString Key=Quitter}"
             WidthRequest="200" 
             HeightRequest="70" 
             HorizontalOptions="End"/>
         <Label Text="Text" HorizontalOptions="Center" VerticalOptions="Center"/>
-        <Grid ColumnDefinitions="*,*,*,*,*,*" 
-              RowDefinitions="*,*,*,*,*,*"
+        <Grid ColumnDefinitions="*,*"
+              RowDefinitions="*,3*,*"
               Grid.Row="1">
 
             <Image Grid.Row="1"
-                   Grid.Column="1"
-                   Grid.RowSpan="4"
-                   Grid.ColumnSpan="4"
                    Source="board.png"
                    ZIndex="-1"/>
 
             <mylayouts:MatrixLayout
                 Grid.Row="1"
-                Grid.Column="1"
-                Grid.RowSpan="4"
-                Grid.ColumnSpan="4"
                 BindableLayout.ItemTemplate="{StaticResource cellTemplate}" 
                 BindableLayout.ItemsSource="{Binding FlatMatrix2d}"
+                NbColumns="4"
+                NbRows="4"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center"/>
+
+            <mylayouts:MatrixLayout
+                Grid.Row="1"
+                Grid.Column="1"
+                BindableLayout.ItemTemplate="{StaticResource cellTemplate}" 
+                BindableLayout.ItemsSource="{Binding FlatMatrixBag}"
                 NbColumns="4"
                 NbRows="4"
                 BackgroundColor="Transparent"

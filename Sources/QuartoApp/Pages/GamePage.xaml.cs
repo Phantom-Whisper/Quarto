@@ -11,18 +11,23 @@ using QuartoApp.MyLayouts;
 
 public partial class GamePage : ContentPage, INotifyPropertyChanged
 {
-    public App? CurrentApp => App.Current as App;
-    public ImageSource? BackgroundImage => CurrentApp?.GlobalBackgroundImage as ImageSource;
+    public App? CurrentApp 
+        => App.Current as App;
 
-    public Board board { get; } = new Board(4, 4);
-    public Bag bag { get; } = new Bag();
+    public ImageSource? BackgroundImage 
+        => CurrentApp?.GlobalBackgroundImage as ImageSource;
+
+    public GameManager? GameManager
+        => CurrentApp?.GameManager as GameManager;
+
+    public Board hand { get; } = new Board(4,4);
 
     private readonly ObservableCollection<IPiece?> _flatMatrix = [];
 
     public GamePage()
     {
         InitializeComponent();
-        TestFillBoard();
+        FillBagMatrix();
         BindingContext = this;
     }
 
@@ -32,30 +37,48 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
         {
             List<IPiece> flatMatrix = new();
 
-            if (board.Grid == null) return flatMatrix;
+            if (GameManager!.Board!.Grid == null) return flatMatrix;
 
-            IPiece[,] mat = new IPiece[board.SizeX, board.SizeY];
-            for (int numRow = 0; numRow < board.SizeX; numRow++)
+            IPiece[,] mat = new IPiece[GameManager.Board.SizeX, GameManager.Board.SizeY];
+            for (int numRow = 0; numRow < GameManager.Board.SizeX; numRow++)
             {
-                for (int numCol = 0; numCol < board.SizeY; numCol++)
+                for (int numCol = 0; numCol < GameManager.Board.SizeY; numCol++)
                 {
-                    flatMatrix.Add(board.Grid[numRow, numCol]);
+                    flatMatrix.Add(GameManager.Board.Grid[numRow, numCol]);
                 }
             }
             return flatMatrix;
         }
     }
 
-    public void TestFillBoard()
+    public IEnumerable<IPiece> FlatMatrixBag
+    {
+        get
+        {
+            List<IPiece> matrix = new();
+
+            if (GameManager!.Bag!.Baglist == null) return matrix;
+
+            IPiece[,] mat = new IPiece[hand.SizeX, hand.SizeY];
+            for (int numRow = 0; numRow < hand.SizeX; numRow++)
+            {
+                for(int numCol = 0; numCol < hand.SizeY; numCol++)
+                    matrix.Add(hand.Grid[numRow, numCol]);
+            }
+            return matrix;
+        }
+    }
+
+    public void FillBagMatrix()
     {
         int index = 0;
-        for (int i = 0; i < board.SizeX; i++)
+        for (int i = 0; i < hand.SizeX; i++)
         {
-            for (int j = 0; j < board.SizeY; j++)
+            for (int j = 0; j < hand.SizeY; j++)
             {
-                if (index < bag.Baglist.Count)
+                if (index < GameManager!.Bag!.Baglist.Count)
                 {
-                    board.InsertPiece(bag.Baglist[index], i, j);
+                    hand.InsertPiece(GameManager!.Bag!.Baglist[index], i, j);
                     index++;
                 }
                 else

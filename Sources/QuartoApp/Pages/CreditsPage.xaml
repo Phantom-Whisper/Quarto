@@ -12,7 +12,7 @@
              Title="CreditsPage">
     <Grid
         RowDefinitions=" *, 9*, * "
-        ColumnDefinitions="*, 5*, *"
+        ColumnDefinitions="*, 4*, *"
         Padding="40,5,0,5">
        <Label
             Text="Crédits"

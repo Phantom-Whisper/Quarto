@@ -85,6 +85,10 @@ namespace Model
         /// </summary>
         private IPiece? pieceToPlay = null;
 
+        public IBoard? Board => board;
+
+        public IBag? Bag => bag;
+
         /// <summary>
         /// Game loop :
         ///    - start : display of the board, pieces available and the name of the current player

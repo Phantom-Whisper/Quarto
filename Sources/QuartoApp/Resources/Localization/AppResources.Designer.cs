@@ -286,15 +286,6 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Sauvegarder.
-        /// </summary>
-        internal static string Sauvegarder {
-            get {
-                return ResourceManager.GetString("Sauvegarder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Score.
         /// </summary>
         internal static string Score {
