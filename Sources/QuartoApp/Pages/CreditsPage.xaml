@@ -68,7 +68,7 @@
                     Grid.Row="1"
                     Grid.ColumnSpan="2"
                     Margin="50,0"
-                    Text="Nous tenons à remercier notre encadrement pédagogique et technique.&#10;En particulier nos enseignants, pour leurs conseils avisés, leur patience et leur soutien indéfectible tout au long du développement.&#10;Vos orientations nous ont permis de surmonter de nombreux défis et d’améliorer constamment notre approche.&#10;Ce projet est le fruit d’un effort collectif, dont l’engagement, la créativité et la persévérance ont permis de donner vie à cette solution informatique. &#10; L'Équipe du Projet."
+                    Text="{ext:LocalizedString Key=CreditsText}"
                     FontSize="18"
                     HorizontalTextAlignment="Center" 
                     LineBreakMode="CharacterWrap"/>
@@ -86,7 +86,7 @@
         <Label
             Grid.Row="2"
             Grid.ColumnSpan="3"
-            Text="© 2025 Quarto Dev Team. All Rights Reserved." 
+            Text="{ext:LocalizedString Key=CopyRights}" 
             HorizontalOptions="Center" 
             VerticalOptions="Center"
             FontSize="Subtitle"
