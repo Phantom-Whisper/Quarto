@@ -31,12 +31,12 @@
                   RowDefinitions="Auto,Auto, Auto">
 
                 <HorizontalStackLayout  HorizontalOptions="Center"
-                                        Margin="0,50,0,0">
+                                        Margin="0,70,0,0">
                     <Label Style="{StaticResource LoginLabel}"
-                           Text="Joueur 1 :"/>
+                           Text="{ext:LocalizedString Key=LoginJoueur1}"/>
                     <Entry Style="{StaticResource Login}"
                            Text="{Binding Entry_name1}"
-                           Placeholder="{ext:LocalizedString Key=LoginJoueur1}"/>
+                           Placeholder="{ext:LocalizedString Key=EntrerPseudo}"/>
 
                 </HorizontalStackLayout>
 
@@ -50,7 +50,9 @@
                            Text="{Binding Entry_name2}"/>
                 </HorizontalStackLayout>
 
-                <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center">
+                <HorizontalStackLayout Grid.Row="2" 
+                                       HorizontalOptions="Center"
+                                       Margin="0,70,0,0">
 
                     <component:CustomButton2 x:Name="Easy"
                                              Text="{ext:LocalizedString Key=Facile}">

@@ -1,6 +1,8 @@
 using QuartoApp.Resources.Localization;
 using QuartoApp.Views;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace QuartoApp.Pages;
 
@@ -73,9 +75,25 @@ public partial class SettingsPage : ContentPage, INotifyPropertyChanged
         CulturePicker.SelectedItem = savedCulture;
     }
 
-    public async void Rules_Tapped(Object sender, TappedEventArgs e)
+    private void CulturePicker_SelectedIndexChanged(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new RulesPage());
+        var selectedCulture = CulturePicker.SelectedItem?.ToString() ?? "fr-FR";
+        Preferences.Default.Set("Culture", selectedCulture);
+
+        // Met à jour la culture du thread
+        var culture = new CultureInfo(selectedCulture);
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
+    }
+
+
+    public async void Rules_Tapped(object sender, TappedEventArgs e)
+    {
+        string savedCulture = Preferences.Default.Get("Culture", "fr-FR");
+        if (savedCulture.StartsWith("en"))
+            await Navigation.PushAsync(new RulesPageEn());
+        else
+            await Navigation.PushAsync(new RulesPage());
     }
 
     public async void Score_Tapped(Object sender, TappedEventArgs e)

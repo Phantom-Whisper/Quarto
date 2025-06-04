@@ -78,6 +78,12 @@ public partial class LoginPage : ContentPage
         }
         else
         {
+            if(Entry_name1 == Entry_name2)
+            {
+                _ = DisplayAlert("Erreur", "Veuillez entrer des pseudos différents.", "OK");
+                return;
+            }
+
             for (int i = 0; i < 2; i++)
             {
                 if (i == 0 && string.IsNullOrWhiteSpace(Entry_name1))
@@ -117,10 +123,10 @@ public partial class LoginPage : ContentPage
         }
         else
         {
-            _ = DisplayAlert("Erreur", "Veuillez Entrer la difficulté.", "OK");
+            _ = DisplayAlert("Erreur", "Veuillez entrer la difficulté.", "OK");
             return;
         }
 
-        await Navigation.PushAsync(new GamePage());
+        await Shell.Current.GoToAsync("//Game");
     }
 }

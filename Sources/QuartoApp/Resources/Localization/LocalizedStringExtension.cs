@@ -6,19 +6,26 @@ using QuartoApp.Resources.Localization;
 
 namespace QuartoApp.Resources.Localization;
 
-public class LocalizationApp
+public class LocalizationApp : INotifyPropertyChanged
 {
+    private string culture = "fr-FR";
     public string Culture
     {
         get => culture;
         set
         {
-            if (string.IsNullOrWhiteSpace(value)) return;
+            if (string.IsNullOrWhiteSpace(value) || culture == value) return;
             culture = value;
             LocalizedStringExtension.Culture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
+            OnPropertyChanged(nameof(Culture));
         }
     }
-    private string culture = "fr-FR";
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged(string propertyName)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }
 
 public class LocalizedStringExtension : IMarkupExtension<string>

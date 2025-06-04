@@ -117,6 +117,7 @@
                             Title="{ext:LocalizedString Key=PickerText}"
                             TitleColor="{AppThemeBinding Light={StaticResource Gold}, Dark={StaticResource Gold}}"
                             SelectedItem="{Binding Culture, Source={StaticResource Localization}}"
+                            SelectedIndexChanged="CulturePicker_SelectedIndexChanged"
                             TextColor="{AppThemeBinding Light={StaticResource Gold}, Dark={StaticResource Gold}}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
