@@ -5,9 +5,12 @@ using System.ComponentModel;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Xml.Linq;
 using Manager;
+using Manager.CustomEventArgs;
 using Model;
 using QuartoApp.MyLayouts;
+using QuartoApp.Views;
 
 public partial class GamePage : ContentPage, INotifyPropertyChanged
 {
@@ -20,65 +23,27 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
     public GameManager? GameManager
         => CurrentApp?.GameManager as GameManager;
 
-    public Board hand { get; } = new Board(4,4);
-
-    private readonly ObservableCollection<IPiece?> _flatMatrix = [];
+    public Board Hand { get; } = new Board(4,4); // Pour afficher le bag correctement
 
     public GamePage()
     {
         InitializeComponent();
         FillBagMatrix();
         BindingContext = this;
-    }
 
-    public IEnumerable<IPiece> FlatMatrix2d
-    {
-        get
-        {
-            List<IPiece> flatMatrix = new();
-
-            if (GameManager!.Board!.Grid == null) return flatMatrix;
-
-            IPiece[,] mat = new IPiece[GameManager.Board.SizeX, GameManager.Board.SizeY];
-            for (int numRow = 0; numRow < GameManager.Board.SizeX; numRow++)
-            {
-                for (int numCol = 0; numCol < GameManager.Board.SizeY; numCol++)
-                {
-                    flatMatrix.Add(GameManager.Board.Grid[numRow, numCol]);
-                }
-            }
-            return flatMatrix;
-        }
-    }
-
-    public IEnumerable<IPiece> FlatMatrixBag
-    {
-        get
-        {
-            List<IPiece> matrix = new();
-
-            if (GameManager!.Bag!.Baglist == null) return matrix;
-
-            IPiece[,] mat = new IPiece[hand.SizeX, hand.SizeY];
-            for (int numRow = 0; numRow < hand.SizeX; numRow++)
-            {
-                for(int numCol = 0; numCol < hand.SizeY; numCol++)
-                    matrix.Add(hand.Grid[numRow, numCol]);
-            }
-            return matrix;
-        }
+        //GameManager!.AskCoordinate += OnAskCoordinate;
     }
 
     public void FillBagMatrix()
     {
         int index = 0;
-        for (int i = 0; i < hand.SizeX; i++)
+        for (int i = 0; i < Hand.SizeX; i++)
         {
-            for (int j = 0; j < hand.SizeY; j++)
+            for (int j = 0; j < Hand.SizeY; j++)
             {
                 if (index < GameManager!.Bag!.Baglist.Count)
                 {
-                    hand.InsertPiece(GameManager!.Bag!.Baglist[index], i, j);
+                    Hand.InsertPiece(GameManager!.Bag!.Baglist[index], i, j);
                     index++;
                 }
                 else
@@ -93,5 +58,22 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
     public async void Settings_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new SettingsPage());
+    }
+
+    private void Piece_Clicked(object sender, EventArgs e)
+    {
+        if (sender is ImageButton button && button.BindingContext is IPiece clickedPiece)
+        {
+            Debug.WriteLine($"Pièce sélectionnée : {clickedPiece}");
+            GameManager!.PieceToPlay = clickedPiece;
+            //GameManager!.Bag!.Remove(clickedPiece);
+            //GameManager!.Board!.InsertPiece(clickedPiece, 2, 2);
+            Debug.WriteLine("test");
+        }
+    }
+
+    private async void Return_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync();
     }
 }

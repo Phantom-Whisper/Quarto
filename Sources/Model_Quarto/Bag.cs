@@ -1,5 +1,6 @@
 ﻿using Manager;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 
 namespace Model
@@ -7,8 +8,13 @@ namespace Model
     /// <summary>
     /// Class of the bag containing the piece available to play on the board
     /// </summary>
-    public class Bag : IBag
+    public class Bag : IBag, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
         /// <summary>
         /// <c>Ctor</c> of the Class <c>Bag</c>.
         /// </summary>
@@ -23,16 +29,13 @@ namespace Model
         /// </summary>
         public ReadOnlyObservableCollection<IPiece> Baglist { get; private set; }
 
-        private readonly ObservableCollection<IPiece> pieces = new();
+        private readonly ObservableCollection<IPiece> pieces = [];
 
         /// <summary>
         /// Checks if the <c>Bag</c>
         /// </summary>
         /// <returns></returns>
-        public bool IsEmpty()
-        {
-            return !Baglist.Any();
-        }
+        public bool IsEmpty() => !Baglist.Any();
 
         /// <summary>
         /// Adds a <c>Piece</c> object to the <c>Bag</c>.
@@ -44,6 +47,7 @@ namespace Model
             if (!Baglist.Contains(piece))
             {
                 pieces.Add(piece);
+                OnPropertyChanged(nameof(Baglist));
             }
             else
             {
@@ -60,7 +64,10 @@ namespace Model
         public IPiece? TakePiece(IPiece? piece)
         {
             ArgumentNullException.ThrowIfNull(piece);
-            return pieces.Remove(piece) ? piece : null;
+            bool removed = pieces.Remove(piece);
+            if (removed)
+                OnPropertyChanged(nameof(IsEmpty));
+            return removed ? piece : null;
         }
 
         /// <summary>
@@ -69,8 +76,8 @@ namespace Model
         /// <param name="piece"></param>
         public void Remove(IPiece? piece)
         {
-            if (piece is not null)
-                pieces.Remove(piece);
+            if (piece is not null && pieces.Remove(piece))
+                OnPropertyChanged(nameof(IsEmpty));
         }
 
         /// <summary>

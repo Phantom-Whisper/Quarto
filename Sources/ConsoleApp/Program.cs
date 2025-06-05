@@ -166,48 +166,53 @@ namespace ConsoleApp
         {
             if (e.CurrentPlayer is HumanPlayer)
             {
-                Console.WriteLine($"{e.CurrentPlayer.Name}, do you want to declare a Quarto? (y/n)");
-                string? response = Console.ReadLine()?.Trim().ToLower();
-
-                if (response == "y")
-                {
-                    List<(int row, int col)> selectedPositions = [];
-                    int selectedCount = 0;
-
-                    while (selectedCount < 4)
-                    {
-                        Console.WriteLine($"Select piece {selectedCount + 1}: enter row:");
-                        if (!TryReadInt(out int row, "row")) continue;
-
-                        Console.WriteLine("Enter column:");
-                        if (!TryReadInt(out int col, "column")) continue;
-
-                        if (!IsValidSelection(row, col, (Board)e.Board, selectedPositions)) continue;
-
-                        selectedPositions.Add((row, col));
-                        selectedCount++;
-                    }
-
-                    var selectedPieces = selectedPositions
-                        .Select(pos => e.Board.GetPiece(pos.row, pos.col))
-                        .ToList();
-
-                    if (e.RulesManager.IsQuarto(e.Board, selectedPieces))
-                    {
-                        Console.WriteLine($"{e.CurrentPlayer.Name} wins with a Quarto!");
-                        return;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Incorrect Quarto declaration. The game continues.");
-                    }
-                }
+                HumanQuarto(sender, e);
             }
 
             var autoQuarto = e.RulesManager.GetQuarto(e.Board);
             if (autoQuarto != null && e.RulesManager.IsQuarto(e.Board, autoQuarto))
             {
                 Console.WriteLine($"{e.CurrentPlayer.Name} wins with a Quarto!");
+            }
+        }
+
+        private static void HumanQuarto(object? sender, QuartoEventArgs e)
+        {
+            Console.WriteLine($"{e.CurrentPlayer.Name}, do you want to declare a Quarto? (y/n)");
+            string? response = Console.ReadLine()?.Trim().ToLower();
+
+            if (response == "y")
+            {
+                List<(int row, int col)> selectedPositions = [];
+                int selectedCount = 0;
+
+                while (selectedCount < 4)
+                {
+                    Console.WriteLine($"Select piece {selectedCount + 1}: enter row:");
+                    if (!TryReadInt(out int row, "row")) continue;
+
+                    Console.WriteLine("Enter column:");
+                    if (!TryReadInt(out int col, "column")) continue;
+
+                    if (!IsValidSelection(row, col, (Board)e.Board, selectedPositions)) continue;
+
+                    selectedPositions.Add((row, col));
+                    selectedCount++;
+                }
+
+                var selectedPieces = selectedPositions
+                    .Select(pos => e.Board.GetPiece(pos.row, pos.col))
+                    .ToList();
+
+                if (e.RulesManager.IsQuarto(e.Board, selectedPieces))
+                {
+                    Console.WriteLine($"{e.CurrentPlayer.Name} wins with a Quarto!");
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Incorrect Quarto declaration. The game continues.");
+                }
             }
         }
 

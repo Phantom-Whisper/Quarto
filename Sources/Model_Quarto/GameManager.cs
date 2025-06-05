@@ -1,13 +1,14 @@
 ﻿using Manager;
 using Manager.CustomEventArgs;
 using Serialize;
+using System.ComponentModel;
 
 namespace Model
 {
     /// <summary>
     /// Main class that manage the game by setting up events
     /// </summary>
-    public class GameManager(IRulesManager rules, IScoreManager scoreManager, IBoard board, IBag bag, IPlayer[] players) : IGameManager
+    public class GameManager(IRulesManager rules, IScoreManager scoreManager, IBoard board, IBag bag, IPlayer[] players) : IGameManager, INotifyPropertyChanged
     {
         private int _turnNumber  = 0;
         private bool _hasWinner = false;
@@ -56,6 +57,13 @@ namespace Model
         private void OnAskedCoordinate(AskCoordinatesEventArgs args) => AskCoordinate?.Invoke(this, args);
 
         /// <summary>
+        /// Tells a property has changed
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        /// <summary>
         /// List of players
         /// </summary>
 
@@ -83,11 +91,36 @@ namespace Model
         /// <summary>
         /// <c>Piece</c> chosen by the opponent to by played by the current player
         /// </summary>
-        private IPiece? pieceToPlay = null;
+        private IPiece? _pieceToPlay;
+        public IPiece? PieceToPlay
+        {
+            get => _pieceToPlay;
+            set
+            {
+                if (_pieceToPlay != value)
+                {
+                    _pieceToPlay = value;
+                    OnPropertyChanged(nameof(PieceToPlay));
+                }
+            }
+        }
 
         public IBoard? Board => board;
 
         public IBag? Bag => bag;
+
+        public int TurnNumber
+        {
+            get => _turnNumber;
+            set
+            {
+                if (_turnNumber != value)
+                {
+                    _turnNumber = value;
+                    OnPropertyChanged(nameof(TurnNumber));
+                }
+            }
+        }
 
         /// <summary>
         /// Game loop :
@@ -119,13 +152,13 @@ namespace Model
         /// <exception cref="InvalidOperationException"> if the piece is not selected </exception>
         private void RequestNewPiece()
         {
-            var args = new AskPieceToPlayEventArgs(CurrentPlayer, GetAvailablePieces(), pieceToPlay);
+            var args = new AskPieceToPlayEventArgs(CurrentPlayer, GetAvailablePieces(), _pieceToPlay);
             OnAskPieceToPlay(args);
 
             if (args.PieceToPlay is null)
                 throw new InvalidOperationException("No piece was selected.");
 
-            pieceToPlay = args.PieceToPlay;
+            _pieceToPlay = args.PieceToPlay;
         }
 
         /// <summary>
@@ -136,7 +169,7 @@ namespace Model
         {
             SwitchCurrentPlayer();
             RequestNewPiece();
-            bag.Remove(pieceToPlay);
+            bag.Remove(_pieceToPlay);
             SwitchCurrentPlayer();
         }
 
@@ -151,23 +184,23 @@ namespace Model
         public void Turn()
         {
             if (currentPlayerIndex == 0)
-                _turnNumber++;
+                TurnNumber++;
 
-            if (pieceToPlay is null)
+            if (_pieceToPlay is null)
                 throw new InvalidOperationException("Piece not selected before usage.");
 
-            CurrentPlayer.PlayTurn(board, pieceToPlay, this);
+            CurrentPlayer.PlayTurn(board, _pieceToPlay, this);
 
-            bag.Remove(pieceToPlay);
+            bag.Remove(_pieceToPlay);
 
             try
             {
-                var (row, col) = board.PositionPiece(pieceToPlay); // get last placed piece position
+                var (row, col) = board.PositionPiece(_pieceToPlay); // get last placed piece position
 
                 var turnLog = new TurnLog(
-                    _turnNumber,
+                    TurnNumber,
                     CurrentPlayer.Name,
-                    (Piece)pieceToPlay,
+                    (Piece)_pieceToPlay,
                     row,
                     col
                 );
@@ -244,11 +277,11 @@ namespace Model
         /// </summary>
         internal void Display()
         {
-            OnDisplayMessage($"Tour: {_turnNumber}");
+            OnDisplayMessage($"Tour: {TurnNumber}");
             OnDisplayMessage($"Joueur courant: {CurrentPlayer.Name}");
             OnBoardChanged(new BoardChangedEventArgs(board));
             OnBagChanged(new BagChangedEventArgs(bag));
-            OnDisplayMessage($"Piece à jouer: {pieceToPlay}");
+            OnDisplayMessage($"Piece à jouer: {_pieceToPlay}");
         }
     }
 }

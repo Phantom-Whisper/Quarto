@@ -1,4 +1,5 @@
 ﻿using Manager;
+using System.ComponentModel;
 using System.Text;
 
 namespace Model
@@ -6,12 +7,17 @@ namespace Model
     /// <summary>
     /// CLass of the board containing the piece played and their position
     /// </summary>
-    public class Board : IBoard
+    public class Board : IBoard, INotifyPropertyChanged
     {
         /// <summary>
         /// Constante of the size of the board
         /// </summary>
         private const int MAXSIZE = 4;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         /// <summary>
         /// Constructor of the board, the size depend on the constant <c>MAXSIZE</c>
@@ -79,7 +85,10 @@ namespace Model
         public void InsertPiece(IPiece piece, int row, int col)
         {
             if (IsEmpty(row, col) && IsOnBoard(row, col))
+            {
                 grid[row, col] = piece;
+                OnPropertyChanged(nameof(BoardMatrix));
+            }
             else
                 throw new InvalidOperationException($"The piece cannot be placed in this position ({row},{col}).");
         }
@@ -311,5 +320,22 @@ namespace Model
                 }
             }
         }
+
+        public List<IPiece> BoardMatrix
+        {
+            get
+            {
+                var list = new List<IPiece>();
+                for (int row = 0; row < SizeX; row++)
+                {
+                    for (int col = 0; col < SizeY; col++)
+                    {
+                        list.Add(grid[row, col]);
+                    }
+                }
+                return list;
+            }
+        }
+
     }
 }

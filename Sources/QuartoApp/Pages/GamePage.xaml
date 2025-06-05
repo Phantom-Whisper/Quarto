@@ -22,7 +22,8 @@
             <DataTemplate x:Key="cellTemplate" x:DataType="model:Piece">
                 <Grid BackgroundColor="Transparent">
                     <ImageButton Source="{Binding .,Converter={StaticResource PieceConverter}}"
-                           MaximumHeightRequest="100" MaximumWidthRequest="100"/>
+                           MaximumHeightRequest="100" MaximumWidthRequest="100"
+                                 BackgroundColor="Transparent" Clicked="Piece_Clicked"/>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
@@ -34,8 +35,12 @@
             Text="{ext:LocalizedString Key=Quitter}"
             WidthRequest="200" 
             HeightRequest="70" 
-            HorizontalOptions="End"/>
-        <Label Text="Text" HorizontalOptions="Center" VerticalOptions="Center"/>
+            HorizontalOptions="End">
+            <component:CustomButton2.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Return_Tapped"/>
+            </component:CustomButton2.GestureRecognizers>
+        </component:CustomButton2>
+        <Label Text="{Binding GameManager.TurnNumber}" HorizontalOptions="Center" VerticalOptions="Center"/>
         <Grid ColumnDefinitions="*,*"
               RowDefinitions="*,3*,*"
               Grid.Row="1">
@@ -47,7 +52,7 @@
             <mylayouts:MatrixLayout
                 Grid.Row="1"
                 BindableLayout.ItemTemplate="{StaticResource cellTemplate}" 
-                BindableLayout.ItemsSource="{Binding FlatMatrix2d}"
+                BindableLayout.ItemsSource="{Binding GameManager.Board.BoardMatrix}"
                 NbColumns="4"
                 NbRows="4"
                 BackgroundColor="Transparent"
@@ -58,7 +63,7 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 BindableLayout.ItemTemplate="{StaticResource cellTemplate}" 
-                BindableLayout.ItemsSource="{Binding FlatMatrixBag}"
+                BindableLayout.ItemsSource="{Binding GameManager.Bag.Baglist}"
                 NbColumns="4"
                 NbRows="4"
                 BackgroundColor="Transparent"

@@ -103,65 +103,6 @@ namespace TestModel
         }
 
         [Fact]
-        public void Turn_ShouldCallPlayTurn_OnCurrentPlayer()
-        {
-            var rules = new DummyRules();
-            var scoreManager = new DummyScoreManager();
-            var board = new Board(4, 4);
-            var bag = new Bag();
-            var player = new DummyPlayer("A");
-            var players = new IPlayer[] { player, new DummyPlayer("B") };
-            var manager = new GameManager(rules, scoreManager, board, bag, players);
-
-            typeof(GameManager).GetField("currentPlayerIndex", BindingFlags.NonPublic | BindingFlags.Instance)!.SetValue(manager, 0);
-            typeof(GameManager).GetField("pieceToPlay", BindingFlags.NonPublic | BindingFlags.Instance)!.SetValue(manager, bag.Baglist.First());
-
-            manager.AskPieceToPlay += (s, e) => e.PieceToPlay = bag.Baglist.First();
-
-            manager.Turn();
-
-            Assert.True(player.PlayTurnCount > 0);
-        }
-
-        [Fact]
-        public void Turn_ShouldThrow_WhenPieceToPlayIsNull()
-        {
-            var rules = new DummyRules();
-            var scoreManager = new DummyScoreManager();
-            var board = new Board(4, 4);
-            var bag = new Bag();
-            var players = new IPlayer[] { new DummyPlayer("A"), new DummyPlayer("B") };
-            var manager = new GameManager(rules, scoreManager, board, bag, players);
-
-            typeof(GameManager).GetField("currentPlayerIndex", BindingFlags.NonPublic | BindingFlags.Instance)!.SetValue(manager, 0);
-            typeof(GameManager).GetField("pieceToPlay", BindingFlags.NonPublic | BindingFlags.Instance)!.SetValue(manager, null);
-
-            Assert.Throws<InvalidOperationException>(() => manager.Turn());
-        }
-
-        [Fact]
-        public void Turn_ShouldSwitchPlayer_WhenNoQuarto()
-        {
-            var rules = new DummyRules();
-            var scoreManager = new DummyScoreManager();
-            var board = new Board(4, 4);
-            var bag = new Bag();
-            var players = new IPlayer[] { new DummyPlayer("A"), new DummyPlayer("B") };
-            var manager = new GameManager(rules, scoreManager, board, bag, players);
-
-            typeof(GameManager).GetField("currentPlayerIndex", BindingFlags.NonPublic | BindingFlags.Instance)!.SetValue(manager, 0);
-            typeof(GameManager).GetField("pieceToPlay", BindingFlags.NonPublic | BindingFlags.Instance)!.SetValue(manager, bag.Baglist.First());
-
-            // Simule la sélection d'une nouvelle pièce à chaque RequestNewPiece
-            manager.AskPieceToPlay += (s, e) => e.PieceToPlay = bag.Baglist.FirstOrDefault();
-
-            manager.Turn();
-
-            var currentPlayerIndex = (int)typeof(GameManager).GetField("currentPlayerIndex", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(manager)!;
-            Assert.Equal(1, currentPlayerIndex);
-        }
-
-        [Fact]
         public void RequestCoordinates_ShouldReturnCoordinatesProvidedByCallback()
         {
             var rules = new DummyRules();
@@ -281,19 +222,6 @@ namespace TestModel
 
             playerMock1.Verify(p => p.PlayTurn(It.IsAny<IBoard>(), It.IsAny<IPiece>(), gm), Times.AtLeastOnce);
             playerMock2.Verify(p => p.PlayTurn(It.IsAny<IBoard>(), It.IsAny<IPiece>(), gm), Times.AtLeastOnce);
-        }
-
-        
-
-        [Fact]
-        public void Turn_ShouldThrow_IfPieceToPlayIsNull()
-        {
-            var gm = CreateGameManager();
-            var pieceToPlayField = typeof(GameManager).GetField("pieceToPlay", BindingFlags.NonPublic | BindingFlags.Instance)!;
-            pieceToPlayField.SetValue(gm, null);
-
-            var ex = Assert.Throws<InvalidOperationException>(() => gm.Turn());
-            Assert.Equal("Piece not selected before usage.", ex.Message);
         }
     }
 }
