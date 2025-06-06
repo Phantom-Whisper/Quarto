@@ -8,9 +8,9 @@ namespace QuartoApp.Resources.Converters
         {
             string? filename;
             if (value == null) return null;
-            //if (value is Cell cell)
-            //    //filename = value.Piec
-            //else
+            if (value is Model.Board.Cell cell)
+                filename = cell.Piece!.ToString() + ".png";
+            else
                 filename = value.ToString() + ".png"; 
             return ImageSource.FromFile(filename);
         }

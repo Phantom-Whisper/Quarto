@@ -72,7 +72,7 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
 
     private void Pose_Clicked(object sender, EventArgs e)
     {
-        if (sender is ImageButton button && button.BindingContext is Cell cell)
+        if (sender is ImageButton button && button.BindingContext is Model.Board.Cell cell)
         {
             GameManager!.Board!.InsertPiece(GameManager!.PieceToPlay!, cell.X, cell.Y);
         }
