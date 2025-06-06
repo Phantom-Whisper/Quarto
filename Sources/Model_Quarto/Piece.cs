@@ -83,6 +83,20 @@ namespace Model
         }
 
         /// <summary>
+        /// Returns a string that represents the current object picture filename
+        /// </summary>
+        /// <returns>A string that represents the <c>Piece</c> filename</returns>
+        public string PieceToString()
+        {
+            StringBuilder sb = new();
+            sb.Append(IsSquare ? "square_" : "round_");
+            sb.Append(IsFull ? "full_" : "hollow_");
+            sb.Append(IsBig ? "big_" : "small_");
+            sb.Append(IsLight ? "light" : "dark");
+            return sb.ToString() + ".png";
+        }
+
+        /// <summary>
         /// This method tells if two <c>Piece</c> are the same.
         /// </summary>
         /// <param name="other">The other <c>Piece</c> we want to compare</param>

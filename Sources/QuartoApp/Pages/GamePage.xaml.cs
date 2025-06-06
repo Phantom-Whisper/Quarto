@@ -72,14 +72,15 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
 
     private void Pose_Clicked(object sender, EventArgs e)
     {
-        if (sender is ImageButton button && button.BindingContext is Model.Board.Cell cell)
+        if (sender is ImageButton button && button.BindingContext is Model.Cell cell && GameManager!.PieceToPlay != null)
         {
             GameManager!.Board!.InsertPiece(GameManager!.PieceToPlay!, cell.X, cell.Y);
+            GameManager!.PieceToPlay = null;
         }
     }
 
     private async void Return_Tapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync("//Accueil");
     }
 }

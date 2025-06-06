@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Model;
 
 namespace QuartoApp.Resources.Converters
 {
@@ -8,10 +9,10 @@ namespace QuartoApp.Resources.Converters
         {
             string? filename;
             if (value == null) return null;
-            if (value is Model.Board.Cell cell)
-                filename = cell.Piece!.ToString() + ".png";
+            if (value is Model.Cell cell && cell.Piece != null)
+                filename = cell.Piece!.PieceToString();
             else
-                filename = value.ToString() + ".png"; 
+                filename = value.ToString() + ".png";
             return ImageSource.FromFile(filename);
         }
 

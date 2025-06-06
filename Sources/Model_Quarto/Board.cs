@@ -338,13 +338,35 @@ namespace Model
             }
         }
 
-        public class Cell(int x, int y, IPiece? piece)
-        {
-            public int X => x;
-        
-            public int Y => y;
+    }
+    public class Cell : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-            public IPiece? Piece => piece;
+        protected virtual void OnPropertyChanged(string propertyName)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        public Cell(int x, int y, IPiece? piece)
+        {
+            X = x;
+            Y = y;
+            Piece = piece;
+        }
+
+        private IPiece? _piece;
+
+        public int X { get; set; }
+        
+        public int Y { get; set; }
+
+        public IPiece? Piece
+        {
+            get => _piece;
+            set
+            {
+                _piece = value;
+                OnPropertyChanged(nameof(Piece));
+            }
         }
     }
 }
