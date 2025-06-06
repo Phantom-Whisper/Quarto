@@ -33,14 +33,14 @@
                     <ImageButton Source="{Binding .,Converter={StaticResource PieceConverter}}"
                            MaximumHeightRequest="100" 
                            MaximumWidthRequest="100"
-                           BackgroundColor="Transparent" Clicked="Piece_Clicked"/>
+                           BackgroundColor="Transparent" Clicked="Bag_Clicked"/>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="cellTemplate" x:DataType="model:Cell">
                 <Grid BackgroundColor="Transparent" Margin="4">
                     <ImageButton Source="{Binding .,Converter={StaticResource PieceConverter}}"
                         BackgroundColor="Transparent" 
-                        Clicked="Pose_Clicked"
+                        Clicked="Board_Clicked"
                         Margin="{Binding Piece.IsBig, Converter={StaticResource isBigConverter}}"/>
                 </Grid>
             </DataTemplate>
@@ -55,7 +55,7 @@
             HeightRequest="70" 
             HorizontalOptions="End">
             <component:CustomButton2.GestureRecognizers>
-                <TapGestureRecognizer Tapped="Return_Tapped"/>
+                <TapGestureRecognizer Tapped="Exit_Tapped"/>
             </component:CustomButton2.GestureRecognizers>
         </component:CustomButton2>
         <Label Text="{Binding GameManager.TurnNumber}" HorizontalOptions="Center" VerticalOptions="Center"/>

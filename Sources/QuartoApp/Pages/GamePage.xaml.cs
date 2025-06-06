@@ -60,17 +60,16 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
         await Navigation.PushAsync(new SettingsPage());
     }
 
-    private void Piece_Clicked(object sender, EventArgs e)
+    private void Bag_Clicked(object sender, EventArgs e)
     {
         if (sender is ImageButton button && button.BindingContext is IPiece clickedPiece)
         {
-            Debug.WriteLine($"Pièce sélectionnée : {clickedPiece}");
             GameManager!.PieceToPlay = clickedPiece;
             GameManager!.Bag!.Remove(clickedPiece);
         }
     }
 
-    private void Pose_Clicked(object sender, EventArgs e)
+    private void Board_Clicked(object sender, EventArgs e)
     {
         if (sender is ImageButton button && button.BindingContext is Model.Cell cell && GameManager!.PieceToPlay != null)
         {
@@ -79,8 +78,12 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
         }
     }
 
-    private async void Return_Tapped(object sender, TappedEventArgs e)
+    private async void Exit_Tapped(object sender, TappedEventArgs e)
     {
-        await Shell.Current.GoToAsync("//Accueil");
+        bool confirmation = await DisplayAlert("Alert", "Are you sure you want to exit the game ?", "Yes", "No");
+        if (confirmation)
+        {
+            App.Current?.Quit();
+        }
     }
 }
