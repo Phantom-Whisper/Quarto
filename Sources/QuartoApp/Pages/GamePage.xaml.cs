@@ -66,9 +66,15 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
         {
             Debug.WriteLine($"Pièce sélectionnée : {clickedPiece}");
             GameManager!.PieceToPlay = clickedPiece;
-            //GameManager!.Bag!.Remove(clickedPiece);
-            //GameManager!.Board!.InsertPiece(clickedPiece, 2, 2);
-            Debug.WriteLine("test");
+            GameManager!.Bag!.Remove(clickedPiece);
+        }
+    }
+
+    private void Pose_Clicked(object sender, EventArgs e)
+    {
+        if (sender is ImageButton button && button.BindingContext is Cell cell)
+        {
+            GameManager!.Board!.InsertPiece(GameManager!.PieceToPlay!, cell.X, cell.Y);
         }
     }
 

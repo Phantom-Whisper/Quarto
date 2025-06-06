@@ -321,21 +321,30 @@ namespace Model
             }
         }
 
-        public List<IPiece> BoardMatrix
+        public List<Cell> BoardMatrix
         {
             get
             {
-                var list = new List<IPiece>();
+                var list = new List<Cell>();
                 for (int row = 0; row < SizeX; row++)
                 {
                     for (int col = 0; col < SizeY; col++)
                     {
-                        list.Add(grid[row, col]);
+                        Cell cell = new(row,col, grid[row,col]);
+                        list.Add(cell);
                     }
                 }
                 return list;
             }
         }
 
+        public class Cell(int x, int y, IPiece? piece)
+        {
+            public int X => x;
+        
+            public int Y => y;
+
+            public IPiece? Piece => piece;
+        }
     }
 }
