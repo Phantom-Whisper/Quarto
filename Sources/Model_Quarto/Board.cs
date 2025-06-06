@@ -1,4 +1,5 @@
 ﻿using Manager;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 
@@ -321,22 +322,24 @@ namespace Model
             }
         }
 
-        public List<Cell> BoardMatrix
+        public ObservableCollection<Cell> BoardMatrix
         {
             get
             {
+                boardMatrix.Clear();
                 var list = new List<Cell>();
                 for (int row = 0; row < SizeX; row++)
                 {
                     for (int col = 0; col < SizeY; col++)
                     {
-                        Cell cell = new(row,col, grid[row,col]);
-                        list.Add(cell);
+                        Cell cell = new(row, col, grid[row, col]);
+                        boardMatrix.Add(cell);
                     }
                 }
-                return list;
+                return boardMatrix;
             }
         }
+        private ObservableCollection<Cell> boardMatrix = new ObservableCollection<Cell>();
 
     }
     public class Cell : INotifyPropertyChanged
