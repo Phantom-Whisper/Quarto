@@ -337,5 +337,17 @@ namespace TestModel
             Assert.Contains(p4, result);
         }
 
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        [InlineData(5)]
+        public void HasCommonAttribute_ShouldThrow_WhenPiecesCountIsNot4(int count)
+        {
+            var rules = new Rules();
+            var pieces = Enumerable.Repeat<IPiece>(new Piece(true, true, true, true), count).ToList();
+            Assert.Throws<ArgumentException>(() => rules.HasCommonAttribute(pieces));
+        }
     }
 }

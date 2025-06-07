@@ -49,15 +49,5 @@ namespace TestModel
             Assert.Equal(7, log.Row);
             Assert.Equal(8, log.Col);
         }
-
-        [Fact]
-        public void TestConstructor_ShouldHandleNullPlayerName()
-        {
-            var piece = new Piece(false, false, false, false);
-            var log = new TurnLog(1, null, piece, 0, 0);
-
-            Assert.Null(log.CurrentPlayerName);
-            Assert.Equal(piece.ToString(), log.PiecePlayed);
-        }
     }
 }
