@@ -149,5 +149,28 @@ namespace TestModel
             Assert.Equal(expected, piece.PieceToString());
         }
 
+        [Fact]
+        public void RemovePiece_InlineLogic_ShouldBehaveAsExpected()
+        {
+            var piece1 = new Piece(true, true, true, true);
+            var piece2 = new Piece(false, false, false, false);
+            var pieces = new List<Piece> { piece1, piece2 };
+
+            // Cas 1 : piece non null et présente
+            var piece = piece1;
+            bool removed = (piece is not null && pieces.Remove(piece));
+            Assert.True(removed);
+            Assert.DoesNotContain(piece, pieces);
+
+            // Cas 2 : piece non null mais absente
+            removed = (piece is not null && pieces.Remove(piece));
+            Assert.False(removed);
+
+            // Cas 3 : piece null
+            piece = null;
+            removed = (piece is not null && pieces.Remove(piece));
+            Assert.False(removed);
+        }
+
     }
 }
