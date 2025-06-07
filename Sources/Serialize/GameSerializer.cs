@@ -12,7 +12,7 @@ namespace Serialize
     {
         private static readonly string _baseFolder = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-        "Quarto", "Data", "Games");
+        "Quarto", "Data");
 
         private const string DefaultFileName = "GameSaves.xml";
 

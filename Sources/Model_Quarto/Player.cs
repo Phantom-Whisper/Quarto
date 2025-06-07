@@ -46,9 +46,8 @@ namespace Model
         /// </summary>
         /// <param name="board">the board of the game</param>
         /// <param name="currentPiece">the piece chosen by the opponent</param>
-        /// <param name="gameManager"> the main interface that manage the game</param>
         /// <returns>the piece chosen for the opponent</returns>
-        public abstract void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager); // comportement à définir par les sous-classes
+        public abstract Task<(int, int)?> PlayTurn(IBoard board, IPiece currentPiece); // comportement à définir par les sous-classes
 
         /// <summary>
         /// This method tells if two <c>Player</c> are the same.

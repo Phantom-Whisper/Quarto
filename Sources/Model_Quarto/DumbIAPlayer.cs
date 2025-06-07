@@ -17,40 +17,21 @@ namespace Model
         /// </summary>
         /// <param name="board">the board of the game</param>
         /// <param name="currentPiece">the piece chosen by the opponent</param>
-        /// <param name="gameManager"> the main interface that manage the game</param>
         /// <returns>the piece chosen for the opponent</returns>
-        public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
+        public override async Task<(int, int)?> PlayTurn(IBoard board, IPiece currentPiece)
         {
             using var randomGenerator = RandomNumberGenerator.Create();
             byte[] data = new byte[4];
             randomGenerator.GetBytes(data);
-
             int randomInt = Math.Abs(BitConverter.ToInt32(data, 0));
+
             List<(int row, int col)> availablePositions = Rules.GetAvailablePositions((Board)board);
+            if (availablePositions.Count == 0)
+                return null;
 
             var (row, col) = availablePositions[randomInt % availablePositions.Count];
-            bool success = Rules.PlayAMove((Piece)currentPiece, row, col, (Board)board);
 
-            if (success)
-            {
-                gameManager.OnDisplayMessage($"{Name} placed a piece at ({row}, {col}).");
-            }
-            else
-            {
-                gameManager.OnDisplayMessage($"{Name}: Failed to place the piece. This should not happen.");
-            }
-
-            var availablePieces = gameManager.GetAvailablePieces();
-            if (availablePieces.Count == 0)
-            {
-                gameManager.OnDisplayMessage($"{Name}: No pieces left to give.");
-                return;
-            }
-            IPiece pieceToGive = availablePieces[randomInt % availablePieces.Count];
-
-            var args = new AskPieceToPlayEventArgs(this, availablePieces, pieceToGive);
-            gameManager.OnAskPieceToPlay(args);
+            return (row, col);
         }
-
     }
 }

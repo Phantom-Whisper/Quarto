@@ -53,9 +53,6 @@ namespace Model
         public event EventHandler<GameEndEventArgs>? GameEnd;
         private void OnGameEnd(GameEndEventArgs args) => GameEnd?.Invoke(this, args);
 
-        public event EventHandler<AskCoordinatesEventArgs>? AskCoordinate;
-        private void OnAskedCoordinate(AskCoordinatesEventArgs args) => AskCoordinate?.Invoke(this, args);
-
         /// <summary>
         /// Tells a property has changed
         /// </summary>
@@ -127,15 +124,17 @@ namespace Model
         ///    - start : display of the board, pieces available and the name of the current player
         ///    - a loop of turn which consist of changing of current player, ask the piece the opponent has to put and switch again
         /// </summary>
-        public void Run()
+        public async Task Run()
         {
             _gameLog = new GameLog(DateTime.Now);
             OnGameStarted(new GameStartedEventArgs(board, bag, CurrentPlayer));
+
             FirstTurn();
-            while (!RulesManager.IsGameOver(bag, board) && !_hasWinner) // fin du jeu -> si un joueur à gagner ou si baglist est vide et board plein
+
+            while (!rules.IsGameOver(bag, board) && !_hasWinner)
             {
                 Display();
-                Turn();
+                await Turn();
             }
 
             if (_hasWinner && CurrentPlayer is HumanPlayer humanPlayer)
@@ -173,41 +172,32 @@ namespace Model
             SwitchCurrentPlayer();
         }
 
-        /// <summary>
-        /// method of one turn of the game :
-        ///    - Verify if there is quarto
-        ///    - Play the piece 
-        ///    - ask a new piece
-        ///    - switch between the player
-        /// </summary>
-        /// <exception cref="InvalidOperationException"></exception>
-        public void Turn()
+        public void ExecuteTurn(int row, int col)
         {
-            if (currentPlayerIndex == 0)
-                TurnNumber++;
+            bool placed = Rules.PlayAMove((Piece)_pieceToPlay!, row, col, (Board)board);
 
-            if (_pieceToPlay is null)
-                throw new InvalidOperationException("Piece not selected before usage.");
-
-            CurrentPlayer.PlayTurn(board, _pieceToPlay, this);
+            if (!placed)
+            {
+                OnDisplayMessage("Invalid move. The move will be skipped.");
+                return;
+            }
 
             bag.Remove(_pieceToPlay);
 
             try
             {
-                var (row, col) = board.PositionPiece(_pieceToPlay); // get last placed piece position
+                var (placedRow, placedCol) = board.PositionPiece(_pieceToPlay!); // si différent, sinon utiliser `row,col`
 
                 var turnLog = new TurnLog(
                     TurnNumber,
                     CurrentPlayer.Name,
-                    (Piece)_pieceToPlay,
-                    row,
-                    col
+                    (Piece)_pieceToPlay!,
+                    placedRow,
+                    placedCol
                 );
 
                 _gameLog!.AddTurn(turnLog);
 
-                // Save with unique filename per game
                 string fileName = $"GameLog_{_gameLog.GameStartTime:yyyy-MM-dd_HH-mm-ss}.xml";
                 GameSerializer.Save(_gameLog, fileName);
             }
@@ -241,35 +231,38 @@ namespace Model
         }
 
         /// <summary>
+        /// method of one turn of the game :
+        ///    - Verify if there is quarto
+        ///    - Play the piece 
+        ///    - ask a new piece
+        ///    - switch between the player
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
+        public async Task Turn()
+        {
+            if (currentPlayerIndex == 0)
+                TurnNumber++;
+
+            if (_pieceToPlay is null)
+                throw new InvalidOperationException("Piece not selected before usage.");
+
+            var coords = await CurrentPlayer.PlayTurn(board, _pieceToPlay);
+
+            if (coords == null)
+            {
+                // UI mode — attendre que la UI appelle ExecuteTurn()
+                return;
+            }
+
+            ExecuteTurn(coords.Value.Item1, coords.Value.Item2);
+        }
+
+        /// <summary>
         /// method that changed the current player
         /// </summary>
         public void SwitchCurrentPlayer()
         {
             currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
-        }
-
-        /// <summary>
-        /// Requests coordinates input from the specified player by raising an event,
-        /// and waits synchronously for the player's response.
-        /// </summary>
-        /// <param name="player">The player from whom to request coordinates.</param>
-        /// <returns>
-        /// A tuple containing the row and column coordinates selected by the player.
-        /// </returns>
-        /// <remarks>
-        /// This method blocks synchronously until the player provides valid coordinates.
-        /// Will consider using an asynchronous version to avoid blocking the calling thread.
-        /// </remarks>
-        public (int row, int col) RequestCoordinates(IPlayer player)
-        {
-            var tcs = new TaskCompletionSource<(int row, int col)>();
-
-            OnAskedCoordinate(new AskCoordinatesEventArgs(player, board, coords =>
-            {
-                tcs.SetResult(coords);
-            }));
-
-            return tcs.Task.Result;
         }
 
         /// <summary>
