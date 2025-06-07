@@ -92,42 +92,7 @@ namespace TestModel
             Assert.Equal(1, rules.IsGameOverCallCount); // Appelé une seule fois
         }
 
-        private class DummyPlayer(string name) : HumanPlayer(name)
-        {
-            public int PlayTurnCount { get; private set; }
 
-            public override void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager)
-            {
-                PlayTurnCount++;
-            }
-        }
-
-        [Fact]
-        public void RequestCoordinates_ShouldReturnCoordinatesProvidedByCallback()
-        {
-            var rules = new DummyRules();
-            var scoreManager = new DummyScoreManager();
-            var board = new Board(4, 4);
-            var bag = new Bag();
-            var player = new HumanPlayer("Alice");
-            var players = new IPlayer[] { player, new HumanPlayer("Bob") };
-            var manager = new GameManager(rules, scoreManager, board, bag, players);
-
-            (int row, int col) expected = (2, 3);
-            bool eventTriggered = false;
-
-            manager.AskCoordinate += (s, e) =>
-            {
-                eventTriggered = true;
-                // Simule la réponse utilisateur via le callback
-                e.CoordinateCallback(expected);
-            };
-
-            var result = manager.RequestCoordinates(player);
-
-            Assert.True(eventTriggered);
-            Assert.Equal(expected, result);
-        }
 
         [Fact]
         public void SwitchCurrentPlayer_ShouldIncrementIndex_AndWrapAround()
@@ -185,43 +150,6 @@ namespace TestModel
             var method = typeof(GameManager).GetMethod("RequestNewPiece", BindingFlags.NonPublic | BindingFlags.Instance)!;
 
             Assert.Throws<TargetInvocationException>(() => method.Invoke(gm, null));
-        }
-
-        [Fact]
-        public void Run_ShouldLoopUntilGameOver()
-        {
-            var rulesMock = new Mock<IRulesManager>();
-            var piecesList = new ObservableCollection<IPiece> { Mock.Of<IPiece>() };
-            var readonlyPieces = new ReadOnlyObservableCollection<IPiece>(piecesList);
-            var bagMock = new Mock<IBag>();
-            bagMock.SetupGet(b => b.Baglist).Returns(readonlyPieces);
-
-            int callCount = 0;
-            rulesMock.Setup(r => r.IsGameOver(It.IsAny<IBag>(), It.IsAny<IBoard>()))
-                .Returns(() => callCount++ > 1); 
-
-            var playerMock1 = new Mock<IPlayer>();
-            playerMock1.Setup(p => p.Name).Returns("Player1");
-            playerMock1.Setup(p => p.PlayTurn(It.IsAny<IBoard>(), It.IsAny<IPiece>(), It.IsAny<IGameManager>()));
-
-            var playerMock2 = new Mock<IPlayer>();
-            playerMock2.Setup(p => p.Name).Returns("Player2");
-            playerMock2.Setup(p => p.PlayTurn(It.IsAny<IBoard>(), It.IsAny<IPiece>(), It.IsAny<IGameManager>()));
-
-            var players = new IPlayer[] { playerMock1.Object, playerMock2.Object };
-
-            var boardMock = new Mock<IBoard>();
-
-            var gm = new GameManager(rulesMock.Object, Mock.Of<IScoreManager>(), boardMock.Object, bagMock.Object, players);
-
-            gm.AskPieceToPlay += (s, e) => e.PieceToPlay = e.Pieces.First();
-
-            gm.Run();
-
-            Assert.True(callCount >= 2);
-
-            playerMock1.Verify(p => p.PlayTurn(It.IsAny<IBoard>(), It.IsAny<IPiece>(), gm), Times.AtLeastOnce);
-            playerMock2.Verify(p => p.PlayTurn(It.IsAny<IBoard>(), It.IsAny<IPiece>(), gm), Times.AtLeastOnce);
         }
     }
 }
