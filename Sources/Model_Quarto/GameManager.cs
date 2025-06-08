@@ -139,13 +139,7 @@
             }
 
             public bool HasWinner => _hasWinner;
-
-            private string? _fileName;
-            public string? FileName
-            {
-                get => _fileName;
-                set => _fileName = value;
-            }
+        public string? FileName { get; set;  }
 
         private bool _isFirstTurnDone = false;
             public bool IsFirstTurnDone => _isFirstTurnDone;

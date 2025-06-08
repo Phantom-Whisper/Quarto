@@ -106,7 +106,9 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Nous tenons à remercier notre encadrement pédagogique et technique. En particulier nos enseignants, pour leurs conseils avisés, leur patience et leur soutien indéfectible tout au long du développement. Vos orientations nous ont permis de surmonter de nombreux défis et d’améliorer constamment notre approche. Ce projet est le fruit d’un effort collectif, dont l’engagement, la créativité et la persévérance ont permis de donner vie à cette solution informatique. L&apos;Équipe du Projet..
+        ///   Recherche une chaîne localisée semblable à Nous tenons à remercier notre encadrement pédagogique et technique. En particulier nos enseignants, pour leurs conseils avisés, leur patience et leur soutien indéfectible tout au long du développement. Vos orientations nous ont permis de surmonter de nombreux défis et d’améliorer constamment notre approche. Ce projet est le fruit d’un effort collectif, dont l’engagement, la créativité et la persévérance ont permis de donner vie à cette solution informatique. L&apos;Équipe du Projet.
+        ///
+        ///Son : |Musique libre de dr [le reste de la chaîne a été tronqué]&quot;;.
         /// </summary>
         internal static string CreditsText {
             get {
@@ -169,7 +171,7 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Développeuse/Cheffe de projet/Graphiste.
+        ///   Recherche une chaîne localisée semblable à Développeuse/Cheffe de projet/Graphiste/Ingénieuse son.
         /// </summary>
         internal static string InesRole {
             get {

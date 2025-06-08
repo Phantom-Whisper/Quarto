@@ -133,7 +133,9 @@
     <value>Credits</value>
   </data>
   <data name="CreditsText" xml:space="preserve">
-    <value>We would like to thank our teaching and technical staff especially our teachers, for their sound advice, patience and unfailing support throughout the development process. Your guidance has enabled us to overcome many challenges and constantly improve our approach. This project is the fruit of a collective effort, whose commitment, creativity and perseverance have brought this IT solution to life. The Project Team.</value>
+    <value>We would like to thank our teaching and technical staff especially our teachers, for their sound advice, patience and unfailing support throughout the development process. Your guidance has enabled us to overcome many challenges and constantly improve our approach. This project is the fruit of a collective effort, whose commitment, creativity and perseverance have brought this IT solution to life. The Project Team.
+
+Song : Son : |copyright-free music| Spheriá - Otjánbird Pt.III</value>
   </data>
   <data name="Difficile" xml:space="preserve">
     <value>Hard</value>
@@ -154,7 +156,7 @@
     <value>General</value>
   </data>
   <data name="InesRole" xml:space="preserve">
-    <value>Developer/Project Manager/Graphic Designer</value>
+    <value>Developer/Project Manager/Graphic Designer/sound engineer</value>
   </data>
   <data name="Jouer" xml:space="preserve">
     <value> Play ►</value>
