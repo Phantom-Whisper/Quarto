@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 using Microsoft.UI.Windowing;
+using Plugin.Maui.Audio;
 
 namespace QuartoApp
 {
@@ -20,6 +21,10 @@ namespace QuartoApp
                     fonts.AddFont("FontAwesomeSolid.otf", "AwesomeSolid");
                     fonts.AddFont("NovaSquare-Regular.ttf", "NovaSquare");
                 });
+
+            builder.Services.AddSingleton(AudioManager.Current);
+            builder.Services.AddTransient<App>();
+
             builder.ConfigureLifecycleEvents(events =>
             {
 #if WINDOWS

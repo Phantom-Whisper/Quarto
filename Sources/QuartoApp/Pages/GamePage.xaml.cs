@@ -3,6 +3,7 @@ using System.ComponentModel;
 using Manager;
 using Manager.CustomEventArgs;
 using Model;
+using Plugin.Maui.Audio;
 
 public partial class GamePage : ContentPage, INotifyPropertyChanged
 {
@@ -32,13 +33,24 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
     public GameManager? GameManager
         => CurrentApp?.GameManager as GameManager;
 
+    public IAudioManager AudioManager
+        => CurrentApp!._audioManager as IAudioManager;
+
     public Board Hand { get; } = new Board(4,4); // Pour afficher le bag correctement
 
     private AskPieceToPlayEventArgs? _pendingAskPieceArgs;
 
+    private IAudioPlayer? _highPlayer;
+    private IAudioPlayer? _lowPlayer;
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+
+        if (_highPlayer == null)
+            _highPlayer = AudioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("high.mp3"));
+        if (_lowPlayer == null)
+            _lowPlayer = AudioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("low.mp3"));
 
         if (GameManager != null)
         {
@@ -121,10 +133,12 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
         }
     }
 
-    private void Bag_Clicked(object sender, EventArgs e)
+    private async void Bag_Clicked(object sender, EventArgs e)
     {
+        _highPlayer?.Play();
         if (sender is ImageButton button && button.BindingContext is IPiece clickedPiece && GameManager!.PieceToPlay == null)
         {
+            
             GameManager.PieceToPlay = clickedPiece;
             GameManager.Bag?.Remove(clickedPiece);
 
@@ -143,8 +157,10 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
 
     private async void Board_Clicked(object sender, EventArgs e)
     {
+        _lowPlayer?.Play();
         if (sender is ImageButton button && button.BindingContext is Model.Cell cell && GameManager!.PieceToPlay != null)
         {
+            
             await GameManager.ExecuteTurn(cell.X, cell.Y);
         }
     }
