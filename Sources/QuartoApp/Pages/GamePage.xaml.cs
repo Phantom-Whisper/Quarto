@@ -1,74 +1,158 @@
 namespace QuartoApp.Pages;
-
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.Common;
-using System.Diagnostics;
-using System.Text.Json;
 using Manager;
+using Manager.CustomEventArgs;
 using Model;
-using QuartoApp.MyLayouts;
 
 public partial class GamePage : ContentPage, INotifyPropertyChanged
 {
-    public App? CurrentApp => App.Current as App;
-    public ImageSource? BackgroundImage => CurrentApp?.GlobalBackgroundImage as ImageSource;
-
-    public Board board { get; } = new Board(4, 4);
-    public Bag bag { get; } = new Bag();
-
-    private readonly ObservableCollection<IPiece?> _flatMatrix = [];
-
     public GamePage()
     {
         InitializeComponent();
-        TestFillBoard();
         BindingContext = this;
     }
 
-    public IEnumerable<IPiece> FlatMatrix2d
+    public App? CurrentApp 
+        => App.Current as App;
+
+    public ImageSource? BackgroundImage 
+        => CurrentApp?.GlobalBackgroundImage as ImageSource;
+
+    public GameManager? GameManager
+        => CurrentApp?.GameManager as GameManager;
+
+    public Board Hand { get; } = new Board(4,4); // Pour afficher le bag correctement
+
+    private AskPieceToPlayEventArgs? _pendingAskPieceArgs;
+
+    protected override async void OnAppearing()
     {
-        get
+        base.OnAppearing();
+
+        if (GameManager != null)
         {
-            List<IPiece> flatMatrix = new();
+            GameManager.AskPieceToPlay += OnAskPieceToPlay;
+            GameManager.BoardChanged += OnBoardChanged;
+            GameManager.BagChanged += OnBagChanged;
+            GameManager.Quarto += OnQuarto;
+            GameManager.GameEnd += OnGameEnd;
 
-            if (board.Grid == null) return flatMatrix;
+            FillBagMatrix();
 
-            IPiece[,] mat = new IPiece[board.SizeX, board.SizeY];
-            for (int numRow = 0; numRow < board.SizeX; numRow++)
+            await GameManager.Run();
+        }
+
+    }
+
+    private async void OnAskPieceToPlay(object? sender, AskPieceToPlayEventArgs e)
+    {
+        if (GameManager?.CurrentPlayer is DumbAIPlayer aiPlayer)
+        {
+            var piece = aiPlayer.ChoosePiece(GameManager.Bag!);
+            e.PieceToPlay = piece;
+
+            GameManager.Bag!.Remove(piece);
+
+            GameManager.PieceToPlay = piece;
+
+            if (GameManager.PieceSelectionTcs is { Task.IsCompleted: false } tcs)
             {
-                for (int numCol = 0; numCol < board.SizeY; numCol++)
-                {
-                    flatMatrix.Add(board.Grid[numRow, numCol]);
-                }
+                tcs.SetResult(piece);
             }
-            return flatMatrix;
+        }
+        else
+        {
+            _pendingAskPieceArgs = e;
         }
     }
 
-    public void TestFillBoard()
+    private void OnBoardChanged(object? sender, BoardChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(GameManager));
+    }
+
+    private void OnBagChanged(object? sender, BagChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(GameManager));
+    }
+
+    private async void OnQuarto(object? sender, QuartoEventArgs e)
+    {
+        await DisplayAlert("Quarto !", $"{e.CurrentPlayer.Name} a gagné avec un Quarto.", "OK");
+    }
+
+    private async void OnGameEnd(object? sender, GameEndEventArgs e)
+    {
+        await DisplayAlert("Fin de la partie", $"Le gagnant est : {e.Winner.Name}", "OK");
+        if (GameManager!.HasWinner && GameManager!.CurrentPlayer is HumanPlayer)
+            await Shell.Current.GoToAsync("//Win");
+        else
+            await Shell.Current.GoToAsync("//Defeat");
+    }
+
+    public void FillBagMatrix()
     {
         int index = 0;
-        for (int i = 0; i < board.SizeX; i++)
+        for (int i = 0; i < Hand.SizeX; i++)
         {
-            for (int j = 0; j < board.SizeY; j++)
+            for (int j = 0; j < Hand.SizeY; j++)
             {
-                if (index < bag.Baglist.Count)
+                if (index < GameManager!.Bag!.Baglist.Count)
                 {
-                    board.InsertPiece(bag.Baglist[index], i, j);
+                    Hand.InsertPiece(GameManager!.Bag!.Baglist[index], i, j);
                     index++;
                 }
                 else
                 {
-                    // No more pieces left in bag
                     return;
                 }
             }
         }
     }
 
+    private void Bag_Clicked(object sender, EventArgs e)
+    {
+        if (sender is ImageButton button && button.BindingContext is IPiece clickedPiece && GameManager!.PieceToPlay == null)
+        {
+            GameManager.PieceToPlay = clickedPiece;
+            GameManager.Bag?.Remove(clickedPiece);
+
+            if (_pendingAskPieceArgs is not null)
+            {
+                _pendingAskPieceArgs.PieceToPlay = clickedPiece;
+                _pendingAskPieceArgs = null;
+            }
+
+            if (GameManager.PieceSelectionTcs is { Task.IsCompleted: false } tcs)
+            {
+                tcs.SetResult(clickedPiece);
+            }
+        }
+    }
+
+    private async void Board_Clicked(object sender, EventArgs e)
+    {
+        if (sender is ImageButton button && button.BindingContext is Model.Cell cell && GameManager!.PieceToPlay != null)
+        {
+            await GameManager.ExecuteTurn(cell.X, cell.Y);
+        }
+    }
+
     public async void Settings_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new SettingsPage());
+    }
+
+    private async void Exit_Tapped(object sender, TappedEventArgs e)
+    {
+        bool confirmation = await DisplayAlert("Alert", "Are you sure you want to exit the game ?", "Yes", "No");
+        if (!confirmation)
+        {
+            return;
+        }
+        /*if (!GameManager!.HasWinner)
+           GameManager!.FileName; // Sauver le nom du fichier pour pouvoir le charger au prochain lancement
+        */
+        App.Current?.Quit();
     }
 }

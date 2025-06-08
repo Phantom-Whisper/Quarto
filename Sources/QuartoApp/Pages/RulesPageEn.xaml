@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:component="clr-namespace:QuartoApp.Views"
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
-             x:Class="QuartoApp.Pages.RulesPageEn"
-             Title="RulesPage"
              xmlns:local="clr-namespace:QuartoApp"
+             xmlns:folder="clr-namespace:QuartoApp.Pages"
+             x:Class="QuartoApp.Pages.RulesPageEn"
+             x:DataType="folder:RulesPageEn"
+             Title="RulesPage"
              BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
 

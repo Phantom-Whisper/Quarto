@@ -1,4 +1,6 @@
 ﻿using Manager;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 
 namespace Model
@@ -6,12 +8,17 @@ namespace Model
     /// <summary>
     /// CLass of the board containing the piece played and their position
     /// </summary>
-    public class Board : IBoard
+    public class Board : IBoard, INotifyPropertyChanged
     {
         /// <summary>
         /// Constante of the size of the board
         /// </summary>
         private const int MAXSIZE = 4;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         /// <summary>
         /// Constructor of the board, the size depend on the constant <c>MAXSIZE</c>
@@ -79,9 +86,12 @@ namespace Model
         public void InsertPiece(IPiece piece, int row, int col)
         {
             if (IsEmpty(row, col) && IsOnBoard(row, col))
+            {
                 grid[row, col] = piece;
+                OnPropertyChanged(nameof(BoardMatrix));
+            }
             else
-                throw new InvalidOperationException($"The piece cannot be placed in this position ({row},{col}).");
+                return;
         }
 
         /// <summary>
@@ -309,6 +319,55 @@ namespace Model
                         }
                     }
                 }
+            }
+        }
+
+        public ObservableCollection<Cell> BoardMatrix
+        {
+            get
+            {
+                boardMatrix.Clear();
+                for (int row = 0; row < SizeX; row++)
+                {
+                    for (int col = 0; col < SizeY; col++)
+                    {
+                        Cell cell = new(row, col, grid[row, col]);
+                        boardMatrix.Add(cell);
+                    }
+                }
+                return boardMatrix;
+            }
+        }
+        private readonly ObservableCollection<Cell> boardMatrix = [];
+
+    }
+    public class Cell : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        public Cell(int x, int y, IPiece? piece)
+        {
+            X = x;
+            Y = y;
+            Piece = piece;
+        }
+
+        private IPiece? _piece;
+
+        public int X { get; set; }
+        
+        public int Y { get; set; }
+
+        public IPiece? Piece
+        {
+            get => _piece;
+            set
+            {
+                _piece = value;
+                OnPropertyChanged(nameof(Piece));
             }
         }
     }

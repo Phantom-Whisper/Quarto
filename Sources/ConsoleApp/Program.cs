@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Text;
 using Manager;
 using Manager.CustomEventArgs;
@@ -22,6 +23,7 @@ namespace ConsoleApp
             Console.WriteLine("1. Launch a game");
             Console.WriteLine("2. Consults score table");
             Console.WriteLine("3. Consults score table (Stub)");
+            Console.WriteLine("9. Quit");
 
             Console.Write("Enter your choice: ");
 
@@ -29,14 +31,14 @@ namespace ConsoleApp
 
             while (!int.TryParse(input, out choice) || (choice < 1 && choice > 9))
             {
-                Console.WriteLine("Invalid choice. Please enter 1 or 9.");
+                Console.WriteLine("Invalid choice. Please enter a number between 1 and 3, or 9 to quit.");
                 input = Console.ReadLine();
             }
 
             return choice;
         }
 
-        static void Main()
+        static async Task Main()
         {
             var scoreManager = new ScoreManager();
             var stubScores = new StubPlayerScores();
@@ -65,11 +67,10 @@ namespace ConsoleApp
                         gameManager.Quarto += Quarto;
                         gameManager.BoardChanged += BoardChange;
                         gameManager.AskPieceToPlay += AskPieceToPlay;
-                        gameManager.AskCoordinate += AskCoordinate;
                         gameManager.BagChanged += BagChange;
                         gameManager.GameEnd += GameEnd;
 
-                        gameManager.Run();
+                        await gameManager.Run();
                         break;
 
                     case 2:
@@ -129,14 +130,13 @@ namespace ConsoleApp
             if (solo)
             {
                 Console.Write($"Entrez votre nom de joueur: ");
-
                 string? name = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(name))
-                {
                     name = "Player1";
-                }
 
-                players[0] = new HumanPlayer(name);
+                var human = new HumanPlayer(name);
+                human.AskCoordinate += AskCoordinate;
+                players[0] = human;
                 players[1] = new DumbAIPlayer();
             }
             else
@@ -144,14 +144,13 @@ namespace ConsoleApp
                 for (int i = 0; i < 2; i++)
                 {
                     Console.Write($"Entrez votre nom de joueur: ");
-
                     string? name = Console.ReadLine();
                     if (string.IsNullOrWhiteSpace(name))
-                    {
-                        name = $"Player{i+1}";
-                    }
+                        name = $"Player{i + 1}";
 
-                    players[i] = new HumanPlayer(name);
+                    var human = new HumanPlayer(name);
+                    human.AskCoordinate += AskCoordinate;
+                    players[i] = human;
                 }
             }
         }
@@ -166,48 +165,53 @@ namespace ConsoleApp
         {
             if (e.CurrentPlayer is HumanPlayer)
             {
-                Console.WriteLine($"{e.CurrentPlayer.Name}, do you want to declare a Quarto? (y/n)");
-                string? response = Console.ReadLine()?.Trim().ToLower();
-
-                if (response == "y")
-                {
-                    List<(int row, int col)> selectedPositions = [];
-                    int selectedCount = 0;
-
-                    while (selectedCount < 4)
-                    {
-                        Console.WriteLine($"Select piece {selectedCount + 1}: enter row:");
-                        if (!TryReadInt(out int row, "row")) continue;
-
-                        Console.WriteLine("Enter column:");
-                        if (!TryReadInt(out int col, "column")) continue;
-
-                        if (!IsValidSelection(row, col, (Board)e.Board, selectedPositions)) continue;
-
-                        selectedPositions.Add((row, col));
-                        selectedCount++;
-                    }
-
-                    var selectedPieces = selectedPositions
-                        .Select(pos => e.Board.GetPiece(pos.row, pos.col))
-                        .ToList();
-
-                    if (e.RulesManager.IsQuarto(e.Board, selectedPieces))
-                    {
-                        Console.WriteLine($"{e.CurrentPlayer.Name} wins with a Quarto!");
-                        return;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Incorrect Quarto declaration. The game continues.");
-                    }
-                }
+                HumanQuarto(sender, e);
             }
 
             var autoQuarto = e.RulesManager.GetQuarto(e.Board);
             if (autoQuarto != null && e.RulesManager.IsQuarto(e.Board, autoQuarto))
             {
                 Console.WriteLine($"{e.CurrentPlayer.Name} wins with a Quarto!");
+            }
+        }
+
+        private static void HumanQuarto(object? sender, QuartoEventArgs e)
+        {
+            Console.WriteLine($"{e.CurrentPlayer.Name}, do you want to declare a Quarto? (y/n)");
+            string? response = Console.ReadLine()?.Trim().ToLower();
+
+            if (response == "y")
+            {
+                List<(int row, int col)> selectedPositions = [];
+                int selectedCount = 0;
+
+                while (selectedCount < 4)
+                {
+                    Console.WriteLine($"Select piece {selectedCount + 1}: enter row:");
+                    if (!TryReadInt(out int row, "row")) continue;
+
+                    Console.WriteLine("Enter column:");
+                    if (!TryReadInt(out int col, "column")) continue;
+
+                    if (!IsValidSelection(row, col, (Board)e.Board, selectedPositions)) continue;
+
+                    selectedPositions.Add((row, col));
+                    selectedCount++;
+                }
+
+                var selectedPieces = selectedPositions
+                    .Select(pos => e.Board.GetPiece(pos.row, pos.col))
+                    .ToList();
+
+                if (e.RulesManager.IsQuarto(e.Board, selectedPieces))
+                {
+                    Console.WriteLine($"{e.CurrentPlayer.Name} wins with a Quarto!");
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Incorrect Quarto declaration. The game continues.");
+                }
             }
         }
 
@@ -371,8 +375,7 @@ namespace ConsoleApp
 
                 break;
             }
-
-            e.CoordinateCallback((row, col));
+            e.CoordinatesTcs.SetResult((row, col));
         }
     }
 }

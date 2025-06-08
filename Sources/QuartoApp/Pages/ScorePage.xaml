@@ -6,6 +6,7 @@
              xmlns:card="clr-namespace:QuartoApp.Views"
              xmlns:local="clr-namespace:QuartoApp"
              xmlns:folder="clr-namespace:QuartoApp.Pages"
+             xmlns:model="clr-namespace:Model;assembly=Model"
              x:Class="QuartoApp.Pages.ScorePage"
              x:DataType="folder:ScorePage"
              Title="ScorePage"
@@ -66,8 +67,8 @@
                     Grid.RowSpan="2">
                 <CollectionView x:Name="ScoresCollection" ItemsSource="{Binding Scores}">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="component:ScoreView">
-                            <component:ScoreView Name="{Binding Name}" Value="{Binding Value}"/>
+                        <DataTemplate x:DataType="model:PlayerScore">
+                            <component:ScoreView Name="{Binding Name}" Value="{Binding Score}"/>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

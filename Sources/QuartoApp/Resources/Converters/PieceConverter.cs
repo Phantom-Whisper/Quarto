@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Model;
 
 namespace QuartoApp.Resources.Converters
 {
@@ -6,12 +7,12 @@ namespace QuartoApp.Resources.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
+            string? filename;
             if (value == null) return null;
-            // Supposons que tu récupères un nom de fichier selon la pièce
-            string? filename = value.ToString() + ".png"; // exemple
-            
-
-            // Retourne un ImageSource, pas une simple string
+            if (value is Model.Cell cell && cell.Piece != null)
+                filename = cell.Piece!.PieceToString();
+            else
+                filename = value.ToString() + ".png";
             return ImageSource.FromFile(filename);
         }
 

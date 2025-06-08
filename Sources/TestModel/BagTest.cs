@@ -136,5 +136,33 @@ namespace TestModel
             Assert.StartsWith("16. ", lines[15]);
         }
 
+        [Fact]
+        public void AddPiece_ShouldRaisePropertyChangedEvent()
+        {
+            var bag = new Bag();
+            string? propertyName = null;
+            bag.PropertyChanged += (s, e) => propertyName = e.PropertyName;
+
+            var piece = new Piece(false, false, false, false);
+            bag.Remove(piece); // Pour éviter l'exception de doublon
+            bag.AddPiece(piece);
+
+            Assert.Equal("Baglist", propertyName); // Remplace "Baglist" par le nom exact de la propriété notifiée dans Bag
+        }
+
+
+        [Fact]
+        public void Remove_ShouldRemovePiece_WhenPieceIsInBag()
+        {
+            var bag = new Bag();
+            var piece = new Piece(true, true, true, true);
+            bag.Remove(piece); // Pour éviter l'exception de doublon
+            bag.AddPiece(piece);
+
+            bag.Remove(piece);
+
+            Assert.DoesNotContain(piece, bag.Baglist);
+        }
+
     }
 }
