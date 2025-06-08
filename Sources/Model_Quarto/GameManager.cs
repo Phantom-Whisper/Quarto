@@ -117,7 +117,7 @@
                 }
             }
 
-            private TaskCompletionSource<IPiece> _pieceSelectionTcs = null!;
+            private TaskCompletionSource<IPiece>? _pieceSelectionTcs;
             public TaskCompletionSource<IPiece>? PieceSelectionTcs => _pieceSelectionTcs;
 
 
@@ -139,7 +139,7 @@
             }
 
             public bool HasWinner => _hasWinner;
-        public string? FileName { get; set;  }
+        public string? FileName { get; set; }
 
         private bool _isFirstTurnDone = false;
             public bool IsFirstTurnDone => _isFirstTurnDone;
@@ -236,7 +236,7 @@
 
                     _gameLog!.AddTurn(turnLog);
 
-                    string FileName = $"GameLog_{_gameLog.GameStartTime:yyyy-MM-dd_HH-mm-ss}.xml";
+                    FileName = $"GameLog_{_gameLog.GameStartTime:yyyy-MM-dd_HH-mm-ss}.xml";
                     GameSerializer.Save(_gameLog, FileName);
                 }
                 catch (Exception ex)
@@ -258,7 +258,7 @@
 
                     _hasWinner = true;
                     _gameLog!.Winner = CurrentPlayer.Name;
-                    string FileName = $"GameLog_{_gameLog.GameStartTime:yyyy-MM-dd_HH-mm-ss}.xml";
+                    FileName = $"GameLog_{_gameLog.GameStartTime:yyyy-MM-dd_HH-mm-ss}.xml";
                     GameSerializer.Save(_gameLog, FileName);
                     OnGameEnd(new GameEndEventArgs(CurrentPlayer));
                     
@@ -313,8 +313,6 @@
                     {
                         OnDisplayMessage("L'IA n'a pas réussi à jouer.");
                     }
-
-                    return;
                 }
             }
 

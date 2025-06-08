@@ -90,8 +90,6 @@ namespace Model
                 grid[row, col] = piece;
                 OnPropertyChanged(nameof(BoardMatrix));
             }
-            else
-                return;
         }
 
         /// <summary>
