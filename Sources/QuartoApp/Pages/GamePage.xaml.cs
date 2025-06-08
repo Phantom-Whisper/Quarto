@@ -1,9 +1,11 @@
 namespace QuartoApp.Pages;
 using System.ComponentModel;
+using System.Diagnostics;
 using Manager;
 using Manager.CustomEventArgs;
 using Model;
 using Plugin.Maui.Audio;
+using Serialize;
 
 public partial class GamePage : ContentPage, INotifyPropertyChanged
 {
@@ -11,6 +13,8 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
     {
         InitializeComponent();
         BindingContext = this;
+
+        _serializer = new GameStateSerializer();
 
         if (CurrentApp != null)
             CurrentApp.PropertyChanged += (s, e) =>
@@ -43,14 +47,14 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
     private IAudioPlayer? _highPlayer;
     private IAudioPlayer? _lowPlayer;
 
+    private readonly GameStateSerializer _serializer;
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-        if (_highPlayer == null)
-            _highPlayer = AudioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("high.mp3"));
-        if (_lowPlayer == null)
-            _lowPlayer = AudioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("low.mp3"));
+        _highPlayer ??= AudioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("high.mp3"));
+        _lowPlayer ??= AudioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("low.mp3"));
 
         if (GameManager != null)
         {
@@ -69,7 +73,7 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
 
     private async void OnAskPieceToPlay(object? sender, AskPieceToPlayEventArgs e)
     {
-        if (GameManager?.CurrentPlayer is DumbAIPlayer aiPlayer)
+        if (GameManager?.CurrentPlayer is DumbAIPlayer)
         {
 
             var piece = DumbAIPlayer.ChoosePiece(GameManager.Bag!);
@@ -172,12 +176,54 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
         await Navigation.PushAsync(new SettingsPage());
     }
 
+    public static Piece[][] ConvertToJagged(Piece[,] grid)
+    {
+        int rows = grid.GetLength(0);
+        int cols = grid.GetLength(1);
+        var result = new Piece[rows][];
+        for (int i = 0; i < rows; i++)
+        {
+            result[i] = new Piece[cols];
+            for (int j = 0; j < cols; j++)
+            {
+                result[i][j] = grid[i, j];
+            }
+        }
+        return result;
+    }
+
+    private GameState CreateGameStateFromManager()
+    {
+        return new GameState
+        {
+            Board = ConvertToJagged((Piece[,])(GameManager?.Board?.GetPiecesGrid())!),
+            CurrentPlayerName = GameManager?.CurrentPlayer?.Name,
+            Players = GameManager?.Players.Select(p => new PlayerData
+            {
+                Name = p.Name,
+                Type = p is DumbAIPlayer ? "Dumb AI" : "Human"
+            }).ToList(),
+            Bag = GameManager?.Bag as Bag,
+            Turn = GameManager?.TurnNumber ?? 0,
+            CurrentPiece = GameManager?.PieceToPlay as Piece,
+            Rules = GameManager?.RulesManager as Rules
+        };
+    }
+
     private async void Exit_Tapped(object sender, TappedEventArgs e)
     {
         bool confirmation = await DisplayAlert("Alert", "Are you sure you want to exit the game ?", "Yes", "No");
         if (!confirmation)
-        {
             return;
+
+        try
+        {
+            var gameState = CreateGameStateFromManager();
+            _serializer.Save(gameState);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Erreur lors de la sauvegarde : {ex.Message}");
         }
 
         App.Current?.Quit();

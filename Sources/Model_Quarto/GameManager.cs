@@ -72,7 +72,7 @@
             /// <summary>
             /// Rules of the game according to the level chosen (easy, normal and advanced)
             /// </summary>
-            private IRulesManager RulesManager => rules;
+            public IRulesManager RulesManager => rules;
 
             /// <summary>
             /// List of the piece available
@@ -139,17 +139,19 @@
             }
 
             public bool HasWinner => _hasWinner;
-        public string? FileName { get; set; }
+            public string? FileName { get; set; }
 
-        private bool _isFirstTurnDone = false;
+            private bool _isFirstTurnDone = false;
             public bool IsFirstTurnDone => _isFirstTurnDone;
+        
+            public List<IPlayer> Players => [.. players];
 
 
-        /// <summary>
-        /// Game loop :
-        ///    - start : display of the board, pieces available and the name of the current player
-        ///    - a loop of turn which consist of changing of current player, ask the piece the opponent has to put and switch again
-        /// </summary>
+            /// <summary>
+            /// Game loop :
+            ///    - start : display of the board, pieces available and the name of the current player
+            ///    - a loop of turn which consist of changing of current player, ask the piece the opponent has to put and switch again
+            /// </summary>
             public async Task Run()
             {
                 _gameLog = new GameLog(DateTime.Now);
@@ -325,10 +327,20 @@
                 CurrentPlayer = players[_currentPlayerIndex];
             }
 
-            /// <summary>
-            /// Displays the current game state by triggering appropriate events.
-            /// </summary>
-            internal void Display()
+            public void SetCurrentPlayerByName(string playerName)
+            {
+                var player = players.FirstOrDefault(p => p.Name == playerName);
+                if (player != null)
+                {
+                    _currentPlayerIndex = Array.IndexOf(players, player);
+                    CurrentPlayer = player;
+                }
+            }
+
+        /// <summary>
+        /// Displays the current game state by triggering appropriate events.
+        /// </summary>
+        internal void Display()
             {
                 OnDisplayMessage($"Tour: {TurnNumber}");
                 OnDisplayMessage($"Joueur courant: {CurrentPlayer.Name}");

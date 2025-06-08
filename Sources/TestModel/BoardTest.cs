@@ -329,7 +329,7 @@ namespace TestModel
         {
             var board = new Board(4, 4);
 
-            var pieces = board.GetAllPieces();
+            var pieces = board.GetPieces();
 
             Assert.NotNull(pieces);
             Assert.Empty(pieces);
@@ -343,7 +343,7 @@ namespace TestModel
 
             board.InsertPiece(piece, 1, 2);
 
-            var pieces = board.GetAllPieces();
+            var pieces = board.GetPieces();
 
             Assert.Single(pieces);
             Assert.Contains(piece, pieces);
@@ -359,7 +359,7 @@ namespace TestModel
             board.InsertPiece(piece1, 0, 0);
             board.InsertPiece(piece2, 3, 3);
 
-            var pieces = board.GetAllPieces();
+            var pieces = board.GetPieces();
 
             Assert.Equal(2, pieces.Count);
             Assert.Contains(piece1, pieces);
@@ -376,7 +376,7 @@ namespace TestModel
                 for (int j = 0; j < board.SizeY; j++)
                     board.InsertPiece(piece, i, j);
 
-            var pieces = board.GetAllPieces();
+            var pieces = board.GetPieces();
 
             Assert.Equal(board.SizeX * board.SizeY, pieces.Count);
         }

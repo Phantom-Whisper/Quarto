@@ -276,7 +276,7 @@ namespace Model
         /// </summary>
         /// <param name="board">The game board to extract pieces from.</param>
         /// <returns>A list of all pieces currently placed on the board.</returns>
-        public List<IPiece> GetAllPieces()
+        public List<IPiece> GetPieces()
         {
             var pieces = new List<IPiece>();
             for (int row = 0; row < SizeX; row++)
@@ -338,6 +338,23 @@ namespace Model
         }
         private readonly ObservableCollection<Cell> boardMatrix = [];
 
+        public Piece[,] GetPiecesGrid()
+        {
+            var pieces = new Piece[SizeX, SizeY];
+            for (int i = 0; i < SizeX; i++)
+            {
+                for (int j = 0; j < SizeY; j++)
+                {
+                    pieces[i, j] = (Piece)grid[i, j]!;
+                }
+            }
+            return pieces;
+        }
+
+        IPiece[,] IBoard.GetPiecesGrid()
+        {
+            return GetPiecesGrid();
+        }
     }
     public class Cell : INotifyPropertyChanged
     {
