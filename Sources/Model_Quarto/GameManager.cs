@@ -144,9 +144,10 @@
             public string? FileName
             {
                 get => _fileName;
+                set => _fileName = value;
             }
 
-            private bool _isFirstTurnDone = false;
+        private bool _isFirstTurnDone = false;
             public bool IsFirstTurnDone => _isFirstTurnDone;
 
 
@@ -241,8 +242,8 @@
 
                     _gameLog!.AddTurn(turnLog);
 
-                    string _fileName = $"GameLog_{_gameLog.GameStartTime:yyyy-MM-dd_HH-mm-ss}.xml";
-                    GameSerializer.Save(_gameLog, _fileName);
+                    string FileName = $"GameLog_{_gameLog.GameStartTime:yyyy-MM-dd_HH-mm-ss}.xml";
+                    GameSerializer.Save(_gameLog, FileName);
                 }
                 catch (Exception ex)
                 {
@@ -263,8 +264,8 @@
 
                     _hasWinner = true;
                     _gameLog!.Winner = CurrentPlayer.Name;
-                    string _fileName = $"GameLog_{_gameLog.GameStartTime:yyyy-MM-dd_HH-mm-ss}.xml";
-                    GameSerializer.Save(_gameLog, _fileName);
+                    string FileName = $"GameLog_{_gameLog.GameStartTime:yyyy-MM-dd_HH-mm-ss}.xml";
+                    GameSerializer.Save(_gameLog, FileName);
                     OnGameEnd(new GameEndEventArgs(CurrentPlayer));
                     
                 }
