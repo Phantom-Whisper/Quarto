@@ -96,9 +96,10 @@
                         </ImageButton.Source>
                     </ImageButton>
                     <Slider 
+                        x:Name="MySlider"
                         Maximum="100"
                         Grid.Column="2"
-                        />
+                        ValueChanged="OnVolumeChanged"/>
 
                     <!-- Language part -->
                     <ImageButton

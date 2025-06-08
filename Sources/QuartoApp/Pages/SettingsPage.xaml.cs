@@ -27,6 +27,8 @@ public partial class SettingsPage : ContentPage, INotifyPropertyChanged
         InitializeCulturePicker();
 
         BindingContext = this;
+        if (CurrentApp?.BackgroundPlayer != null)
+            MySlider.Value = CurrentApp.BackgroundPlayer.Volume * 100;
 
         if (CurrentApp != null)
             CurrentApp.PropertyChanged += (s, e) =>
@@ -34,6 +36,16 @@ public partial class SettingsPage : ContentPage, INotifyPropertyChanged
                 if (e.PropertyName == nameof(CurrentApp.GlobalBackgroundImage))
                     OnPropertyChanged(nameof(BackgroundImage));
             };
+    }
+
+    private void OnVolumeChanged(object sender, ValueChangedEventArgs e)
+    {
+        // Le volume de IAudioPlayer est entre 0.0 et 1.0
+        var app = Application.Current as App;
+        if (app?.BackgroundPlayer != null)
+        {
+            app.BackgroundPlayer.Volume = (float)(e.NewValue / 100.0);
+        }
     }
 
     public new event PropertyChangedEventHandler? PropertyChanged;
