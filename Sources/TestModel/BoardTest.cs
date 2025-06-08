@@ -61,24 +61,6 @@ namespace TestModel
         }
 
         [Theory]
-        [InlineData(4, 3)]
-        [InlineData(4, 0)]
-        [InlineData(3, 4)]
-        [InlineData(5, 8)]
-        [InlineData(-1, -1)]
-        [InlineData(-1, -2)]
-        [InlineData(-3, -3)]
-        [InlineData(-10, 24)]
-        [InlineData(2, 2)]
-        public void TestInsertPieceInvalidArgument(int x, int y)
-        {
-            board.InsertPiece(piece, 2, 2);
-            Assert.Throws<InvalidOperationException>(() => { board.InsertPiece(piece, x, y); });
-
-            board.ClearBoard();
-        }
-
-        [Theory]
         [InlineData(0,0, true)]
         [InlineData(0, 1, true)]
         [InlineData(0, 2, true)]

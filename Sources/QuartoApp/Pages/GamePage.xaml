@@ -47,14 +47,30 @@
         </ResourceDictionary>
     </ContentPage.Resources> 
     
-    <Grid RowDefinitions="*,8*,*">
+    <Grid RowDefinitions="*,7*,*">
 
-        <Grid ColumnDefinitions="*, *, *, *,*" ColumnSpacing="10" Margin="20,10,10,0">
-            <Label Text="{Binding GameManager.CurrentPlayer.Name}" HorizontalOptions="Start" VerticalOptions="Center"/>
-            <Label Text="{ext:LocalizedString Key=PieceToPlay}" VerticalOptions="Center" Grid.Column="1" />
-            <Image Source="{Binding GameManager.PieceToPlay, Converter={StaticResource PieceConverter}}" MaximumHeightRequest="100" 
-                MaximumWidthRequest="100" Grid.Column="2" />
-            <Label Text="{Binding GameManager.TurnNumber}" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="3"/>
+        <Grid ColumnDefinitions="*, *, *, *,*" ColumnSpacing="10">
+
+            <Image Source="back.png" 
+                   Aspect="AspectFill"
+                   Grid.ColumnSpan="5"/>
+            <Label Text="{Binding GameManager.CurrentPlayer.Name, StringFormat='Current Player : {0}'}" 
+                   TextColor="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Silver}}"
+                   Grid.Column="1"
+                   Margin="30,0"
+                   HorizontalOptions="Start" VerticalOptions="Center"/>
+
+            <Image Source="{Binding GameManager.PieceToPlay, Converter={StaticResource PieceConverter}}" 
+                   MaximumHeightRequest="100" 
+                   MaximumWidthRequest="100" 
+                   Grid.Column="2" 
+                   Margin="10"/>
+
+            <Label Text="{Binding GameManager.TurnNumber, StringFormat='Turn : {0}'}" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center" 
+                   Grid.Column="3" TextColor="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Silver}}"/>
+
             <component:CustomButton2  
                 Text="{ext:LocalizedString Key=Quitter}"
                 WidthRequest="200" 
@@ -119,7 +135,7 @@
                 <FontImageSource FontFamily="AwesomeSolid"
                                  Glyph=""
                                  Size="25"
-                                 Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Silver}}"/>
+                                 Color="Gold"/>
             </ImageButton.Source>
         </ImageButton>
     </Grid>

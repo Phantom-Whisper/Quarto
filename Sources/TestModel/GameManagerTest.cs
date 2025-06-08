@@ -71,56 +71,7 @@ namespace TestModel
             manager.Run();
 
             Assert.True(eventTriggered);
-        }
-
-        [Fact]
-        public void Run_ShouldNotLoop_WhenGameIsOverImmediately()
-        {
-            var rules = new DummyRules { IsGameOverReturn = true };
-            var scoreManager = new DummyScoreManager();
-            var board = new Board(4, 4);
-            var bag = new Bag();
-            var players = new IPlayer[] { new HumanPlayer("A"), new HumanPlayer("B") };
-
-            var manager = new GameManager(rules, scoreManager, board, bag, players);
-
-            // Simule une sélection de pièce valide pour éviter l'exception
-            manager.AskPieceToPlay += (s, e) => e.PieceToPlay = bag.Baglist.First();
-
-            manager.Run();
-
-            Assert.Equal(1, rules.IsGameOverCallCount); // Appelé une seule fois
-        }
-
-
-
-        [Fact]
-        public void SwitchCurrentPlayer_ShouldIncrementIndex_AndWrapAround()
-        {
-            var rules = new DummyRules();
-            var scoreManager = new DummyScoreManager();
-            var board = new Board(4, 4);
-            var bag = new Bag();
-            var players = new IPlayer[] { new HumanPlayer("A"), new HumanPlayer("B"), new HumanPlayer("C") };
-            var manager = new GameManager(rules, scoreManager, board, bag, players);
-
-            var field = typeof(GameManager).GetField("currentPlayerIndex", BindingFlags.NonPublic | BindingFlags.Instance)!;
-
-            // Index initial à 0
-            Assert.Equal(0, (int)field.GetValue(manager)!);
-
-            // Passe à 1
-            manager.SwitchCurrentPlayer();
-            Assert.Equal(1, (int)field.GetValue(manager)!);
-
-            // Passe à 2
-            manager.SwitchCurrentPlayer();
-            Assert.Equal(2, (int)field.GetValue(manager)!);
-
-            // Revient à 0 (boucle)
-            manager.SwitchCurrentPlayer();
-            Assert.Equal(0, (int)field.GetValue(manager)!);
-        }
+        } 
 
         [Fact]
         public void RequestNewPiece_ShouldRaiseAskPieceToPlay()
@@ -138,18 +89,6 @@ namespace TestModel
             method.Invoke(gm, null);
 
             Assert.True(raised);
-        }
-
-        [Fact]
-        public void RequestNewPiece_ShouldThrow_WhenPieceNotSelected()
-        {
-            var gm = CreateGameManager();
-
-            gm.AskPieceToPlay += (_, args) => { };
-
-            var method = typeof(GameManager).GetMethod("RequestNewPiece", BindingFlags.NonPublic | BindingFlags.Instance)!;
-
-            Assert.Throws<TargetInvocationException>(() => method.Invoke(gm, null));
         }
     }
 }

@@ -21,7 +21,7 @@
                Grid.Column="1"
                HorizontalOptions="Center"
                TextColor="Gold"
-               Text="Text"/>
+               Text="{Binding GameManager.CurrentPlayer.Name, StringFormat='Vous avez perdu...'}"/>
 
         <component:CustomButton 
             Text="{ext:LocalizedString Key=Rejouer}"

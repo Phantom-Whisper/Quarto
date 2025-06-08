@@ -250,7 +250,7 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Quarto !.
+        ///   Recherche une chaîne localisée semblable à Quarto automatique.
         /// </summary>
         internal static string Quarto {
             get {
