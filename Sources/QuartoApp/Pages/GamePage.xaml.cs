@@ -23,11 +23,8 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
     protected new void OnPropertyChanged(string propertyName)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-    public App? CurrentApp 
+    public App? CurrentApp
         => App.Current as App;
-
-    public string? BackupFile
-        => CurrentApp?.BackupFileName as string;
 
     public ImageSource? BackgroundImage 
         => CurrentApp?.GlobalBackgroundImage as ImageSource;
@@ -164,8 +161,6 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
         {
             return;
         }
-        if (!GameManager!.HasWinner)
-            Preferences.Default.Set("BackupFileName", GameManager!.FileName);
 
         App.Current?.Quit();
     }

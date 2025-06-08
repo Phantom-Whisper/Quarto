@@ -7,11 +7,6 @@ namespace QuartoApp
 {
     public partial class App : Application
     {
-        public string? BackupFileName
-        {
-            get => Preferences.Default.Get<string?>("BackupFileName", null);
-            set => Preferences.Default.Set("BackupFileName", value);
-        }
 
         public static readonly BindableProperty GlobalBackgroundImageProperty =
              BindableProperty.Create(nameof(GlobalBackgroundImage), typeof(ImageSource), typeof(App), default(ImageSource));

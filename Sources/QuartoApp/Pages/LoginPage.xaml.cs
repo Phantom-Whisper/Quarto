@@ -12,9 +12,6 @@ public partial class LoginPage : ContentPage
     public App? CurrentApp 
         => App.Current as App;
 
-    public string? BackupFile
-        => CurrentApp?.BackupFileName as string;
-
     public ImageSource? BackgroundImage
         => CurrentApp?.GlobalBackgroundImage as ImageSource;
 
@@ -68,11 +65,12 @@ public partial class LoginPage : ContentPage
 
     public async void OnLoadGameClicked(object sender, TappedEventArgs e)
     {
+        /*
         if (string.IsNullOrEmpty(BackupFile))
         {
             await DisplayAlert("Erreur", "Aucune sauvegarde trouvée.", "OK");
             return;
-        }
+        }*/
 
         try
         {
