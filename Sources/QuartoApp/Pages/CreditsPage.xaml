@@ -39,6 +39,7 @@
 
                     <card:CarteMembre
                         Name="Inès DELINAC"
+                        Picture="ines_pfp.jpg"
                         Role="{ext:LocalizedString Key=InesRole}"
                         Grid.Row="1">                        
                     </card:CarteMembre>
@@ -54,6 +55,7 @@
                     <card:CarteMembre
                         Name="Ange GRIMAUD"
                         Role="{ext:LocalizedString Key=AngeRole}"
+                        Picture="ange_pfp.jpg"
                         Grid.Row="3">
                         
                     </card:CarteMembre>
