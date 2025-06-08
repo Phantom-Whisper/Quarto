@@ -29,7 +29,9 @@ Pour l'instant, vous n'avez besoin que d'un IDE pour créer des applications mod
 ✅ Classes (présente dans `Model`) <br>
 ✅ Interfaces et leurs implémentations <br>
 ✅ Application fonctionnelle en ligne de code <br>
-✅ Stub scores permettant de simuler un historique de parties gagnées 
+✅ Stub scores permettant de simuler un historique de parties gagnées <br>
+✅ Serialization de scores et de parties <br>
+✅ Application fonctionnelle en Interface Utilisateur (UI)
 ## 🧪 Exécution des tests
 Pour exécuter les tests, il suffit de lancer Visual Studio et d'utiliser l'explorateur de tests 😜
 ## Auteurs
