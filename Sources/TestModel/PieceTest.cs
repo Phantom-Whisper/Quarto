@@ -125,6 +125,52 @@ namespace TestModel
             Assert.False(result);
         }
 
+        [Theory]
+        [InlineData(true, true, true, true, "square_full_big_light.png")]
+        [InlineData(true, true, true, false, "square_hollow_big_light.png")]
+        [InlineData(true, true, false, true, "square_full_small_light.png")]
+        [InlineData(true, true, false, false, "square_hollow_small_light.png")]
+        [InlineData(true, false, true, true, "square_full_big_dark.png")]
+        [InlineData(true, false, true, false, "square_hollow_big_dark.png")]
+        [InlineData(true, false, false, true, "square_full_small_dark.png")]
+        [InlineData(true, false, false, false, "square_hollow_small_dark.png")]
+        [InlineData(false, true, true, true, "round_full_big_light.png")]
+        [InlineData(false, true, true, false, "round_hollow_big_light.png")]
+        [InlineData(false, true, false, true, "round_full_small_light.png")]
+        [InlineData(false, true, false, false, "round_hollow_small_light.png")]
+        [InlineData(false, false, true, true, "round_full_big_dark.png")]
+        [InlineData(false, false, true, false, "round_hollow_big_dark.png")]
+        [InlineData(false, false, false, true, "round_full_small_dark.png")]
+        [InlineData(false, false, false, false, "round_hollow_small_dark.png")]
+        public void PieceToString_ShouldReturnCorrectImgName(
+            bool isSquare, bool isLight, bool isBig, bool isFull, string expected)
+        {
+            var piece = new Piece(isSquare, isLight, isBig, isFull);
+            Assert.Equal(expected, piece.PieceToString());
+        }
+
+        [Fact]
+        public void RemovePiece_InlineLogic_ShouldBehaveAsExpected()
+        {
+            var piece1 = new Piece(true, true, true, true);
+            var piece2 = new Piece(false, false, false, false);
+            var pieces = new List<Piece> { piece1, piece2 };
+
+            // Cas 1 : piece non null et présente
+            var piece = piece1;
+            bool removed = (piece is not null && pieces.Remove(piece));
+            Assert.True(removed);
+            Assert.DoesNotContain(piece, pieces);
+
+            // Cas 2 : piece non null mais absente
+            removed = (piece is not null && pieces.Remove(piece));
+            Assert.False(removed);
+
+            // Cas 3 : piece null
+            piece = null;
+            removed = (piece is not null && pieces.Remove(piece));
+            Assert.False(removed);
+        }
 
     }
 }

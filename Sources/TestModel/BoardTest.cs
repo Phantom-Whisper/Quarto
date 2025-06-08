@@ -465,5 +465,46 @@ namespace TestModel
             var result = board.CombinationsOf4(null);
             Assert.Empty(result);
         }
+
+        [Fact]
+        public void InsertPiece_ShouldRaisePropertyChangedEvent()
+        {
+            var board = new Board(4, 4);
+            string? propertyName = null;
+            board.PropertyChanged += (s, e) => propertyName = e.PropertyName;
+
+            var piece = new Piece(true, true, true, true);
+            board.InsertPiece(piece, 0, 0);
+
+            Assert.Equal("BoardMatrix", propertyName);
+        }
+
+
+        [Fact]
+        public void Cell_Piece_Setter_ShouldRaisePropertyChanged()
+        {
+            var piece1 = new Piece(true, true, true, true);
+            var piece2 = new Piece(false, false, false, false);
+            var cell = new Cell(0, 0, piece1);
+
+            string? propertyName = null;
+            cell.PropertyChanged += (s, e) => propertyName = e.PropertyName;
+
+            cell.Piece = piece2;
+
+            Assert.Equal(nameof(Cell.Piece), propertyName);
+            Assert.Equal(piece2, cell.Piece);
+        }
+
+        [Fact]
+        public void Cell_Constructor_ShouldSetProperties()
+        {
+            var piece = new Piece(true, false, true, false);
+            var cell = new Cell(1, 2, piece);
+
+            Assert.Equal(1, cell.X);
+            Assert.Equal(2, cell.Y);
+            Assert.Equal(piece, cell.Piece);
+        }
     }
 }
