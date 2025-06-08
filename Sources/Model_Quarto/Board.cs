@@ -91,7 +91,7 @@ namespace Model
                 OnPropertyChanged(nameof(BoardMatrix));
             }
             else
-                throw new InvalidOperationException($"The piece cannot be placed in this position ({row},{col}).");
+                return;
         }
 
         /// <summary>
@@ -327,7 +327,6 @@ namespace Model
             get
             {
                 boardMatrix.Clear();
-                var list = new List<Cell>();
                 for (int row = 0; row < SizeX; row++)
                 {
                     for (int col = 0; col < SizeY; col++)
@@ -339,7 +338,7 @@ namespace Model
                 return boardMatrix;
             }
         }
-        private ObservableCollection<Cell> boardMatrix = new ObservableCollection<Cell>();
+        private readonly ObservableCollection<Cell> boardMatrix = [];
 
     }
     public class Cell : INotifyPropertyChanged
