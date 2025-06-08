@@ -117,13 +117,96 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AngeRole" xml:space="preserve">
+    <value>Developer/Project Manager</value>
+  </data>
+  <data name="Charger" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="Colored" xml:space="preserve">
+    <value>Colored</value>
+  </data>
+  <data name="CopyRights" xml:space="preserve">
+    <value>© 2025 Quarto Dev Team. All Rights Reserved.</value>
+  </data>
+  <data name="Credits" xml:space="preserve">
+    <value>Credits</value>
+  </data>
+  <data name="CreditsText" xml:space="preserve">
+    <value>We would like to thank our teaching and technical staff especially our teachers, for their sound advice, patience and unfailing support throughout the development process. Your guidance has enabled us to overcome many challenges and constantly improve our approach. This project is the fruit of a collective effort, whose commitment, creativity and perseverance have brought this IT solution to life. The Project Team.
+
+Song : Son : |copyright-free music| Spheriá - Otjánbird Pt.III</value>
+  </data>
+  <data name="Difficile" xml:space="preserve">
+    <value>Hard</value>
+  </data>
+  <data name="Egalite" xml:space="preserve">
+    <value>Equality</value>
+  </data>
+  <data name="EntrerPseudo" xml:space="preserve">
+    <value>Enter a pseudo</value>
+  </data>
+  <data name="Facile" xml:space="preserve">
+    <value>Easy</value>
+  </data>
+  <data name="GabrielRole" xml:space="preserve">
+    <value>Developer/Project Manager/Backend designer</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="InesRole" xml:space="preserve">
+    <value>Developer/Project Manager/Graphic Designer/sound engineer</value>
+  </data>
+  <data name="Jouer" xml:space="preserve">
+    <value> Play ►</value>
+  </data>
+  <data name="LoginJoueur1" xml:space="preserve">
+    <value>Player 1 :</value>
+  </data>
+  <data name="LoginJoueur2" xml:space="preserve">
+    <value>Player 2 :</value>
+  </data>
+  <data name="Modern" xml:space="preserve">
+    <value>Modern</value>
+  </data>
+  <data name="Moyen" xml:space="preserve">
+    <value>Medium</value>
+  </data>
   <data name="Parametres" xml:space="preserve">
     <value>Settings</value>
   </data>
   <data name="PickerText" xml:space="preserve">
     <value>Choose a language</value>
   </data>
+  <data name="PieceToPlay" xml:space="preserve">
+    <value>Piece to play :</value>
+  </data>
+  <data name="Quarto" xml:space="preserve">
+    <value>Quarto automatic</value>
+  </data>
   <data name="Quitter" xml:space="preserve">
     <value>Quit</value>
+  </data>
+  <data name="Regles" xml:space="preserve">
+    <value>Rules</value>
+  </data>
+  <data name="Rejouer" xml:space="preserve">
+    <value>Play again</value>
+  </data>
+  <data name="Retour" xml:space="preserve">
+    <value>◄ Return</value>
+  </data>
+  <data name="Score" xml:space="preserve">
+    <value>Score</value>
+  </data>
+  <data name="Simple" xml:space="preserve">
+    <value>Simple</value>
+  </data>
+  <data name="Victoire" xml:space="preserve">
+    <value>Win</value>
+  </data>
+  <data name="Volume de la musique" xml:space="preserve">
+    <value>Music volume</value>
   </data>
 </root>

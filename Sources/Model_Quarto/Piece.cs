@@ -11,6 +11,7 @@ namespace Model
     ///     - the Size : big or small
     ///     - the State : full or hollow
     /// </summary>
+    [Serializable]
     public sealed class Piece : IPiece, IEquatable<Piece>
     {
         /// <summary>
@@ -27,6 +28,11 @@ namespace Model
             IsBig = isBig;
             IsFull = isFull;
         }
+
+        /// <summary>
+        /// Required for XML serialization
+        /// </summary>
+        public Piece() { }
 
         /// <summary>
         /// This property tells if the  is squared (true) or round (false).
@@ -68,13 +74,26 @@ namespace Model
         /// </returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(IsSquare ? "Square" : "Round");
-            sb.Append(IsLight ? " Light" : " Dark");
-            sb.Append(IsBig ? " Big" : " Small");
-            sb.Append(IsFull ? " Full" : " Hollow");
-
+            StringBuilder sb = new();
+            sb.Append(IsSquare ? "square_" : "round_");
+            sb.Append(IsFull ? "full_" : "hollow_");
+            sb.Append(IsBig ? "big_" : "small_");
+            sb.Append(IsLight ? "light" : "dark");
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object picture filename
+        /// </summary>
+        /// <returns>A string that represents the <c>Piece</c> filename</returns>
+        public string PieceToString()
+        {
+            StringBuilder sb = new();
+            sb.Append(IsSquare ? "square_" : "round_");
+            sb.Append(IsFull ? "full_" : "hollow_");
+            sb.Append(IsBig ? "big_" : "small_");
+            sb.Append(IsLight ? "light" : "dark");
+            return sb.ToString() + ".png";
         }
 
         /// <summary>

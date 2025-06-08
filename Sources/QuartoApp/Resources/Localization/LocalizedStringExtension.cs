@@ -1,23 +1,31 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using QuartoApp.Resources.Localization;
 
 namespace QuartoApp.Resources.Localization;
 
-public class LocalizationApp
+public class LocalizationApp : INotifyPropertyChanged
 {
+    private string culture = "fr-FR";
     public string Culture
     {
         get => culture;
         set
         {
-            if (string.IsNullOrWhiteSpace(value)) return;
+            if (string.IsNullOrWhiteSpace(value) || culture == value) return;
             culture = value;
             LocalizedStringExtension.Culture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
+            OnPropertyChanged(nameof(Culture));
         }
     }
-    private string culture = "fr-FR";
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged(string propertyName)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }
 
 public class LocalizedStringExtension : IMarkupExtension<string>
@@ -29,9 +37,19 @@ public class LocalizedStringExtension : IMarkupExtension<string>
         set
         {
             if (culture == value) return;
-            culture = value;
-            AppRes.Culture = new CultureInfo(Culture);
-            CultureChanged?.Invoke(null, EventArgs.Empty);
+
+            try
+            {
+                var newCulture = new CultureInfo(value);
+                culture = value;
+                AppRes.Culture = newCulture;
+                CultureChanged?.Invoke(null, EventArgs.Empty);
+            }
+            catch (CultureNotFoundException)
+            {
+                Debug.WriteLine($"Invalid culture identifier: {value}");
+                AppRes.Culture = new CultureInfo("fr-FR");
+            }
         }
     }
     private static string culture = "fr-FR";

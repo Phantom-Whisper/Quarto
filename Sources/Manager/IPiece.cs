@@ -6,5 +6,6 @@
         bool IsLight { get; }
         bool IsBig { get; }
         bool IsFull { get; }
+        public string PieceToString();
     }
 }

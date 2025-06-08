@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:component="clr-namespace:QuartoApp.Views"
+             xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
+             xmlns:local="clr-namespace:QuartoApp"
+             xmlns:folder="clr-namespace:QuartoApp.Pages"
+             x:Class="QuartoApp.Pages.RulesPageEn"
+             x:DataType="folder:RulesPageEn"
+             Title="RulesPage"
+             BackgroundImageSource="{Binding BackgroundImage}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto, *"
+        ColumnDefinitions="*,3*,*"
+          Margin="0,0,0,40">
+        <Label 
+            Grid.ColumnSpan="3"
+            Text="Règles"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            FontSize="30"
+            Margin="0,0,0,10"/>
+        <Image Source="back.png" 
+               Grid.Column="1"
+               Grid.Row="1"
+               ZIndex="0"
+               Aspect="Fill"/>
+        <ScrollView
+                Grid.Column="1"
+                Grid.Row="1" Margin="10">
+            <VerticalStackLayout>
+                <Label Text="📜 Composition"
+                       FontSize="Large"/>
+                <Grid ColumnDefinitions="*,*" Margin="0" Padding="0">
+                    <Label Text="• 1 board (16 cells)
+                           &#x0a;• 16 pieces unique with 4 characteristics :&#x0a; 
+                           &#x09;• Color : light or dark &#x0a; 
+                           &#x09;• Shape : round or square &#x0a; 
+                           &#x09;• Size : big or small &#x0a; 
+                           &#x09;• State : full or hollow 
+                           &#x0a;⚠ At the begining, the 16 pieces are around the board 
+                           &#x0a;• The game last around 10 to 20 minutes  
+                           &#x0a;• Strategy : Anticipate your opponents' moves and choose your pieces wisely ! &#x0a;"
+                           FontSize="Body"/>
+                    <Image Grid.Column="1" Source="pieces.png" WidthRequest="150"/>
+                </Grid>
+                <Label Text="🎯 Goal"
+                       FontSize="Large"/>
+                <Image Source="combinaisons.png"/>
+                <Label Text="• Line up 4 counters with a common characteristic vertically, horizontally or diagonally (and in a square for the advanced version) on the board. &#x0a;"
+                       FontSize="Body"/>
+                <Label Text="⌛ Game flow"
+                       FontSize="Large"/>
+                <Label Text="• One player chooses a piece and gives it to his opponent.
+                             &#x0a;• The opponent places the piece on a free square on the board.
+                             &#x0a;• He then chooses a new piece for his opponent.
+                             &#x0a;• Play continues in this way until a player completes a Quarto or the board is full.&#x0a;"
+                       FontSize="Body"/>
+                <Label Text="🏆 Win"
+                       FontSize="Large"/>
+                <Label Text="• **Classic victory:** The first player announces “Quarto!”. Announcing that he has succeeded in aligning 4 pieces and showing the alignment by selecting the pieces.  
+                       &#x0a;&#x09;• A “Quarto!” is possible when :
+                       &#x0a;&#x09;• It creates a line of 4 light or dark pieces, 4 round or square pieces, 4 big or small pieces, 4 full or hollow pieces.
+                       &#x0a;• **Stolen victory:** If the player has not seen and therefore announced his victory, and gives a piece to the opponent. The latter can announce “Quarto!” and win the game.
+                       &#x0a;• If neither player announces “Quarto!”, the alignment loses its value and the game continues. &#x0a;"
+                       FontSize="Body"/>
+                <Label Text="🔚 End of the game"
+                       FontSize="Large"/>
+                <Image Source="end.png"/>
+                <Label Text="• **Victory:** a player announces and shows a “QUARTO!”.
+                       &#x0a;• **Equality:** all the pieces have been placed without forming a valid alignment.
+                       &#x0a;• **Defeat:** all pieces have been placed without forming a valid alignment when playing against an AI.&#x0a;"
+                       FontSize="Body"/>
+
+                <Label Text="🔀 Variants"
+                       FontSize="Large"/>
+                <Label Text="🚼 For beginners"
+                       FontSize="Title"/>
+                <Label Text="For players wishing to gradually get to grips with the game's mechanics, there's a simpler version with just 2 characteristics as alignment criteria: 
+                       &#x0a; •  Color: light or dark
+                       &#x0a; •  Shape: round or square &#x0a;"
+                       FontSize="Body"/>
+
+                <Label Text="🗿 For experienced players"
+                        FontSize="Title"/>
+                <Label Text="For players with a little more experience of the game, we've got you covered! This version allows you to align and square 4 pieces with at least one feature in common. 
+                       &#x0a;&#x0a; There are then 9 more possibilities to do “QUARTO!”. "
+                       FontSize="Body"/>
+            </VerticalStackLayout>
+        </ScrollView>
+        <component:CustomButton 
+            Text="{ext:LocalizedString Key=Retour}"
+            Grid.Row="1" 
+            Grid.Column="2" 
+            VerticalOptions="End">
+            <component:CustomButton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Return_Tapped"/>
+            </component:CustomButton.GestureRecognizers>
+        </component:CustomButton>
+    </Grid>
+</ContentPage>

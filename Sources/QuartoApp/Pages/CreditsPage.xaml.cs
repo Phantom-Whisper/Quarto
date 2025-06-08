@@ -2,13 +2,20 @@ namespace QuartoApp.Pages;
 
 public partial class CreditsPage : ContentPage
 {
-	public CreditsPage()
+    public App? CurrentApp
+        => App.Current as App;
+
+    public ImageSource? BackgroundImage
+        => CurrentApp?.GlobalBackgroundImage as ImageSource;
+
+    public CreditsPage()
 	{
 		InitializeComponent();
+        BindingContext = this;
 	}
 
-    private void Return_Clicked(object sender, EventArgs e)
+    private async void Return_Tapped(object sender, TappedEventArgs e)
     {
-        Shell.Current.GoToAsync("//MainPage");
+        await Navigation.PopAsync();
     }
 }

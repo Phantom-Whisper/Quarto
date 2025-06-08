@@ -130,10 +130,38 @@ namespace TestModel
 
             // Vérifie le format de la première ligne
             Assert.StartsWith("1. ", lines[0]);
-            Assert.Contains("Square", lines[0]); // ou "Round" selon la première pièce
+            Assert.Contains("square", lines[0]); // ou "Round" selon la première pièce
 
             // Vérifie le format de la dernière ligne
             Assert.StartsWith("16. ", lines[15]);
+        }
+
+        [Fact]
+        public void AddPiece_ShouldRaisePropertyChangedEvent()
+        {
+            var bag = new Bag();
+            string? propertyName = null;
+            bag.PropertyChanged += (s, e) => propertyName = e.PropertyName;
+
+            var piece = new Piece(false, false, false, false);
+            bag.Remove(piece); // Pour éviter l'exception de doublon
+            bag.AddPiece(piece);
+
+            Assert.Equal("Baglist", propertyName); // Remplace "Baglist" par le nom exact de la propriété notifiée dans Bag
+        }
+
+
+        [Fact]
+        public void Remove_ShouldRemovePiece_WhenPieceIsInBag()
+        {
+            var bag = new Bag();
+            var piece = new Piece(true, true, true, true);
+            bag.Remove(piece); // Pour éviter l'exception de doublon
+            bag.AddPiece(piece);
+
+            bag.Remove(piece);
+
+            Assert.DoesNotContain(piece, bag.Baglist);
         }
 
     }

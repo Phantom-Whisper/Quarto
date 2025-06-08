@@ -1,6 +1,7 @@
 ﻿using Manager.CustomEventArgs;
 using Manager;
 using Model;
+using Moq;
 
 namespace TestModel
 {
@@ -14,59 +15,36 @@ namespace TestModel
             Assert.Equal(expectedName, aiPlayer.Name);
         }
 
-        private class MinimalGameManager : IGameManager
+        [Fact]
+        public async Task PlayTurn_ShouldReturnValidPosition_WhenPositionsAvailable()
         {
-            public List<string> Messages { get; } = new();
-            public List<IPiece> AvailablePieces { get; set; } = new();
-            public AskPieceToPlayEventArgs? LastAskArgs { get; private set; }
+            var aiPlayer = new DumbAIPlayer();
+            var board = new Board();
+            var piece = new Piece(true, true, true, true);
 
-            public event EventHandler<AskPieceToPlayEventArgs>? AskPieceToPlay;
-            public void OnAskPieceToPlay(AskPieceToPlayEventArgs args)
-            {
-                LastAskArgs = args;
-                AskPieceToPlay?.Invoke(this, args); // This is what triggers the event
-            }
-            public void OnDisplayMessage(string message) => Messages.Add(message);
-            public List<IPiece> GetAvailablePieces() => AvailablePieces;
+            // On laisse toutes les cases vides
+            var result = await aiPlayer.PlayTurn(board, piece);
 
-            public (int row, int col) RequestCoordinates(IPlayer player)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Run()
-            {
-                throw new NotImplementedException();
-            }
-
-            // Ajoutez des membres vides si IGameManager a d'autres méthodes obligatoires
+            Assert.NotNull(result);
+            var available = Rules.GetAvailablePositions(board);
+            Assert.Contains(result.Value, available);
         }
 
         [Fact]
-        public void PlayTurn_ShouldPlacePieceAndAskPieceToPlay()
+        public async Task PlayTurn_ShouldReturnNull_WhenNoPositionsAvailable()
         {
-            var ai = new DumbAIPlayer();
-            var board = new Board(4, 4);
+            var aiPlayer = new DumbAIPlayer();
+            var board = new Board();
             var piece = new Piece(true, true, true, true);
 
-            // On prépare le plateau pour qu'il y ait au moins une position disponible
-            // (le plateau est vide, donc toutes les positions sont disponibles)
-            var gameManager = new MinimalGameManager
-            {
-                AvailablePieces = new List<IPiece>
-                {
-                    new Piece(false, false, false, false)
-                }
-            };
+            // Remplir toutes les cases
+            for (int i = 0; i < board.SizeX; i++)
+                for (int j = 0; j < board.SizeY; j++)
+                    board.InsertPiece(piece, i, j);
 
-            ai.PlayTurn(board, piece, gameManager);
+            var result = await aiPlayer.PlayTurn(board, piece);
 
-            // Vérifie qu'un message de placement a été affiché
-            Assert.Contains(gameManager.Messages, m => m.Contains("placed a piece at (") || m.Contains("Failed to place the piece"));
-            // Vérifie qu'une demande de pièce à jouer a été envoyée
-            Assert.NotNull(gameManager.LastAskArgs);
-            Assert.Equal(ai, gameManager.LastAskArgs.Player);
-            Assert.Equal(gameManager.AvailablePieces[0], gameManager.LastAskArgs.PieceToPlay);
+            Assert.Null(result);
         }
     }
 }

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:Model;assembly=Model"
              xmlns:card="clr-namespace:QuartoApp.Views"
-             x:Class="QuartoApp.Pages.LoginPage"
              xmlns:component="clr-namespace:QuartoApp.Views"
+             xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
+             xmlns:local="clr-namespace:QuartoApp"
+             xmlns:folder="clr-namespace:QuartoApp.Pages"
+             x:Class="QuartoApp.Pages.LoginPage"
+             x:DataType="folder:LoginPage"
              Title="LoginPage"
-             BackgroundImageSource="simple.png"
+             BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
     <Grid
         ColumnDefinitions="*,*">
@@ -28,30 +33,53 @@
                   RowDefinitions="Auto,Auto, Auto">
 
                 <HorizontalStackLayout  HorizontalOptions="Center"
-                                        Margin="0,50,0,0">
+                                        Margin="0,70,0,0">
                     <Label Style="{StaticResource LoginLabel}"
-                           Text="Joueur 1 :"/>
-                    <Entry Style="{StaticResource Login}"/>
-                    
+                           Text="{ext:LocalizedString Key=LoginJoueur1}"/>
+                    <Entry Style="{StaticResource Login}"
+                           Text="{Binding Entry_name1}"
+                           Placeholder="{ext:LocalizedString Key=EntrerPseudo}"/>
+
                 </HorizontalStackLayout>
 
-                <HorizontalStackLayout 
-                                     Grid.Row="1" HorizontalOptions="Center">
+                <HorizontalStackLayout Grid.Row="1" 
+                                       HorizontalOptions="Center">
                     <Label Style="{StaticResource LoginLabel}"
-                           Text="Joueur 2 :"/>
-                    <Entry Style="{StaticResource Login}"/>
+                           Text="{ext:LocalizedString Key=LoginJoueur2}"/>
+                    <Entry x:Name="NamePlayer2"
+                           Style="{StaticResource Login}"
+                           Placeholder="{ext:LocalizedString Key=EntrerPseudo}"
+                           Text="{Binding Entry_name2}"/>
                 </HorizontalStackLayout>
-                
-                <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center">
-                    <component:CustomButton2/>
-                    <component:CustomButton2/>
-                    <component:CustomButton2/>
+
+                <HorizontalStackLayout Grid.Row="2" 
+                                       HorizontalOptions="Center"
+                                       Margin="0,70,0,0">
+
+                    <component:CustomButton2 x:Name="Easy"
+                                             Text="{ext:LocalizedString Key=Facile}">
+                        <component:CustomButton2.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDiffButtonPressed"/>
+                        </component:CustomButton2.GestureRecognizers>
+                    </component:CustomButton2>
+
+                    <component:CustomButton2 x:Name="Normal"
+                                             Text="{ext:LocalizedString Key=Moyen}">
+                        <component:CustomButton2.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDiffButtonPressed"/>
+                        </component:CustomButton2.GestureRecognizers>
+                    </component:CustomButton2>
+
+                    <component:CustomButton2 x:Name="Advanced"
+                                             Text="{ext:LocalizedString Key=Difficile}">
+                        <component:CustomButton2.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDiffButtonPressed"/>
+                        </component:CustomButton2.GestureRecognizers>
+                    </component:CustomButton2>
+
                 </HorizontalStackLayout>
-                
 
             </Grid>
-
-            
 
         </Grid>
 
@@ -59,9 +87,28 @@
                         HorizontalOptions="End"
                         VerticalOptions="End"
                         Margin="50,50,40,50">
-            <component:CustomButton WidthRequest="300"/>
-            <component:CustomButton WidthRequest="300"/>
-            <component:CustomButton WidthRequest="300"/>
+
+            <component:CustomButton WidthRequest="300"
+                                    Text="{ext:LocalizedString Key=Retour}">
+                <component:CustomButton.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Return_Tapped"/>
+                </component:CustomButton.GestureRecognizers>
+            </component:CustomButton>
+
+            <component:CustomButton WidthRequest="300"
+                                    Text="{ext:LocalizedString Key=Charger}">
+                <component:CustomButton.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLoadGameClicked"/>
+                </component:CustomButton.GestureRecognizers>
+            </component:CustomButton>
+
+            <component:CustomButton WidthRequest="300"
+                                    Text="{ext:LocalizedString Key=Jouer}">
+                <component:CustomButton.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTappedStart"/>
+                </component:CustomButton.GestureRecognizers>
+            </component:CustomButton>
+             
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>

@@ -32,22 +32,22 @@ namespace TestModel
         }
 
         [Theory]
-        [InlineData(true, true, true, true, "Square Light Big Full")]
-        [InlineData(true, true, true, false, "Square Light Big Hollow")]
-        [InlineData(true, true, false, true, "Square Light Small Full")]
-        [InlineData(true, true, false, false, "Square Light Small Hollow")]
-        [InlineData(true, false, true, true, "Square Dark Big Full")]
-        [InlineData(true, false, true, false, "Square Dark Big Hollow")]
-        [InlineData(true, false, false, true, "Square Dark Small Full")]
-        [InlineData(true, false, false, false, "Square Dark Small Hollow")]
-        [InlineData(false, true, true, true, "Round Light Big Full")]
-        [InlineData(false, true, true, false, "Round Light Big Hollow")]
-        [InlineData(false, true, false, true, "Round Light Small Full")]
-        [InlineData(false, true, false, false, "Round Light Small Hollow")]
-        [InlineData(false, false, true, true, "Round Dark Big Full")]
-        [InlineData(false, false, true, false, "Round Dark Big Hollow")]
-        [InlineData(false, false, false, true, "Round Dark Small Full")]
-        [InlineData(false, false, false, false, "Round Dark Small Hollow")]
+        [InlineData(true, true, true, true, "square_full_big_light")]
+        [InlineData(true, true, true, false, "square_hollow_big_light")]
+        [InlineData(true, true, false, true, "square_full_small_light")]
+        [InlineData(true, true, false, false, "square_hollow_small_light")]
+        [InlineData(true, false, true, true, "square_full_big_dark")]
+        [InlineData(true, false, true, false, "square_hollow_big_dark")]
+        [InlineData(true, false, false, true, "square_full_small_dark")]
+        [InlineData(true, false, false, false, "square_hollow_small_dark")]
+        [InlineData(false, true, true, true, "round_full_big_light")]
+        [InlineData(false, true, true, false, "round_hollow_big_light")]
+        [InlineData(false, true, false, true, "round_full_small_light")]
+        [InlineData(false, true, false, false, "round_hollow_small_light")]
+        [InlineData(false, false, true, true, "round_full_big_dark")]
+        [InlineData(false, false, true, false, "round_hollow_big_dark")]
+        [InlineData(false, false, false, true, "round_full_small_dark")]
+        [InlineData(false, false, false, false, "round_hollow_small_dark")]
         public void TestToString(bool isSquare, bool isLight, bool isBig, bool isFull, string comparable)
         {
             Piece piece = new Piece(isSquare, isLight, isBig, isFull);
@@ -125,6 +125,52 @@ namespace TestModel
             Assert.False(result);
         }
 
+        [Theory]
+        [InlineData(true, true, true, true, "square_full_big_light.png")]
+        [InlineData(true, true, true, false, "square_hollow_big_light.png")]
+        [InlineData(true, true, false, true, "square_full_small_light.png")]
+        [InlineData(true, true, false, false, "square_hollow_small_light.png")]
+        [InlineData(true, false, true, true, "square_full_big_dark.png")]
+        [InlineData(true, false, true, false, "square_hollow_big_dark.png")]
+        [InlineData(true, false, false, true, "square_full_small_dark.png")]
+        [InlineData(true, false, false, false, "square_hollow_small_dark.png")]
+        [InlineData(false, true, true, true, "round_full_big_light.png")]
+        [InlineData(false, true, true, false, "round_hollow_big_light.png")]
+        [InlineData(false, true, false, true, "round_full_small_light.png")]
+        [InlineData(false, true, false, false, "round_hollow_small_light.png")]
+        [InlineData(false, false, true, true, "round_full_big_dark.png")]
+        [InlineData(false, false, true, false, "round_hollow_big_dark.png")]
+        [InlineData(false, false, false, true, "round_full_small_dark.png")]
+        [InlineData(false, false, false, false, "round_hollow_small_dark.png")]
+        public void PieceToString_ShouldReturnCorrectImgName(
+            bool isSquare, bool isLight, bool isBig, bool isFull, string expected)
+        {
+            var piece = new Piece(isSquare, isLight, isBig, isFull);
+            Assert.Equal(expected, piece.PieceToString());
+        }
+
+        [Fact]
+        public void RemovePiece_InlineLogic_ShouldBehaveAsExpected()
+        {
+            var piece1 = new Piece(true, true, true, true);
+            var piece2 = new Piece(false, false, false, false);
+            var pieces = new List<Piece> { piece1, piece2 };
+
+            // Cas 1 : piece non null et présente
+            var piece = piece1;
+            bool removed = (piece is not null && pieces.Remove(piece));
+            Assert.True(removed);
+            Assert.DoesNotContain(piece, pieces);
+
+            // Cas 2 : piece non null mais absente
+            removed = (piece is not null && pieces.Remove(piece));
+            Assert.False(removed);
+
+            // Cas 3 : piece null
+            piece = null;
+            removed = (piece is not null && pieces.Remove(piece));
+            Assert.False(removed);
+        }
 
     }
 }

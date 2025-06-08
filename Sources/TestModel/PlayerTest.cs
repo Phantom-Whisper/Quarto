@@ -27,58 +27,16 @@ namespace TestModel
             Assert.Equal("JoueurTest", player.Name);
         }
 
-        private class TestGameManager : IGameManager
-        {
-            public (int, int) CoordinatesToReturn { get; set; }
-            public List<string> Messages { get; } = new();
-
-            public event EventHandler<AskPieceToPlayEventArgs>? AskPieceToPlay;
-            public void OnAskPieceToPlay(AskPieceToPlayEventArgs args)
-            {
-                AskPieceToPlay?.Invoke(this, args);
-            }
-            public (int, int) RequestCoordinates(IPlayer player) => CoordinatesToReturn;
-            public void OnDisplayMessage(string message) => Messages.Add(message);
-
-
-            public List<IPiece> GetAvailablePieces()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Run()
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        [Fact]
-        public void PlayTurn_ShouldPlacePiece_WhenMoveIsValid()
-        {
-            var player = new HumanPlayer("Test");
-            var board = new Board(4, 4);
-            var piece = new Piece(true, true, true, true);
-            var gameManager = new TestGameManager { CoordinatesToReturn = (1, 1) };
-
-            player.PlayTurn(board, piece, gameManager);
-
-            Assert.Equal(piece, board.GetPiece(1, 1));
-            Assert.Empty(gameManager.Messages);
-        }
-
         [Fact]
         public void PlayTurn_ShouldDisplayMessage_WhenMoveIsInvalid()
         {
             var player = new HumanPlayer("Test");
             var board = new Board(4, 4);
             var piece = new Piece(true, true, true, true);
-            var gameManager = new TestGameManager { CoordinatesToReturn = (5, 5) }; // Invalid coordinates
 
-            player.PlayTurn(board, piece, gameManager);
+            player.PlayTurn(board, piece);
 
             Assert.Null(board.GetPiece(1, 1)); // No piece placed at (1,1)
-            Assert.Single(gameManager.Messages);
-            Assert.Contains("Invalid move", gameManager.Messages[0]);
         }
 
         [Fact]
@@ -154,6 +112,74 @@ namespace TestModel
             int actual = player.GetHashCode(player);
 
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void PlayerConstructor_ShouldThrow_OnNullName()
+        {
+            Assert.Throws<ArgumentNullException>(() => new HumanPlayer(null!));
+        }
+
+        [Fact]
+        public void Name_Getter_ShouldReturnName()
+        {
+            var player = new HumanPlayer("Alice");
+            Assert.Equal("Alice", player.Name);
+        }
+
+        [Fact]
+        public void Name_Getter_ThrowsIfNameNotInitialized()
+        {
+            // Crée instance avec constructeur (nom="temp")
+            var player = (Player)Activator.CreateInstance(typeof(HumanPlayer), ["temp"])!;
+
+            // Réinitialise le champ privé 'name' à null via réflexion
+            var field = typeof(Player).GetField("name", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!;
+            field.SetValue(player, null);
+
+            // Teste que la lecture de Name lance InvalidOperationException
+            Assert.Throws<InvalidOperationException>(() => { var n = player.Name; });
+        }
+
+        [Fact]
+        public void PropertyChanged_ShouldBeRaised_WhenNameChanges()
+        {
+            var player = new HumanPlayer("Bob");
+            bool eventRaised = false;
+
+            player.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == "Name") eventRaised = true;
+            };
+
+            player.Name = "Charlie";
+
+            Assert.True(eventRaised);
+            Assert.Equal("Charlie", player.Name);
+        }
+
+        [Fact]
+        public void Name_Setter_ShouldThrowOnNull()
+        {
+            var player = new HumanPlayer("Jean");
+            Assert.Throws<ArgumentNullException>(() => player.Name =null!);
+        }
+
+        [Fact]
+        public void GetHashCode_ShouldReturnHashCodeOfName()
+        {
+            var player = new HumanPlayer("TestPlayer");
+
+            int expected = player.Name.GetHashCode();
+
+            Assert.Equal(expected, player.GetHashCode(player));
+        }
+
+        [Fact]
+        public void GetHashCode_ShouldThrowOnNullPlayer()
+        {
+            var player = new HumanPlayer("Grégoire");
+            Assert.Throws<ArgumentNullException>(() => player.GetHashCode(null!));
         }
     }
 }

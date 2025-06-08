@@ -1,4 +1,6 @@
 ﻿using Manager;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 
 namespace Model
@@ -6,17 +8,22 @@ namespace Model
     /// <summary>
     /// CLass of the board containing the piece played and their position
     /// </summary>
-    public class Board : IBoard
+    public class Board : IBoard, INotifyPropertyChanged
     {
         /// <summary>
         /// Constante of the size of the board
         /// </summary>
         private const int MAXSIZE = 4;
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
         /// <summary>
         /// Constructor of the board, the size depend on the constant <c>MAXSIZE</c>
         /// </summary>
-        public Board() 
+        public Board()
         {
             grid = new IPiece[MAXSIZE, MAXSIZE];
         }
@@ -26,7 +33,7 @@ namespace Model
         /// </summary>
         /// <param name="row">Number of cells in the row-axis.</param>
         /// <param name="col">Number of cells in the col-axis.</param>
-        public Board(int row, int col) 
+        public Board(int row, int col)
         {
             if (row != MAXSIZE || col != MAXSIZE)
                 throw new ArgumentException($"The maximum alowed size of the board is : {MAXSIZE}*{MAXSIZE}.");
@@ -79,9 +86,10 @@ namespace Model
         public void InsertPiece(IPiece piece, int row, int col)
         {
             if (IsEmpty(row, col) && IsOnBoard(row, col))
+            {
                 grid[row, col] = piece;
-            else
-                throw new InvalidOperationException($"The piece cannot be placed in this position ({row},{col}).");
+                OnPropertyChanged(nameof(BoardMatrix));
+            }
         }
 
         /// <summary>
@@ -103,15 +111,15 @@ namespace Model
                 }
                 else
                 {
-                    sb.AppendFormat("{0,4} | ", i); 
+                    sb.AppendFormat("{0,4} | ", i);
                 }
             }
             sb.AppendLine();
 
-            string horizontalSeparator = new string('-', (SizeY + 1) * 7); 
+            string horizontalSeparator = new('-', (SizeY + 1) * 7);
             sb.AppendLine(horizontalSeparator);
 
-            sb.AppendFormat("{0,2}  |", z); 
+            sb.AppendFormat("{0,2}  |", z);
 
             foreach (var piece in grid)
             {
@@ -124,7 +132,7 @@ namespace Model
                     sb.AppendFormat("{0,2}  |", z);
                 }
 
-                sb.AppendFormat("{0,5} |", piece?.ToString() ?? ""); 
+                sb.AppendFormat("{0,5} |", piece?.ToString() ?? "");
                 row++;
             }
 
@@ -139,8 +147,8 @@ namespace Model
         /// <returns> a boolean : true = the <c>Board</c> is empty and false = the <c>Board</c> is not empty </returns>
         public bool IsEmpty(int row, int col)
         {
-            if (IsOnBoard(row,col) && grid[row, col] == null)
-                    return true;
+            if (IsOnBoard(row, col) && grid[row, col] == null)
+                return true;
             return false;
         }
 
@@ -290,7 +298,7 @@ namespace Model
         /// </summary>
         /// <param name="pieces">The list of pieces to generate combinations from.</param>
         /// <returns>An enumerable of lists, each containing exactly 4 pieces.</returns>
-        public IEnumerable<List<IPiece>> CombinationsOf4(List<IPiece> pieces)
+        public IEnumerable<List<IPiece>> CombinationsOf4(List<IPiece>? pieces)
         {
             if (pieces == null || pieces.Count < 4)
                 yield break;
@@ -309,6 +317,55 @@ namespace Model
                         }
                     }
                 }
+            }
+        }
+
+        public ObservableCollection<Cell> BoardMatrix
+        {
+            get
+            {
+                boardMatrix.Clear();
+                for (int row = 0; row < SizeX; row++)
+                {
+                    for (int col = 0; col < SizeY; col++)
+                    {
+                        Cell cell = new(row, col, grid[row, col]);
+                        boardMatrix.Add(cell);
+                    }
+                }
+                return boardMatrix;
+            }
+        }
+        private readonly ObservableCollection<Cell> boardMatrix = [];
+
+    }
+    public class Cell : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        public Cell(int x, int y, IPiece? piece)
+        {
+            X = x;
+            Y = y;
+            Piece = piece;
+        }
+
+        private IPiece? _piece;
+
+        public int X { get; set; }
+        
+        public int Y { get; set; }
+
+        public IPiece? Piece
+        {
+            get => _piece;
+            set
+            {
+                _piece = value;
+                OnPropertyChanged(nameof(Piece));
             }
         }
     }

@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:QuartoApp.Resources.Localization">
 
     <Style TargetType="Entry" x:Key="Login">
         <Setter Property="Margin" Value="20,20,0,0"/>
-        <Setter Property="Placeholder" Value="Entrer le pseudo"/>
+        <!--<Setter Property="Placeholder" Value="{ext:LocalizedString Key=EntrerPseudo}"/>-->
         <Setter Property="PlaceholderColor" Value="{StaticResource Gold}"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="WidthRequest" Value="250"/>

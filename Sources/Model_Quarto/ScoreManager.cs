@@ -1,5 +1,7 @@
 ﻿using Manager;
+using Microsoft.VisualBasic;
 using Serialize;
+using System.Collections.ObjectModel;
 
 namespace Model
 {
@@ -10,9 +12,9 @@ namespace Model
     public class ScoreManager : IScoreManager
     {
         /// <summary>
-        /// Dictionary that maps a player's name to their number of victories.
+        /// Collection that holds player names and their number of victories.
         /// </summary>
-        private Dictionary<string, int> Scores { get; set; } = new();
+        public ObservableCollection<PlayerScore> Scores { get; private set; } = new();
 
         /// <summary>
         /// Serializer responsible for loading and saving score data.
@@ -27,11 +29,15 @@ namespace Model
         {
             if (winner is null) return;
 
-            string name = winner.Name;
-            if (Scores.TryGetValue(name, out _))
-                Scores[name]++;
+            var existing = Scores.FirstOrDefault(ps => ps.Name == winner.Name);
+            if (existing != null)
+            {
+                existing.Score++;
+            }
             else
-                Scores[name] = 1;
+            {
+                Scores.Add(new PlayerScore(winner.Name, 1));
+            }
         }
 
         /// <summary>
@@ -43,7 +49,7 @@ namespace Model
         {
             if (player is null) return 0;
 
-            return Scores.TryGetValue(player.Name, out int score) ? score : 0;
+            return Scores.FirstOrDefault(ps => ps.Name == player.Name)?.Score ?? 0;
         }
 
         /// <summary>
@@ -51,7 +57,7 @@ namespace Model
         /// </summary>
         public void LoadScores()
         {
-            Scores = serializer.Load<Dictionary<string, int>>() ?? new();
+            Scores = serializer.Load<ObservableCollection<PlayerScore>>() ?? new();
         }
 
         /// <summary>
@@ -59,16 +65,22 @@ namespace Model
         /// </summary>
         public void SaveScores()
         {
+            var sorted = Scores.OrderByDescending(ps => ps.Score).ToList();
+
+            Scores.Clear();
+            foreach (var item in sorted)
+            {
+                Scores.Add(item);
+            }
             serializer.Save(Scores);
         }
 
         /// <summary>
-        /// Returns a copy of all scores.
+        /// Returns the scores as an ObservableCollection.
         /// </summary>
-        /// <returns>A dictionary of player names and their victory counts.</returns>
-        public Dictionary<string, int> GetAllScores()
+        public ObservableCollection<PlayerScore> GetAllScores()
         {
-            return new Dictionary<string, int>(Scores);
+            return Scores;
         }
     }
 }

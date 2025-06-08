@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuartoApp.Views"
              xmlns:ext="clr-namespace:QuartoApp.Resources.Localization"
-             x:Class="QuartoApp.Pages.SettingsPage"
              xmlns:component="clr-namespace:QuartoApp.Views"
+             xmlns:local="clr-namespace:QuartoApp"
+             xmlns:folder="clr-namespace:QuartoApp.Pages"
+             x:Class="QuartoApp.Pages.SettingsPage"
+             x:DataType="folder:SettingsPage"
              Title="SettingsPage"
-             BackgroundImageSource="simple.png"
+             BackgroundImageSource="{Binding BackgroundImage}"
              Shell.NavBarIsVisible="False">
     
 
@@ -22,41 +25,81 @@
               RowDefinitions="2*,*"
               Grid.Row="1"
               Grid.ColumnSpan="2">
+            <!-- Rights Button of navigation -->
             <VerticalStackLayout Margin="0,0,30,0">
-                <component:CustomButton />
+                <component:CustomButton
+                    Text="{ext:LocalizedString Key=General}">
+                    <component:CustomButton.GestureRecognizers>
+                        <TapGestureRecognizer/>
+                    </component:CustomButton.GestureRecognizers>
+                </component:CustomButton>
 
-                <component:CustomButton />
+                <component:CustomButton 
+                    Text="{ext:LocalizedString Key=Regles}">
+                    <component:CustomButton.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Rules_Tapped"/>
+                    </component:CustomButton.GestureRecognizers>
+                </component:CustomButton>
 
-                <component:CustomButton/>
+                <component:CustomButton
+                    Text="{ext:LocalizedString Key=Score}">
+                    <component:CustomButton.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Score_Tapped"/>
+                    </component:CustomButton.GestureRecognizers>
+                </component:CustomButton>
 
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Row="1" Margin="0,0,30,0">
-                <component:CustomButton/>
+                <component:CustomButton
+                    Text="{ext:LocalizedString Key=Credits}">
+                    <component:CustomButton.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Credit_Tapped"/>
+                    </component:CustomButton.GestureRecognizers>
+                </component:CustomButton>
 
-                <component:CustomButton/>
+                <component:CustomButton
+                    Text="{ext:LocalizedString Key=Quitter}">
+                    <component:CustomButton.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Quit_Tapped"/>
+                    </component:CustomButton.GestureRecognizers>
+                </component:CustomButton>
 
             </VerticalStackLayout>
-            <Image Source="back.png" 
-                   Grid.Column="1"
-                   Grid.RowSpan="2" ZIndex="0"
-                   Aspect="Fill"/>
-            <ScrollView Grid.Column="1"
-                        Grid.RowSpan="2">
-                <Grid ColumnDefinitions="*,*,3*,*"
-                      RowDefinitions="Auto,Auto,Auto,*">
+            
+            <!-- Background of the window -->
+            <Image 
+                Source="back.png" 
+                Grid.Column="1"
+                Grid.RowSpan="2" ZIndex="0"
+                Aspect="Fill"/>
+            
+            <!-- Main window -->
+            <ScrollView 
+                Grid.Column="1"
+                Grid.RowSpan="2">
+                <Grid 
+                    ColumnDefinitions="*,*,3*,*"
+                    RowDefinitions="Auto,Auto,Auto,*"
+                    RowSpacing="20"
+                    Padding="0,25,0,25">
                     <!-- Music part -->
                     <ImageButton
                         Grid.Column="1"
                         BackgroundColor="Transparent">
                         <ImageButton.Source>
-                            <FontImageSource FontFamily="AwesomeSolid"
-                                             Glyph=""
-                                             Size="20"
-                                             Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Silver}}"/>
+                        <FontImageSource 
+                            FontFamily="AwesomeSolid"
+                            Glyph=""
+                            Size="30"
+                            Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Gold}}"/>
                         </ImageButton.Source>
                     </ImageButton>
-
+                    <Slider 
+                        x:Name="MySlider"
+                        Maximum="100"
+                        Grid.Column="2"
+                        ValueChanged="OnVolumeChanged"/>
 
                     <!-- Language part -->
                     <ImageButton
@@ -66,16 +109,20 @@
                         <ImageButton.Source>
                             <FontImageSource FontFamily="AwesomeSolid"
                          Glyph=""
-                         Size="20"
-                         Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Silver}}"/>
+                         Size="30"
+                         Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Gold}}"/>
                         </ImageButton.Source>
                     </ImageButton>
 
-                    <Picker x:Name="picker"
+                    <Picker x:Name="CulturePicker"
+                            x:DataType="ext:LocalizationApp"
                             Grid.Column="2"
                             Grid.Row="1"
                             Title="{ext:LocalizedString Key=PickerText}"
-                            SelectedItem="{Binding Culture, Source={StaticResource Localization}}">
+                            TitleColor="{AppThemeBinding Light={StaticResource Gold}, Dark={StaticResource Gold}}"
+                            SelectedItem="{Binding Culture, Source={StaticResource Localization}}"
+                            SelectedIndexChanged="CulturePicker_SelectedIndexChanged"
+                            TextColor="{AppThemeBinding Light={StaticResource Gold}, Dark={StaticResource Gold}}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>fr-FR</x:String>
@@ -93,10 +140,37 @@
                         <ImageButton.Source>
                             <FontImageSource FontFamily="AwesomeSolid"
                          Glyph=""
-                         Size="20"
-                         Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Silver}}"/>
+                         Size="30"
+                         Color="{AppThemeBinding Dark={StaticResource Gold}, Light={StaticResource Gold}}"/>
                         </ImageButton.Source>
                     </ImageButton>
+
+                    <HorizontalStackLayout 
+                        Grid.Column="2"
+                        Grid.Row="2">
+
+                        <component:CustomButton2 x:Name="Simple"
+                         Text="{ext:LocalizedString Key=Simple}">
+                            <component:CustomButton2.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnThemeButtonPressed"/>
+                            </component:CustomButton2.GestureRecognizers>
+                        </component:CustomButton2>
+
+                        <component:CustomButton2 x:Name="Modern"
+                         Text="{ext:LocalizedString Key=Modern}">
+                            <component:CustomButton2.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnThemeButtonPressed"/>
+                            </component:CustomButton2.GestureRecognizers>
+                        </component:CustomButton2>
+
+                        <component:CustomButton2 x:Name="Colored"
+                         Text="{ext:LocalizedString Key=Colored}">
+                            <component:CustomButton2.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnThemeButtonPressed"/>
+                            </component:CustomButton2.GestureRecognizers>
+                        </component:CustomButton2>
+
+                    </HorizontalStackLayout>
                 </Grid>
             </ScrollView>
         </Grid>

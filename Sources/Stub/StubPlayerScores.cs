@@ -6,16 +6,16 @@ namespace Stub
     {
         private readonly Dictionary<string, int> playerWins = new()
         {
-            { "Alice", 3 },
-            { "Bob", 5 },
-            { "Charlie", 2 },
-            { "Diana", 4 },
-            { "Ethan", 1 },
-            { "Fiona", 6 },
-            { "George", 0 },
-            { "Hannah", 2 },
-            { "Isaac", 7 },
-            { "Julia", 5 }
+            { "Alice", 3},
+            { "Bob", 5},
+            { "Charlie", 2},
+            { "Diana", 4},
+            { "Ethan", 1},
+            { "Fiona", 6},
+            { "George", 0},
+            { "Hannah", 2},
+            { "Isaac", 7},
+            { "Julia", 5}
         };
 
         /// <summary>

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartoApp", "QuartoApp\QuartoApp.csproj", "{867865C0-1D12-4C33-9383-C9AE4B1E835E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7A08E890-28CA-4ABB-9596-BEAAF879F7DB} = {7A08E890-28CA-4ABB-9596-BEAAF879F7DB}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model_Quarto\Model.csproj", "{E1F14081-AB4D-47C2-BEDA-DB9DBC13237C}"
 EndProject

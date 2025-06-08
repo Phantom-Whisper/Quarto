@@ -1,16 +1,36 @@
 ﻿using Manager;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Model
 {
     /// <summary>
     /// Abstract Class player used by <c>HumanPlayer</c> and <c>AIPlayer</c>
     /// </summary>
-    public abstract class Player : IPlayer, IEqualityComparer<Player>
+    public abstract class Player : IPlayer, IEqualityComparer<Player>, INotifyPropertyChanged
     {
+        private string? name;
+
         /// <summary>
         /// name of the player
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name 
+        {
+            get => name ?? throw new InvalidOperationException("Name is not intialized");
+            set
+            {
+                if (name == value) return;
+                name = value ?? throw new ArgumentNullException(nameof(value));
+                OnPropertyChanged();
+            }
+        
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        void OnPropertyChanged([CallerMemberName]string? propertyName = null)
+         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
 
         /// <summary>
         /// Constructor of player
@@ -18,7 +38,7 @@ namespace Model
         /// <param name="name">pseudo chosen</param>
         protected Player(string name)
         {
-            Name = name;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
         /// <summary>
@@ -26,9 +46,8 @@ namespace Model
         /// </summary>
         /// <param name="board">the board of the game</param>
         /// <param name="currentPiece">the piece chosen by the opponent</param>
-        /// <param name="gameManager"> the main interface that manage the game</param>
         /// <returns>the piece chosen for the opponent</returns>
-        public abstract void PlayTurn(IBoard board, IPiece currentPiece, IGameManager gameManager); // comportement à définir par les sous-classes
+        public abstract Task<(int, int)?> PlayTurn(IBoard board, IPiece currentPiece); // comportement à définir par les sous-classes
 
         /// <summary>
         /// This method tells if two <c>Player</c> are the same.
@@ -48,6 +67,9 @@ namespace Model
         /// This method gives us the hashcode of a <c>Player</c>.
         /// </summary>
         /// <returns></returns>
-        public int GetHashCode(Player player) => Name.GetHashCode();
+        public int GetHashCode(Player player)
+        {
+            return player == null ? throw new ArgumentNullException(nameof(player)) : player.Name.GetHashCode();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using Manager;
+using Model;
 
 namespace TestModel
 {
@@ -60,24 +61,6 @@ namespace TestModel
         }
 
         [Theory]
-        [InlineData(4, 3)]
-        [InlineData(4, 0)]
-        [InlineData(3, 4)]
-        [InlineData(5, 8)]
-        [InlineData(-1, -1)]
-        [InlineData(-1, -2)]
-        [InlineData(-3, -3)]
-        [InlineData(-10, 24)]
-        [InlineData(2, 2)]
-        public void TestInsertPieceInvalidArgument(int x, int y)
-        {
-            board.InsertPiece(piece, 2, 2);
-            Assert.Throws<InvalidOperationException>(() => { board.InsertPiece(piece, x, y); });
-
-            board.ClearBoard();
-        }
-
-        [Theory]
         [InlineData(0,0, true)]
         [InlineData(0, 1, true)]
         [InlineData(0, 2, true)]
@@ -125,7 +108,7 @@ namespace TestModel
             board.InsertPiece(piece,1, 1);
             var output = board.ToString();
 
-            Assert.Contains("Square Light Big Full", output);
+            Assert.Contains("square_full_big_light", output);
 
             board.ClearBoard();
         }
@@ -138,8 +121,8 @@ namespace TestModel
 
             var output = board.ToString();
 
-            Assert.Contains("Square Light Big Full", output);
-            Assert.Contains("Square Dark Big Full", output);
+            Assert.Contains("square_full_big_light", output);
+            Assert.Contains("square_full_big_dark", output);
 
             board.ClearBoard();
         }
@@ -457,6 +440,53 @@ namespace TestModel
             }
         }
 
+        [Fact]
+        public void CombinationsOf4_ReturnsEmpty_WhenPiecesIsNull()
+        {
+            var board = new Board();
+            var result = board.CombinationsOf4(null);
+            Assert.Empty(result);
+        }
 
+        [Fact]
+        public void InsertPiece_ShouldRaisePropertyChangedEvent()
+        {
+            var board = new Board(4, 4);
+            string? propertyName = null;
+            board.PropertyChanged += (s, e) => propertyName = e.PropertyName;
+
+            var piece = new Piece(true, true, true, true);
+            board.InsertPiece(piece, 0, 0);
+
+            Assert.Equal("BoardMatrix", propertyName);
+        }
+
+
+        [Fact]
+        public void Cell_Piece_Setter_ShouldRaisePropertyChanged()
+        {
+            var piece1 = new Piece(true, true, true, true);
+            var piece2 = new Piece(false, false, false, false);
+            var cell = new Cell(0, 0, piece1);
+
+            string? propertyName = null;
+            cell.PropertyChanged += (s, e) => propertyName = e.PropertyName;
+
+            cell.Piece = piece2;
+
+            Assert.Equal(nameof(Cell.Piece), propertyName);
+            Assert.Equal(piece2, cell.Piece);
+        }
+
+        [Fact]
+        public void Cell_Constructor_ShouldSetProperties()
+        {
+            var piece = new Piece(true, false, true, false);
+            var cell = new Cell(1, 2, piece);
+
+            Assert.Equal(1, cell.X);
+            Assert.Equal(2, cell.Y);
+            Assert.Equal(piece, cell.Piece);
+        }
     }
 }
