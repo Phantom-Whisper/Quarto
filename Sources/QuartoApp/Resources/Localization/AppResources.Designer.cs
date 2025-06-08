@@ -241,6 +241,15 @@ namespace QuartoApp.Resources.Localization {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pièce à jouer.
+        /// </summary>
+        internal static string PieceToPlay {
+            get {
+                return ResourceManager.GetString("PieceToPlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Quarto !.
         /// </summary>
         internal static string Quarto {

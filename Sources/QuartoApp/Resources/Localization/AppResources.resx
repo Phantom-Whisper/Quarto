@@ -177,6 +177,9 @@
   <data name="PickerText" xml:space="preserve">
     <value>Choisir une langue</value>
   </data>
+  <data name="PieceToPlay" xml:space="preserve">
+    <value>Pièce à jouer</value>
+  </data>
   <data name="Quarto" xml:space="preserve">
     <value>Quarto !</value>
   </data>

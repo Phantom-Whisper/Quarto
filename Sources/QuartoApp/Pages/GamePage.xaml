@@ -49,16 +49,23 @@
     
     <Grid RowDefinitions="*,8*,*">
 
-        <component:CustomButton2  
-            Text="{ext:LocalizedString Key=Quitter}"
-            WidthRequest="200" 
-            HeightRequest="70" 
-            HorizontalOptions="End">
-            <component:CustomButton2.GestureRecognizers>
-                <TapGestureRecognizer Tapped="Exit_Tapped"/>
-            </component:CustomButton2.GestureRecognizers>
-        </component:CustomButton2>
-        <Label Text="{Binding GameManager.TurnNumber}" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Grid ColumnDefinitions="*, *, *, *,*" ColumnSpacing="10" Margin="20,10,10,0">
+            <Label Text="{Binding GameManager.CurrentPlayer.Name}" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <Label Text="{ext:LocalizedString Key=PieceToPlay}" VerticalOptions="Center" Grid.Column="1" />
+            <Image Source="{Binding GameManager.PieceToPlay, Converter={StaticResource PieceConverter}}" MaximumHeightRequest="100" 
+                MaximumWidthRequest="100" Grid.Column="2" />
+            <Label Text="{Binding GameManager.TurnNumber}" HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="3"/>
+            <component:CustomButton2  
+                Text="{ext:LocalizedString Key=Quitter}"
+                WidthRequest="200" 
+                HeightRequest="70" 
+                HorizontalOptions="End"
+                Grid.Column="4">
+                <component:CustomButton2.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Exit_Tapped"/>
+                </component:CustomButton2.GestureRecognizers>
+            </component:CustomButton2>
+        </Grid>
         <Grid ColumnDefinitions="*,*"
               RowDefinitions="*,3*,*"
               Grid.Row="1">
