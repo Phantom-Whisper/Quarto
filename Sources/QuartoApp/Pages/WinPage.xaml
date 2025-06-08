@@ -22,7 +22,7 @@
            Grid.Column="1"
            HorizontalOptions="Center"
            TextColor="Gold"
-           Text="Text"/>
+           Text="{Binding GameManager.CurrentPlayer.Name, StringFormat='Congrat ! {0}, you win !'}"/>
 
         <component:CustomButton 
             Text="{ext:LocalizedString Key=Rejouer}"

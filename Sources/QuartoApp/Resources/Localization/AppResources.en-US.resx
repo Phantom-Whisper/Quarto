@@ -181,7 +181,7 @@
     <value>Piece to play :</value>
   </data>
   <data name="Quarto" xml:space="preserve">
-    <value>Quarto !</value>
+    <value>Quarto automatic</value>
   </data>
   <data name="Quitter" xml:space="preserve">
     <value>Quit</value>

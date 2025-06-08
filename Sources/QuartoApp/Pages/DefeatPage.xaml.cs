@@ -1,3 +1,5 @@
+using Model;
+
 namespace QuartoApp.Pages;
 
 public partial class DefeatPage : ContentPage
@@ -7,6 +9,9 @@ public partial class DefeatPage : ContentPage
 
     public ImageSource? BackgroundImage
         => CurrentApp?.GlobalBackgroundImage as ImageSource;
+
+    public GameManager? GameManager
+        => CurrentApp?.GameManager as GameManager;
 
     public DefeatPage()
 	{

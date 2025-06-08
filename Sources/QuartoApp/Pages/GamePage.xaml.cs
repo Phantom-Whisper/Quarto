@@ -10,9 +10,20 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
     {
         InitializeComponent();
         BindingContext = this;
+
+        if (CurrentApp != null)
+            CurrentApp.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(CurrentApp.GlobalBackgroundImage))
+                    OnPropertyChanged(nameof(BackgroundImage));
+            };
     }
 
-    public App? CurrentApp 
+    public new event PropertyChangedEventHandler? PropertyChanged;
+    protected new void OnPropertyChanged(string propertyName)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+    public App? CurrentApp
         => App.Current as App;
 
     public ImageSource? BackgroundImage 
@@ -150,9 +161,7 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
         {
             return;
         }
-        /*if (!GameManager!.HasWinner)
-           GameManager!.FileName; // Sauver le nom du fichier pour pouvoir le charger au prochain lancement
-        */
+
         App.Current?.Quit();
     }
 }

@@ -1,3 +1,5 @@
+using Model;
+
 namespace QuartoApp.Pages;
 
 public partial class WinPage : ContentPage
@@ -7,6 +9,10 @@ public partial class WinPage : ContentPage
 
     public ImageSource? BackgroundImage
         => CurrentApp?.GlobalBackgroundImage as ImageSource;
+
+    public GameManager? GameManager
+        => CurrentApp?.GameManager as GameManager;
+
     public WinPage()
 	{
 		InitializeComponent();

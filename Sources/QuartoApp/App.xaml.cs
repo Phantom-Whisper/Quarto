@@ -1,11 +1,13 @@
 ﻿using Model;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Microsoft.Maui.Storage;
 
 namespace QuartoApp
 {
     public partial class App : Application
     {
+
         public static readonly BindableProperty GlobalBackgroundImageProperty =
              BindableProperty.Create(nameof(GlobalBackgroundImage), typeof(ImageSource), typeof(App), default(ImageSource));
 

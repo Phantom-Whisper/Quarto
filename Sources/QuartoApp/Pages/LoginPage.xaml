@@ -94,9 +94,14 @@
                     <TapGestureRecognizer Tapped="Return_Tapped"/>
                 </component:CustomButton.GestureRecognizers>
             </component:CustomButton>
-             
+
             <component:CustomButton WidthRequest="300"
-                                    Text="{ext:LocalizedString Key=Charger}"/>
+                                    Text="{ext:LocalizedString Key=Charger}">
+                <component:CustomButton.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLoadGameClicked"/>
+                </component:CustomButton.GestureRecognizers>
+            </component:CustomButton>
+
             <component:CustomButton WidthRequest="300"
                                     Text="{ext:LocalizedString Key=Jouer}">
                 <component:CustomButton.GestureRecognizers>

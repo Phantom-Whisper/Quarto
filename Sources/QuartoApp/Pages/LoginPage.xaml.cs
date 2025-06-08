@@ -3,6 +3,8 @@ using Model;
 using QuartoApp.Views;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.IO;
+using System.Xml.Serialization;
 namespace QuartoApp.Pages;
 
 public partial class LoginPage : ContentPage
@@ -58,6 +60,25 @@ public partial class LoginPage : ContentPage
         else if (button == Advanced)
         {
             selectedDifficulty = "Advanced";
+        }
+    }
+
+    public async void OnLoadGameClicked(object sender, TappedEventArgs e)
+    {
+        /*
+        if (string.IsNullOrEmpty(BackupFile))
+        {
+            await DisplayAlert("Erreur", "Aucune sauvegarde trouvée.", "OK");
+            return;
+        }*/
+
+        try
+        {
+            //récupère le fichier
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erreur", $"Impossible de charger la partie ", "OK");
         }
     }
 
