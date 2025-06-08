@@ -20,7 +20,7 @@ namespace Model
         /// <returns>the piece chosen for the opponent</returns>
         public override async Task<(int, int)?> PlayTurn(IBoard board, IPiece currentPiece)
         {
-            await Task.Delay(1000);
+            await Task.Delay(500);
             using var randomGenerator = RandomNumberGenerator.Create();
             byte[] data = new byte[4];
             randomGenerator.GetBytes(data);
@@ -35,9 +35,9 @@ namespace Model
             return (row, col);
         }
 
-        public IPiece ChoosePiece(IBag bag)
+        public static IPiece ChoosePiece(IBag bag)
         {
-            Task.Delay(800).Wait();
+            Task.Delay(500).Wait();
             using var randomGenerator = RandomNumberGenerator.Create();
             byte[] data = new byte[4];
             randomGenerator.GetBytes(data);

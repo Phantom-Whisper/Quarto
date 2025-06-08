@@ -71,11 +71,13 @@ public partial class GamePage : ContentPage, INotifyPropertyChanged
     {
         if (GameManager?.CurrentPlayer is DumbAIPlayer aiPlayer)
         {
-            var piece = aiPlayer.ChoosePiece(GameManager.Bag!);
+
+            var piece = DumbAIPlayer.ChoosePiece(GameManager.Bag!);
             e.PieceToPlay = piece;
 
             GameManager.Bag!.Remove(piece);
-
+            
+            _highPlayer?.Play();
             GameManager.PieceToPlay = piece;
 
             if (GameManager.PieceSelectionTcs is { Task.IsCompleted: false } tcs)

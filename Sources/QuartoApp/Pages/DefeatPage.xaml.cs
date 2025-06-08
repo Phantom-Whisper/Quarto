@@ -21,7 +21,7 @@ public partial class DefeatPage : ContentPage
 
     public async void Replay_Tapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PopToRootAsync();
+        await Shell.Current.GoToAsync("//Login");
     }
 
     public async void Credit_Tapped(Object sender, TappedEventArgs e)
