@@ -85,7 +85,7 @@ namespace Model
         /// </summary>
         private void Init()
         {
-            List<Piece> listPiece = new List<Piece> {
+            List<Piece> listPiece = [
                 new(true, true, true, true),
                 new(true, true, true, false),
                 new(true, true, false, true),
@@ -102,7 +102,7 @@ namespace Model
                 new(false, false, true, false),
                 new(false, false, false, true),
                 new(false, false, false, false)
-                };
+                ];
 
             foreach (var piece in listPiece)
             {
@@ -116,7 +116,7 @@ namespace Model
         /// <returns> String of the list of <c>Piece</c> with their number </returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             int i = 1;
             foreach (var piece in Baglist)
