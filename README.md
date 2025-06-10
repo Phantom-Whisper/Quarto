@@ -13,7 +13,7 @@
 
 Mais qu'est-ce que c'est ? <br>
 Quarto est un jeu de société stratégique au tour par tour, le but est d'aligner 4 pièces ayant une caractéristique en commun parmi ces caractéristiques : 
-- Couleur : <span style="color : #99643e">claire</span> ou <span style="color : #5f3b2e">foncée</span>
+- Couleur : claire ou foncée
 - Forme : ronde ou carrée
 - Hauteur : haute ou basse
 - État : pleine ou creuse
@@ -35,6 +35,6 @@ Pour l'instant, vous n'avez besoin que d'un IDE pour créer des applications mod
 ## 🧪 Exécution des tests
 Pour exécuter les tests, il suffit de lancer Visual Studio et d'utiliser l'explorateur de tests 😜
 ## Auteurs
-<img src="https://codefirst.iut.uca.fr/git/avatars/47c956d81fb0ec67c695724312fc63d1?size=870" width=30> [**Inès DELINAC**](https://codefirst.iut.uca.fr/git/ines.delinac) - *Travail initital* - <br>
-<img src="https://codefirst.iut.uca.fr/git/avatars/055ac6569dea306cfa8266d062372630?size=870" width=30> [**Gabriel COUDEL-KOUMBA**](https://codefirst.iut.uca.fr/git/gabriel.coudel-koumba) - *Travail initital* - <br>
-<img src="https://codefirst.iut.uca.fr/git/avatars/659f948491d5636c401d87cc85e6b2ad?size=870" width=30> [**Ange GRIMAUD**](https://codefirst.iut.uca.fr/git/ange.grimaud) - *Travail initital* - 
+<img src="https://codefirst.iut.uca.fr/git/avatars/47c956d81fb0ec67c695724312fc63d1?size=870" width=30> [**Inès DELINAC**](https://codefirst.iut.uca.fr/git/ines.delinac) - *Travail initital* - Développeuse/Cheffe de projet/Graphiste<br>
+<img src="https://avatars.githubusercontent.com/u/157543647?s=400&u=1a9e5f04f782b65bb81c5f4b471495745ad92c25&v=4" width=30> [**Gabriel COUDEL-KOUMBA (Phantom-Whisper)**](https://github.com/Phantom-Whisper) - *Travail initital* - Développeur/Chef de projet/Concepteur back-end<br>
+<img src="https://avatars.githubusercontent.com/u/189655605?v=4" width=30> [**Ange GRIMAUD (letrude)**](https://github.com/letrude) - *Travail initital* - Développeur/Chef de projet
