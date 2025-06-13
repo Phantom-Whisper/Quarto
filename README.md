@@ -32,6 +32,8 @@ Pour l'instant, vous n'avez besoin que d'un IDE pour créer des applications mod
 ✅ Stub scores permettant de simuler un historique de parties gagnées <br>
 ✅ Serialization de scores et de parties <br>
 ✅ Application fonctionnelle en Interface Utilisateur (UI)
+> [!WARNING]
+> L'option "Charger" pour lancer une partie peut rencontrer quelques erreurs, il est déconseillé de l'utiliser pour une expérience optimale.
 ## 🧪 Exécution des tests
 Pour exécuter les tests, il suffit de lancer Visual Studio et d'utiliser l'explorateur de tests 😜
 ## Auteurs
