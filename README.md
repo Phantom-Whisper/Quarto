@@ -19,7 +19,7 @@ Quarto est un jeu de société stratégique au tour par tour, le but est d'align
 - État : pleine ou creuse
 ## Documentation
 Quelques liens utiles :
-* [Description de l'architecture](https://codefirst.iut.uca.fr/git/gabriel.coudel-koumba/Quarto/wiki/Jalon-2-:-Description-de-l%27architecture)
+* [Description de l'architecture]([https://codefirst.iut.uca.fr/git/gabriel.coudel-koumba/Quarto/wiki/Jalon-2-:-Description-de-l%27architecture](https://github.com/Phantom-Whisper/Quarto/wiki/Description-de-l'architecture))
 * [Vidéo promotionnelle](https://youtu.be/uWf8qpmpNpQ)
 ## Prise en main
 Pour l'instant, vous n'avez besoin que d'un IDE pour créer des applications modernes pour Windows (comme Visual Studio Community).
