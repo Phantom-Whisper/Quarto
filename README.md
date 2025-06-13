@@ -1,5 +1,5 @@
 # Quarto
-[![Build Status](https://codefirst.iut.uca.fr/api/badges/gabriel.coudel-koumba/Quarto/status.svg)](https://codefirst.iut.uca.fr/gabriel.coudel-koumba/Quarto)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Phantom-Whisper/Quarto/.github%2Fworkflows%2Fdotnet.yml)
 [![Lines of Code](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=ncloc&token=1d4fd1b55425be34e015b0a55ead52ac889fbb7a)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
 [![Coverage](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=coverage&token=1d4fd1b55425be34e015b0a55ead52ac889fbb7a)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
 [![Maintainability Rating](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Quarto-CI&metric=sqale_rating&token=1d4fd1b55425be34e015b0a55ead52ac889fbb7a)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Quarto-CI)
